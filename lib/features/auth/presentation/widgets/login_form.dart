@@ -82,13 +82,11 @@ class _LoginFormState extends State<LoginForm> {
       validator: Validators.validatePassword,
       suffixIcon: IconButton(
         icon: Icon(_obscurePassword ? Icons.visibility_off : Icons.visibility),
-        onPressed: _togglePasswordVisibility,
+        onPressed: () {
+          setState(() => _obscurePassword = !_obscurePassword);
+        },
       ),
     );
-  }
-
-  void _togglePasswordVisibility() {
-    setState(() => _obscurePassword = !_obscurePassword);
   }
 
   Widget _buildUnlockButton() {
