@@ -14,36 +14,38 @@ class AuthScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => sl<AuthCubit>()..checkAuthState(),
-      child: Scaffold(
-        body: SafeArea(
-          child: BlocListener<AuthCubit, AuthCubitState>(
-            listener: (context, state) {
-              switch (state) {
-                case AuthCubitLoginSuccess() || AuthCubitPasswordSetSuccess():
-                  Navigator.pushReplacementNamed(context, AppRouter.home);
-                case AuthCubitError():
-                  _showError(context, state.message);
-                default:
-                  break;
-              }
-            },
-            child: BlocBuilder<AuthCubit, AuthCubitState>(
-              builder: (context, state) {
-                return switch (state) {
-                  AuthCubitLoading() || AuthCubitInitial() =>
-                    const LoadingIndicator(message: 'Loading...'),
-                  AuthCubitLoaded(:final authState)
-                      when authState.isFirstLaunch || !authState.hasPassword =>
-                    const SetupPasswordForm(),
-                  AuthCubitLoaded(:final authState) => LoginForm(
-                    useBiometric: authState.useBiometric,
-                  ),
-                  _ => const LoginForm(useBiometric: false),
-                };
-              },
+      child: BlocListener<AuthCubit, AuthCubitState>(
+        listener: (context, state) {
+          switch (state) {
+            case AuthCubitLoginSuccess() || AuthCubitPasswordSetSuccess():
+              Navigator.pushReplacementNamed(context, AppRouter.home);
+            case AuthCubitError():
+              _showError(context, state.message);
+            default:
+              break;
+          }
+        },
+        child: Scaffold(body: _buildBody()),
+      ),
+    );
+  }
+
+  Widget _buildBody() {
+    return SafeArea(
+      child: BlocBuilder<AuthCubit, AuthCubitState>(
+        builder: (context, state) {
+          return switch (state) {
+            AuthCubitLoading() ||
+            AuthCubitInitial() => const LoadingIndicator(message: 'Loading...'),
+            AuthCubitLoaded(:final authState)
+                when authState.isFirstLaunch || !authState.hasPassword =>
+              const SetupPasswordForm(),
+            AuthCubitLoaded(:final authState) => LoginForm(
+              useBiometric: authState.useBiometric,
             ),
-          ),
-        ),
+            _ => const LoginForm(useBiometric: false),
+          };
+        },
       ),
     );
   }

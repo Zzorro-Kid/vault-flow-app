@@ -21,34 +21,6 @@ class _SetupPasswordFormState extends State<SetupPasswordForm> {
   bool _obscureConfirmPassword = true;
 
   @override
-  void dispose() {
-    _passwordController.dispose();
-    _confirmPasswordController.dispose();
-    super.dispose();
-  }
-
-  void _submit() {
-    if (_formKey.currentState!.validate()) {
-      context.read<AuthCubit>().setupPassword(_passwordController.text);
-    }
-  }
-
-  void _togglePasswordVisibility() {
-    setState(() => _obscurePassword = !_obscurePassword);
-  }
-
-  void _toggleConfirmPasswordVisibility() {
-    setState(() => _obscureConfirmPassword = !_obscureConfirmPassword);
-  }
-
-  String? _validateConfirmPassword(String? value) {
-    if (value != _passwordController.text) {
-      return 'Passwords do not match';
-    }
-    return null;
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(AppDimensions.paddingLarge),
@@ -112,6 +84,10 @@ class _SetupPasswordFormState extends State<SetupPasswordForm> {
     );
   }
 
+  void _togglePasswordVisibility() {
+    setState(() => _obscurePassword = !_obscurePassword);
+  }
+
   Widget _buildConfirmPasswordField() {
     return CustomTextField(
       label: 'Confirm Password',
@@ -127,6 +103,17 @@ class _SetupPasswordFormState extends State<SetupPasswordForm> {
     );
   }
 
+  String? _validateConfirmPassword(String? value) {
+    if (value != _passwordController.text) {
+      return 'Passwords do not match';
+    }
+    return null;
+  }
+
+  void _toggleConfirmPasswordVisibility() {
+    setState(() => _obscureConfirmPassword = !_obscureConfirmPassword);
+  }
+
   Widget _buildCreateButton() {
     return BlocBuilder<AuthCubit, AuthCubitState>(
       builder: (context, state) {
@@ -137,5 +124,18 @@ class _SetupPasswordFormState extends State<SetupPasswordForm> {
         );
       },
     );
+  }
+
+  void _submit() {
+    if (_formKey.currentState!.validate()) {
+      context.read<AuthCubit>().setupPassword(_passwordController.text);
+    }
+  }
+
+  @override
+  void dispose() {
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
   }
 }

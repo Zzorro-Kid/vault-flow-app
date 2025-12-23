@@ -21,22 +21,6 @@ class _LoginFormState extends State<LoginForm> {
   bool _obscurePassword = true;
 
   @override
-  void dispose() {
-    _passwordController.dispose();
-    super.dispose();
-  }
-
-  void _submit() {
-    if (_formKey.currentState!.validate()) {
-      context.read<AuthCubit>().login(_passwordController.text);
-    }
-  }
-
-  void _togglePasswordVisibility() {
-    setState(() => _obscurePassword = !_obscurePassword);
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(AppDimensions.paddingLarge),
@@ -46,7 +30,7 @@ class _LoginFormState extends State<LoginForm> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // RESET BUTTON
+            // RESET BUTTON (TEMPORARY)
             TextButton(
               onPressed: () {
                 context.read<AuthCubit>().logout();
@@ -109,6 +93,10 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
+  void _togglePasswordVisibility() {
+    setState(() => _obscurePassword = !_obscurePassword);
+  }
+
   Widget _buildUnlockButton() {
     return BlocBuilder<AuthCubit, AuthCubitState>(
       builder: (context, state) {
@@ -121,14 +109,24 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
+  void _submit() {
+    if (_formKey.currentState!.validate()) {
+      context.read<AuthCubit>().login(_passwordController.text);
+    }
+  }
+
   Widget _buildBiometricButton() {
     return CustomButton(
       text: 'Use Biometric',
-      onPressed: () {
-        // TODO: Implement biometric authentication
-      },
+      onPressed: () {},
       isOutlined: true,
       icon: Icons.fingerprint,
     );
+  }
+
+  @override
+  void dispose() {
+    _passwordController.dispose();
+    super.dispose();
   }
 }
