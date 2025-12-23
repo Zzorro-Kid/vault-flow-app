@@ -1,9 +1,13 @@
-import 'package:device_preview_plus/device_preview_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:device_preview_plus/device_preview_plus.dart';
 import 'package:test_app/core/routes/app_routes.dart';
+import 'package:test_app/core/themes/app_theme.dart';
+import 'package:test_app/injection_container.dart' as di;
 
-void main() {
-  runApp(DevicePreview(enabled: true, builder: (contex) => const MyApp()));
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await di.init();
+  runApp(DevicePreview(enabled: true, builder: (context) => const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -11,19 +15,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appRouter = AppRouter();
-
     return MaterialApp(
-      title: 'VaultFlow',
       debugShowCheckedModeBanner: false,
+      title: 'VaultFlow',
       locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      darkTheme: ThemeData.dark(useMaterial3: true),
-      onGenerateRoute: appRouter.onGenerateRoute,
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.system,
+      onGenerateRoute: AppRouter().onGenerateRoute,
       initialRoute: AppRouter.auth,
     );
   }
