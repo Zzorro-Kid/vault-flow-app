@@ -7,9 +7,7 @@ import 'package:test_app/core/widgets/custom_text_field.dart';
 import 'package:test_app/features/auth/presentation/cubit/auth_cubit.dart';
 
 class LoginForm extends StatefulWidget {
-  final bool useBiometric;
-
-  const LoginForm({super.key, required this.useBiometric});
+  const LoginForm({super.key});
 
   @override
   State<LoginForm> createState() => _LoginFormState();
@@ -46,10 +44,6 @@ class _LoginFormState extends State<LoginForm> {
             _buildPasswordField(),
             const SizedBox(height: AppDimensions.spacingXLarge),
             _buildUnlockButton(),
-            if (widget.useBiometric) ...[
-              const SizedBox(height: AppDimensions.spacingMedium),
-              _buildBiometricButton(),
-            ],
           ],
         ),
       ),
@@ -113,15 +107,6 @@ class _LoginFormState extends State<LoginForm> {
     if (_formKey.currentState!.validate()) {
       context.read<AuthCubit>().login(_passwordController.text);
     }
-  }
-
-  Widget _buildBiometricButton() {
-    return CustomButton(
-      text: 'Use Biometric',
-      onPressed: () {},
-      isOutlined: true,
-      icon: Icons.fingerprint,
-    );
   }
 
   @override

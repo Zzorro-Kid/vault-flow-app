@@ -6,7 +6,6 @@ abstract class AuthRepository {
   Future<Either<Failure, AuthStateData>> getAuthState();
   Future<Either<Failure, void>> setPassword(String password);
   Future<Either<Failure, bool>> verifyPassword(String password);
-  Future<Either<Failure, void>> setBiometricEnabled(bool enabled);
   Future<Either<Failure, void>> completeFirstLaunch();
   Future<Either<Failure, void>> clearAuthData();
 }

@@ -10,8 +10,6 @@ abstract class AuthLocalDataSource {
   Future<void> setPassword(String password);
   Future<bool> verifyPassword(String password);
   Future<bool> hasPassword();
-  Future<void> setBiometricEnabled(bool enabled);
-  Future<bool> isBiometricEnabled();
   Future<void> completeFirstLaunch();
   Future<void> clearAuthData();
 }
@@ -32,7 +30,6 @@ class AuthLocalDataSourceImpl extends BaseLocalDataSource
       () async => AuthStateDataModel(
         isFirstLaunch: sharedPrefs.isFirstLaunch,
         hasPassword: sharedPrefs.hasPassword,
-        useBiometric: sharedPrefs.useBiometric,
       ),
       errorMessage: 'Failed to get auth state',
     );
@@ -76,22 +73,6 @@ class AuthLocalDataSourceImpl extends BaseLocalDataSource
   }
 
   @override
-  Future<void> setBiometricEnabled(bool enabled) async {
-    return executeStorageWrite(
-      () => sharedPrefs.setUseBiometric(enabled),
-      errorMessage: 'Failed to set biometric setting',
-    );
-  }
-
-  @override
-  Future<bool> isBiometricEnabled() async {
-    return executeStorageRead(
-      () async => sharedPrefs.useBiometric,
-      errorMessage: 'Failed to check biometric setting',
-    );
-  }
-
-  @override
   Future<void> completeFirstLaunch() async {
     return executeStorageWrite(
       () => sharedPrefs.setIsFirstLaunch(false),
@@ -105,7 +86,6 @@ class AuthLocalDataSourceImpl extends BaseLocalDataSource
       await securePrefs.deletePasswordHash();
       await securePrefs.deleteEncryptionKey();
       await sharedPrefs.setHasPassword(false);
-      await sharedPrefs.setUseBiometric(false);
       await sharedPrefs.setIsFirstLaunch(true);
     }, errorMessage: 'Failed to clear auth data');
   }

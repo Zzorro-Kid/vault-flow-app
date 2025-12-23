@@ -40,10 +40,8 @@ class AuthScreen extends StatelessWidget {
             AuthCubitLoaded(:final authState)
                 when authState.isFirstLaunch || !authState.hasPassword =>
               const SetupPasswordForm(),
-            AuthCubitLoaded(:final authState) => LoginForm(
-              useBiometric: authState.useBiometric,
-            ),
-            _ => const LoginForm(useBiometric: false),
+            AuthCubitLoaded() => const LoginForm(),
+            _ => const LoginForm(),
           };
         },
       ),

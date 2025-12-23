@@ -19,8 +19,6 @@ abstract class BaseRepository {
       return Left(EncryptionFailure(e.message));
     } on StorageException catch (e) {
       return Left(StorageFailure(e.message));
-    } on BiometricException catch (e) {
-      return Left(BiometricFailure(e.message));
     } on ExportException catch (e) {
       return Left(ExportFailure(e.message));
     } on ImportException catch (e) {

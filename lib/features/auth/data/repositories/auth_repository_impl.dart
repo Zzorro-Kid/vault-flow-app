@@ -28,13 +28,6 @@ class AuthRepositoryImpl extends BaseRepository implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, void>> setBiometricEnabled(bool enabled) async {
-    return executeRepositoryCall(
-      () => localDataSource.setBiometricEnabled(enabled),
-    );
-  }
-
-  @override
   Future<Either<Failure, void>> completeFirstLaunch() async {
     return executeRepositoryCall(() => localDataSource.completeFirstLaunch());
   }

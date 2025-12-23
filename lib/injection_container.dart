@@ -10,7 +10,6 @@ import 'package:test_app/features/auth/domain/repositories/auth_repository.dart'
 import 'package:test_app/features/auth/domain/usecases/clear_auth_data_usecase.dart';
 import 'package:test_app/features/auth/domain/usecases/complete_first_launch_usecase.dart';
 import 'package:test_app/features/auth/domain/usecases/get_auth_state_usecase.dart';
-import 'package:test_app/features/auth/domain/usecases/set_biometric_usecase.dart';
 import 'package:test_app/features/auth/domain/usecases/set_password_usecase.dart';
 import 'package:test_app/features/auth/domain/usecases/verify_password_usecase.dart';
 import 'package:test_app/features/auth/presentation/cubit/auth_cubit.dart';
@@ -41,7 +40,6 @@ void _initAuth() {
       getAuthStateUseCase: sl(),
       setPasswordUseCase: sl(),
       verifyPasswordUseCase: sl(),
-      setBiometricUseCase: sl(),
       completeFirstLaunchUseCase: sl(),
       clearAuthDataUseCase: sl(),
     ),
@@ -50,7 +48,6 @@ void _initAuth() {
   sl.registerLazySingleton(() => GetAuthStateUseCase(sl()));
   sl.registerLazySingleton(() => SetPasswordUseCase(sl()));
   sl.registerLazySingleton(() => VerifyPasswordUseCase(sl()));
-  sl.registerLazySingleton(() => SetBiometricUseCase(sl()));
   sl.registerLazySingleton(() => CompleteFirstLaunchUseCase(sl()));
   sl.registerLazySingleton(() => ClearAuthDataUseCase(sl()));
 

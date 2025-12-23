@@ -22,14 +22,6 @@ class SharedPrefs {
     return _sharedPreferences.getBool(AppConstants.keyHasPassword) ?? false;
   }
 
-  Future<bool> setUseBiometric(bool value) async {
-    return _sharedPreferences.setBool(AppConstants.keyUseBiometric, value);
-  }
-
-  bool get useBiometric {
-    return _sharedPreferences.getBool(AppConstants.keyUseBiometric) ?? false;
-  }
-
   Future<bool> setSelectedCurrency(String currency) async {
     return _sharedPreferences.setString(
       AppConstants.keySelectedCurrency,

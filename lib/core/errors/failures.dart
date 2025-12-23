@@ -29,10 +29,6 @@ class StorageFailure extends Failure {
   const StorageFailure(super.message);
 }
 
-class BiometricFailure extends Failure {
-  const BiometricFailure(super.message);
-}
-
 class ExportFailure extends Failure {
   const ExportFailure(super.message);
 }

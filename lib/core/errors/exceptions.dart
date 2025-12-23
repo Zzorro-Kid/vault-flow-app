@@ -23,11 +23,6 @@ class StorageException implements Exception {
   StorageException(this.message);
 }
 
-class BiometricException implements Exception {
-  final String message;
-  BiometricException(this.message);
-}
-
 class ExportException implements Exception {
   final String message;
   ExportException(this.message);
