@@ -79,13 +79,11 @@ class _SetupPasswordFormState extends State<SetupPasswordForm> {
       validator: Validators.validatePassword,
       suffixIcon: IconButton(
         icon: Icon(_obscurePassword ? Icons.visibility_off : Icons.visibility),
-        onPressed: _togglePasswordVisibility,
+        onPressed: () {
+          setState(() => _obscurePassword = !_obscurePassword);
+        },
       ),
     );
-  }
-
-  void _togglePasswordVisibility() {
-    setState(() => _obscurePassword = !_obscurePassword);
   }
 
   Widget _buildConfirmPasswordField() {
@@ -98,7 +96,9 @@ class _SetupPasswordFormState extends State<SetupPasswordForm> {
         icon: Icon(
           _obscureConfirmPassword ? Icons.visibility_off : Icons.visibility,
         ),
-        onPressed: _toggleConfirmPasswordVisibility,
+        onPressed: () {
+          setState(() => _obscureConfirmPassword = !_obscureConfirmPassword);
+        },
       ),
     );
   }
@@ -108,10 +108,6 @@ class _SetupPasswordFormState extends State<SetupPasswordForm> {
       return 'Passwords do not match';
     }
     return null;
-  }
-
-  void _toggleConfirmPasswordVisibility() {
-    setState(() => _obscureConfirmPassword = !_obscureConfirmPassword);
   }
 
   Widget _buildCreateButton() {

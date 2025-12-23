@@ -4,7 +4,7 @@ import 'package:test_app/core/routes/app_routes.dart';
 import 'package:test_app/core/widgets/loading_indicator.dart';
 import 'package:test_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:test_app/features/auth/presentation/widgets/login_form.dart';
-import 'package:test_app/features/auth/presentation/widgets/setup_password_form.dart';
+import 'package:test_app/features/auth/presentation/widgets/first_setup_password_form.dart';
 import 'package:test_app/injection_container.dart';
 
 class AuthScreen extends StatelessWidget {
