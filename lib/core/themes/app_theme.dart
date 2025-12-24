@@ -106,27 +106,6 @@ class AppTheme {
     );
   }
 
-  static const ColorScheme _lightColorScheme = ColorScheme.light(
-    primary: AppColors.primary,
-    secondary: AppColors.accent,
-    surface: AppColors.surfaceLight,
-    error: AppColors.error,
-  );
-
-  static ThemeData get lightTheme => _buildTheme(
-    brightness: Brightness.light,
-    colorScheme: _lightColorScheme,
-    scaffoldBackgroundColor: AppColors.backgroundLight,
-    appBarBackgroundColor: AppColors.surfaceLight,
-    appBarForegroundColor: AppColors.textPrimaryLight,
-    cardColor: AppColors.surfaceLight,
-    inputFillColor: AppColors.surfaceLight,
-    borderColor: AppColors.borderLight,
-    primaryColor: AppColors.primary,
-    buttonBackgroundColor: AppColors.primary,
-    buttonForegroundColor: Colors.white,
-  );
-
   static const ColorScheme _darkColorScheme = ColorScheme.dark(
     primary: AppColors.primaryLight,
     secondary: AppColors.accent,
