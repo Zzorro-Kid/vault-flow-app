@@ -11,6 +11,7 @@ class AppDimensions {
   static const double radiusMedium = 8.0;
   static const double radiusLarge = 12.0;
   static const double radiusXLarge = 16.0;
+  static const double radiusXXLarge = 20.0;
   static const double radiusCircular = 100.0;
 
   // Icon Sizes
@@ -18,6 +19,7 @@ class AppDimensions {
   static const double iconMedium = 24.0;
   static const double iconLarge = 32.0;
   static const double iconXLarge = 48.0;
+  static const double iconXXLarge = 64.0;
 
   // Button Heights
   static const double buttonHeightSmall = 36.0;
@@ -42,6 +44,24 @@ class AppDimensions {
   // App Bar
   static const double appBarHeight = 56.0;
   static const double appBarIconPaddingEnd = 14.0;
+  static const double appBarIconContainerRadius = 12.0;
+
   // Bottom Navigation
   static const double bottomNavHeight = 60.0;
+
+  // Font Sizes
+  static const double fontSizeSmall = 12.0;
+  static const double fontSizeMedium = 14.0;
+  static const double fontSizeLarge = 16.0;
+  static const double fontSizeXLarge = 18.0;
+  static const double fontSizeXXLarge = 22.0;
+  static const double fontSizeTitle = 24.0;
+  static const double fontSizeXXXLarge = 32.0;
+
+  // Shadows
+  static const double shadowBlurRadius = 12.0;
+  static const double shadowOffsetY = 6.0;
+
+  // Border Width
+  static const double borderWidthThin = 1.0;
 }

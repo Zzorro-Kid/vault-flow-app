@@ -54,18 +54,28 @@ class HomeScreen extends StatelessWidget {
 
   Widget _buildAppBarTitle() {
     return Row(
-      children: [_buildLogoIcon(), const SizedBox(width: 12), _buildAppName()],
+      children: [
+        _buildLogoIcon(),
+        const SizedBox(width: AppDimensions.radiusLarge),
+        _buildAppName(),
+      ],
     );
   }
 
   Widget _buildLogoIcon() {
     return Container(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(AppDimensions.paddingSmall),
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: 0.2),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(
+          AppDimensions.appBarIconContainerRadius,
+        ),
       ),
-      child: const Icon(Icons.shield_outlined, color: Colors.white, size: 24),
+      child: const Icon(
+        Icons.shield_outlined,
+        color: Colors.white,
+        size: AppDimensions.iconMedium,
+      ),
     );
   }
 
@@ -73,7 +83,7 @@ class HomeScreen extends StatelessWidget {
     return const Text(
       'VaultFlow',
       style: TextStyle(
-        fontSize: 22,
+        fontSize: AppDimensions.fontSizeXXLarge,
         fontWeight: FontWeight.bold,
         color: Colors.white,
         letterSpacing: 0.5,
@@ -83,10 +93,12 @@ class HomeScreen extends StatelessWidget {
 
   Widget _buildLogoutButton(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(right: 16),
+      margin: const EdgeInsets.only(right: AppDimensions.paddingMedium),
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: 0.2),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(
+          AppDimensions.appBarIconContainerRadius,
+        ),
       ),
       child: IconButton(
         icon: const Icon(Icons.logout_outlined, color: Colors.white),
@@ -134,7 +146,7 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             DashboardSummary(summary: summary),
-            const SizedBox(height: 32),
+            const SizedBox(height: AppDimensions.paddingXLarge),
             Text(
               'Recent Transactions',
               style: Theme.of(context).textTheme.titleLarge,

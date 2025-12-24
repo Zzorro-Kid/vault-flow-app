@@ -26,7 +26,7 @@ class TransactionsList extends StatelessWidget {
           children: [
             Icon(
               Icons.receipt_long_outlined,
-              size: 64,
+              size: AppDimensions.iconXXLarge,
               color: Colors.white.withValues(alpha: 0.3),
             ),
             const SizedBox(height: AppDimensions.paddingMedium),
@@ -75,8 +75,11 @@ class TransactionsList extends StatelessWidget {
   BoxDecoration _buildItemDecoration() {
     return BoxDecoration(
       color: AppColors.surfaceDark,
-      borderRadius: BorderRadius.circular(16),
-      border: Border.all(color: Colors.white.withValues(alpha: 0.1), width: 1),
+      borderRadius: BorderRadius.circular(AppDimensions.radiusXLarge),
+      border: Border.all(
+        color: Colors.white.withValues(alpha: 0.1),
+        width: AppDimensions.borderWidthThin,
+      ),
     );
   }
 
@@ -89,17 +92,17 @@ class TransactionsList extends StatelessWidget {
 
   Widget _buildCategoryIcon(String iconName, bool isIncome) {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(AppDimensions.radiusLarge),
       decoration: BoxDecoration(
         color: isIncome
             ? AppColors.incomeStart.withValues(alpha: 0.2)
             : AppColors.expensesStart.withValues(alpha: 0.2),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(AppDimensions.radiusLarge),
       ),
       child: Icon(
         _getCategoryIcon(iconName),
         color: isIncome ? AppColors.incomeStart : AppColors.expensesStart,
-        size: 24,
+        size: AppDimensions.iconMedium,
       ),
     );
   }

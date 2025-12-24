@@ -40,7 +40,7 @@ class DashboardSummary extends StatelessWidget {
         _buildSummaryCard(
           context: context,
           icon: Icons.trending_up,
-          title: 'Income',
+          title: 'Incomes',
           amount: summary.totalIncome,
           gradient: _buildIncomeGradient(),
         ),
@@ -111,19 +111,23 @@ class DashboardSummary extends StatelessWidget {
   BoxDecoration _buildCardDecoration(LinearGradient gradient) {
     return BoxDecoration(
       gradient: gradient,
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(AppDimensions.radiusXXLarge),
       boxShadow: [
         BoxShadow(
           color: gradient.colors.first.withValues(alpha: 0.3),
-          blurRadius: 12,
-          offset: const Offset(0, 6),
+          blurRadius: AppDimensions.shadowBlurRadius,
+          offset: const Offset(0, AppDimensions.shadowOffsetY),
         ),
       ],
     );
   }
 
   Widget _buildCardIcon(IconData icon) {
-    return Icon(icon, color: Colors.white.withValues(alpha: 0.9), size: 32);
+    return Icon(
+      icon,
+      color: Colors.white.withValues(alpha: 0.9),
+      size: AppDimensions.iconLarge,
+    );
   }
 
   Widget _buildAmountText(BuildContext context, double amount, bool fullWidth) {
@@ -132,7 +136,9 @@ class DashboardSummary extends StatelessWidget {
       style: Theme.of(context).textTheme.titleLarge?.copyWith(
         color: Colors.white,
         fontWeight: FontWeight.bold,
-        fontSize: fullWidth ? 32 : 24,
+        fontSize: fullWidth
+            ? AppDimensions.fontSizeXXXLarge
+            : AppDimensions.fontSizeTitle,
       ),
     );
   }
