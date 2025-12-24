@@ -34,6 +34,7 @@ class HomeScreen extends StatelessWidget {
       elevation: 0,
       backgroundColor: Colors.transparent,
       surfaceTintColor: Colors.transparent,
+      automaticallyImplyLeading: false,
       flexibleSpace: _buildAppBarBackground(),
       title: _buildAppBarTitle(),
       actions: [_buildLogoutButton(context)],
