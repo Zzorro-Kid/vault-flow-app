@@ -9,7 +9,7 @@ import 'package:test_app/features/home/presentation/pages/home_sceen.dart';
 // import 'package:test_app/features/settings/presentation/pages/settings_screen.dart';
 
 class AppRouter {
-  static const String auth = '/';
+  static const String auth = '/auth';
   static const String home = '/home';
   static const String addTransaction = '/add-transaction';
   static const String editTransaction = '/edit-transaction';
@@ -23,10 +23,10 @@ class AppRouter {
   Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case auth:
-        return MaterialPageRoute(builder: (_) => const AuthScreen());
+        return _createFadeRoute(const AuthScreen());
 
       case home:
-        return MaterialPageRoute(builder: (_) => const HomeScreen());
+        return _createFadeRoute(const HomeScreen());
 
       // case addTransaction:
       //   return MaterialPageRoute(builder: (_) => const AddTransactionScreen());
@@ -66,5 +66,19 @@ class AppRouter {
           ),
         );
     }
+  }
+
+  PageRouteBuilder<dynamic> _createFadeRoute(Widget page) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => page,
+      transitionDuration: const Duration(milliseconds: 300),
+      reverseTransitionDuration: const Duration(milliseconds: 300),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(
+          opacity: animation,
+          child: child,
+        );
+      },
+    );
   }
 }
