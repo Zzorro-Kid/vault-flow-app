@@ -31,15 +31,68 @@ class HomeScreen extends StatelessWidget {
 
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     return AppBar(
+      elevation: 0,
+      backgroundColor: Colors.transparent,
       surfaceTintColor: Colors.transparent,
-      title: const Text('VaultFlow'),
-      actions: [
-        IconButton(
-          padding: EdgeInsets.only(right: AppDimensions.appBarIconPaddingEnd),
-          icon: const Icon(Icons.logout),
-          onPressed: () => Navigator.pushReplacementNamed(context, '/auth'),
+      flexibleSpace: _buildAppBarBackground(),
+      title: _buildAppBarTitle(),
+      actions: [_buildLogoutButton(context)],
+    );
+  }
+
+  Widget _buildAppBarBackground() {
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Color.fromARGB(255, 88, 90, 231), Color(0xFF8B5CF6)],
         ),
-      ],
+      ),
+    );
+  }
+
+  Widget _buildAppBarTitle() {
+    return Row(
+      children: [_buildLogoIcon(), const SizedBox(width: 12), _buildAppName()],
+    );
+  }
+
+  Widget _buildLogoIcon() {
+    return Container(
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.2),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: const Icon(Icons.shield_outlined, color: Colors.white, size: 24),
+    );
+  }
+
+  Widget _buildAppName() {
+    return const Text(
+      'VaultFlow',
+      style: TextStyle(
+        fontSize: 22,
+        fontWeight: FontWeight.bold,
+        color: Colors.white,
+        letterSpacing: 0.5,
+      ),
+    );
+  }
+
+  Widget _buildLogoutButton(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(right: 16),
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.2),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: IconButton(
+        icon: const Icon(Icons.logout_outlined, color: Colors.white),
+        onPressed: () => Navigator.pushReplacementNamed(context, '/auth'),
+        tooltip: 'Logout',
+      ),
     );
   }
 
@@ -76,16 +129,17 @@ class HomeScreen extends StatelessWidget {
   Widget _buildDashboardSection(BuildContext context, summary) {
     return SliverToBoxAdapter(
       child: Padding(
-        padding: const EdgeInsets.all(AppDimensions.paddingMedium),
+        padding: const EdgeInsets.all(AppDimensions.paddingLarge),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             DashboardSummary(summary: summary),
-            const SizedBox(height: AppDimensions.spacingLarge),
+            const SizedBox(height: 32),
             Text(
               'Recent Transactions',
               style: Theme.of(context).textTheme.titleLarge,
             ),
+            const SizedBox(height: AppDimensions.paddingMedium),
           ],
         ),
       ),

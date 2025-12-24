@@ -12,9 +12,9 @@ class AppColors {
 
   // Background Colors
   static const Color backgroundLight = Color(0xFFF9FAFB);
-  static const Color backgroundDark = Color(0xFF111827);
+  static const Color backgroundDark = Color.fromARGB(195, 24, 32, 92);
   static const Color surfaceLight = Color(0xFFFFFFFF);
-  static const Color surfaceDark = Color(0xFF1F2937);
+  static const Color surfaceDark = Color(0xFF1A1F3A);
 
   // Text Colors
   static const Color textPrimaryLight = Color(0xFF111827);
@@ -39,4 +39,12 @@ class AppColors {
   // Shadow Colors
   static const Color shadowLight = Color(0x1A000000);
   static const Color shadowDark = Color(0x33000000);
+
+  // Dashboard Card Gradients Colors
+  static const Color balanceStart = Color(0xFF4A90E2);
+  static const Color balanceEnd = Color(0xFF357ABD);
+  static const Color incomeStart = Color(0xFF4ECDC4);
+  static const Color incomeEnd = Color(0xFF44A08D);
+  static const Color expensesStart = Color(0xFFB06AB3);
+  static const Color expensesEnd = Color(0xFF8E44AD);
 }
