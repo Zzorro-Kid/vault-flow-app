@@ -22,7 +22,7 @@ class _SetupPasswordFormState extends State<SetupPasswordForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return SingleChildScrollView(
       padding: const EdgeInsets.all(AppDimensions.paddingLarge),
       child: Form(
         key: _formKey,
