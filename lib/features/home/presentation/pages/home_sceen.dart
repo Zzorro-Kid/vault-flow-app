@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:test_app/core/constants/app_dimensions.dart';
 import 'package:test_app/core/widgets/loading_indicator.dart';
 import 'package:test_app/features/home/presentation/cubit/home_cubit.dart';
 import 'package:test_app/features/home/presentation/widgets/dashboard_summary_widget.dart';
@@ -73,12 +74,12 @@ class HomeScreen extends StatelessWidget {
   Widget _buildDashboardSection(BuildContext context, summary) {
     return SliverToBoxAdapter(
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(AppDimensions.paddingMedium),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             DashboardSummary(summary: summary),
-            const SizedBox(height: 24),
+            const SizedBox(height: AppDimensions.spacingLarge),
             Text(
               'Recent Transactions',
               style: Theme.of(context).textTheme.titleLarge,

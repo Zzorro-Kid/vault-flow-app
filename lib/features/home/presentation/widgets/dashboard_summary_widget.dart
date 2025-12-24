@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_app/core/constants/app_dimensions.dart';
 import 'package:test_app/features/home/domain/entities/dashboard_summary_data.dart';
 
 class DashboardSummary extends StatelessWidget {
@@ -12,7 +13,7 @@ class DashboardSummary extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('Dashboard', style: Theme.of(context).textTheme.headlineMedium),
-        const SizedBox(height: 16),
+        const SizedBox(height: AppDimensions.paddingMedium),
         Text('Balance: \$${summary.totalBalance}'),
         Text('Income: \$${summary.totalIncome}'),
         Text('Expenses: \$${summary.totalExpenses}'),
