@@ -29,20 +29,24 @@ class DashboardSummary extends StatelessWidget {
   Widget _buildExpensesAndIncomeCards(BuildContext context) {
     return Row(
       children: [
-        _buildSummaryCard(
-          context: context,
-          icon: Icons.trending_down,
-          title: 'Expenses',
-          amount: summary.totalExpenses,
-          gradient: _buildExpensesGradient(),
+        Expanded(
+          child: _buildSummaryCard(
+            context: context,
+            icon: Icons.trending_down,
+            title: 'Expenses',
+            amount: summary.totalExpenses,
+            gradient: _buildExpensesGradient(),
+          ),
         ),
         const SizedBox(width: AppDimensions.paddingMedium),
-        _buildSummaryCard(
-          context: context,
-          icon: Icons.trending_up,
-          title: 'Incomes',
-          amount: summary.totalIncome,
-          gradient: _buildIncomeGradient(),
+        Expanded(
+          child: _buildSummaryCard(
+            context: context,
+            icon: Icons.trending_up,
+            title: 'Incomes',
+            amount: summary.totalIncome,
+            gradient: _buildIncomeGradient(),
+          ),
         ),
       ],
     );
