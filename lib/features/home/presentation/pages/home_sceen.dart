@@ -31,6 +31,7 @@ class HomeScreen extends StatelessWidget {
 
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     return AppBar(
+      surfaceTintColor: Colors.transparent,
       title: const Text('VaultFlow'),
       actions: [
         IconButton(
