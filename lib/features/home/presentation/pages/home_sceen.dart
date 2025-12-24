@@ -35,6 +35,7 @@ class HomeScreen extends StatelessWidget {
       title: const Text('VaultFlow'),
       actions: [
         IconButton(
+          padding: EdgeInsets.only(right: AppDimensions.appBarIconPaddingEnd),
           icon: const Icon(Icons.logout),
           onPressed: () => Navigator.pushReplacementNamed(context, '/auth'),
         ),

@@ -23,25 +23,27 @@ class _SetupPasswordFormState extends State<SetupPasswordForm> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(AppDimensions.paddingLarge),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _buildIcon(),
-            const SizedBox(height: AppDimensions.spacingLarge),
-            _buildTitle(),
-            const SizedBox(height: AppDimensions.spacingSmall),
-            _buildSubtitle(),
-            const SizedBox(height: AppDimensions.spacingXLarge),
-            _buildPasswordField(),
-            const SizedBox(height: AppDimensions.spacingMedium),
-            _buildConfirmPasswordField(),
-            const SizedBox(height: AppDimensions.spacingXLarge),
-            _buildCreateButton(),
-          ],
+      child: Padding(
+        padding: const EdgeInsets.all(AppDimensions.paddingLarge),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _buildIcon(),
+              const SizedBox(height: AppDimensions.spacingLarge),
+              _buildTitle(),
+              const SizedBox(height: AppDimensions.spacingSmall),
+              _buildSubtitle(),
+              const SizedBox(height: AppDimensions.spacingXLarge),
+              _buildPasswordField(),
+              const SizedBox(height: AppDimensions.spacingMedium),
+              _buildConfirmPasswordField(),
+              const SizedBox(height: AppDimensions.spacingXLarge),
+              _buildCreateButton(),
+            ],
+          ),
         ),
       ),
     );
