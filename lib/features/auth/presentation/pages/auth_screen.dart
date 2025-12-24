@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:test_app/core/routes/app_routes.dart';
 import 'package:test_app/core/widgets/loading_indicator.dart';
 import 'package:test_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:test_app/features/auth/presentation/widgets/login_form.dart';
 import 'package:test_app/features/auth/presentation/widgets/first_setup_password_form.dart';
 import 'package:test_app/injection_container.dart';
+import 'package:test_app/core/utils/ui_helpers.dart';
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({super.key});
@@ -18,9 +18,9 @@ class AuthScreen extends StatelessWidget {
         listener: (context, state) {
           switch (state) {
             case AuthCubitLoginSuccess() || AuthCubitPasswordSetSuccess():
-              Navigator.pushReplacementNamed(context, AppRouter.home);
+              Navigator.pushReplacementNamed(context, '/home');
             case AuthCubitError():
-              _showError(context, state.message);
+              UiHelpers.showErrorSnackBar(context, state.message);
             default:
               break;
           }
@@ -44,15 +44,6 @@ class AuthScreen extends StatelessWidget {
             _ => const LoginForm(),
           };
         },
-      ),
-    );
-  }
-
-  void _showError(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: Theme.of(context).colorScheme.error,
       ),
     );
   }

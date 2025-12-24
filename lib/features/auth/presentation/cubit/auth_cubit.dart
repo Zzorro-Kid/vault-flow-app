@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:test_app/core/domain/usecases/usecase.dart';
+import 'package:test_app/core/usecases/usecase.dart';
 import 'package:test_app/features/auth/domain/entities/auth_state_data.dart';
 import 'package:test_app/features/auth/domain/usecases/clear_auth_data_usecase.dart';
 import 'package:test_app/features/auth/domain/usecases/complete_first_launch_usecase.dart';

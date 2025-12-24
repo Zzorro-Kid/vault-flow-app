@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test_app/core/blocs/theme_change_cubit/theme_cubit.dart';
 import 'package:test_app/core/secure_prefs.dart';
 import 'package:test_app/core/shared_prefs.dart';
+import 'package:test_app/core/usecases/get_recent_transactions_usecase.dart';
 import 'package:test_app/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:test_app/features/auth/data/sources/auth_local_data_source.dart';
 import 'package:test_app/features/auth/domain/repositories/auth_repository.dart';
@@ -13,12 +14,18 @@ import 'package:test_app/features/auth/domain/usecases/get_auth_state_usecase.da
 import 'package:test_app/features/auth/domain/usecases/set_password_usecase.dart';
 import 'package:test_app/features/auth/domain/usecases/verify_password_usecase.dart';
 import 'package:test_app/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:test_app/features/home/data/repositories/home_repository_impl.dart';
+import 'package:test_app/features/home/data/sources/home_local_data_source.dart';
+import 'package:test_app/features/home/domain/repositories/home_repository.dart';
+import 'package:test_app/features/home/domain/usecases/get_dashboard_summary_usecase.dart';
+import 'package:test_app/features/home/presentation/cubit/home_cubit.dart';
 
 final sl = GetIt.instance;
 
 Future<void> init() async {
   await _initCore();
   _initAuth();
+  _initHome();
 }
 
 Future<void> _initCore() async {
@@ -57,5 +64,25 @@ void _initAuth() {
 
   sl.registerLazySingleton<AuthLocalDataSource>(
     () => AuthLocalDataSourceImpl(sharedPrefs: sl(), securePrefs: sl()),
+  );
+}
+
+void _initHome() {
+  sl.registerFactory(
+    () => HomeCubit(
+      getDashboardSummaryUseCase: sl(),
+      getRecentTransactionsUseCase: sl(),
+    ),
+  );
+
+  sl.registerLazySingleton(() => GetDashboardSummaryUseCase(sl()));
+  sl.registerLazySingleton(() => GetRecentTransactionsUseCase(sl()));
+
+  sl.registerLazySingleton<HomeRepository>(
+    () => HomeRepositoryImpl(localDataSource: sl()),
+  );
+
+  sl.registerLazySingleton<HomeLocalDataSource>(
+    () => HomeLocalDataSourceImpl(),
   );
 }

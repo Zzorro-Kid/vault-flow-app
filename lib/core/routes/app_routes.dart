@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/features/auth/presentation/pages/auth_screen.dart';
-// import 'package:test_app/features/home/presentation/pages/home_screen.dart';
+import 'package:test_app/features/home/presentation/pages/home_sceen.dart';
 // import 'package:test_app/features/transaction/presentation/pages/add_transaction_screen.dart';
 // import 'package:test_app/features/transaction/presentation/pages/transaction_list_screen.dart';
 // import 'package:test_app/features/category/presentation/pages/category_list_screen.dart';
@@ -25,8 +25,8 @@ class AppRouter {
       case auth:
         return MaterialPageRoute(builder: (_) => const AuthScreen());
 
-      // case home:
-      //   return MaterialPageRoute(builder: (_) => const HomeScreen());
+      case home:
+        return MaterialPageRoute(builder: (_) => const HomeScreen());
 
       // case addTransaction:
       //   return MaterialPageRoute(builder: (_) => const AddTransactionScreen());

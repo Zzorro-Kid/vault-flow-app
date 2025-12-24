@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:test_app/core/domain/usecases/usecase.dart';
+import 'package:test_app/core/usecases/usecase.dart';
 import 'package:test_app/core/errors/failures.dart';
 import 'package:test_app/features/auth/domain/entities/auth_state_data.dart';
 import 'package:test_app/features/auth/domain/repositories/auth_repository.dart';
