@@ -10,13 +10,10 @@ abstract class HomeLocalDataSource {
 
 class HomeLocalDataSourceImpl extends BaseLocalDataSource
     implements HomeLocalDataSource {
-  final SecurePrefs _securePrefs;
-
-  HomeLocalDataSourceImpl({required SecurePrefs securePrefs})
-      : _securePrefs = securePrefs;
-
   @override
-  SecurePrefs get securePrefs => _securePrefs;
+  final SecurePrefs securePrefs;
+
+  HomeLocalDataSourceImpl({required this.securePrefs});
 
   @override
   Future<DashboardSummaryDataModel> getDashboardSummary() async {
