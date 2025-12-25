@@ -14,6 +14,14 @@ import 'package:test_app/features/auth/domain/usecases/get_auth_state_usecase.da
 import 'package:test_app/features/auth/domain/usecases/set_password_usecase.dart';
 import 'package:test_app/features/auth/domain/usecases/verify_password_usecase.dart';
 import 'package:test_app/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:test_app/features/category/data/repositories/category_repository_impl.dart';
+import 'package:test_app/features/category/data/sources/category_local_data_source.dart';
+import 'package:test_app/features/category/domain/repositories/category_repository.dart';
+import 'package:test_app/features/category/domain/usecases/add_category_usecase.dart';
+import 'package:test_app/features/category/domain/usecases/delete_category_usecase.dart';
+import 'package:test_app/features/category/domain/usecases/get_all_categories_usecase.dart';
+import 'package:test_app/features/category/domain/usecases/update_category_usecase.dart';
+import 'package:test_app/features/category/presentation/cubit/category_cubit.dart';
 import 'package:test_app/features/home/data/repositories/home_repository_impl.dart';
 import 'package:test_app/features/home/data/sources/home_local_data_source.dart';
 import 'package:test_app/features/home/domain/repositories/home_repository.dart';
@@ -26,6 +34,7 @@ Future<void> init() async {
   await _initCore();
   _initAuth();
   _initHome();
+  _initCategory();
 }
 
 Future<void> _initCore() async {
@@ -84,5 +93,29 @@ void _initHome() {
 
   sl.registerLazySingleton<HomeLocalDataSource>(
     () => HomeLocalDataSourceImpl(securePrefs: sl()),
+  );
+}
+
+void _initCategory() {
+  sl.registerFactory(
+    () => CategoryCubit(
+      getAllCategoriesUseCase: sl(),
+      addCategoryUseCase: sl(),
+      updateCategoryUseCase: sl(),
+      deleteCategoryUseCase: sl(),
+    ),
+  );
+
+  sl.registerLazySingleton(() => GetAllCategoriesUseCase(sl()));
+  sl.registerLazySingleton(() => AddCategoryUseCase(sl()));
+  sl.registerLazySingleton(() => UpdateCategoryUseCase(sl()));
+  sl.registerLazySingleton(() => DeleteCategoryUseCase(sl()));
+
+  sl.registerLazySingleton<CategoryRepository>(
+    () => CategoryRepositoryImpl(localDataSource: sl()),
+  );
+
+  sl.registerLazySingleton<CategoryLocalDataSource>(
+    () => CategoryLocalDataSourceImpl(securePrefs: sl()),
   );
 }

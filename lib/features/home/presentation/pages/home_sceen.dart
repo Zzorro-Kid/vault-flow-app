@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_app/core/constants/app_dimensions.dart';
+import 'package:test_app/core/themes/app_colors.dart';
+import 'package:test_app/core/utils/ui_helpers.dart';
+import 'package:test_app/core/widgets/bottom_navigation_bar.dart';
+import 'package:test_app/core/widgets/custom_app_bar.dart';
 import 'package:test_app/core/widgets/loading_indicator.dart';
-import 'package:test_app/core/widgets/app_bottom_navigation_bar.dart';
+import 'package:test_app/core/widgets/transactions_list_widget.dart';
 import 'package:test_app/features/home/presentation/cubit/home_cubit.dart';
 import 'package:test_app/features/home/presentation/widgets/dashboard_summary_widget.dart';
-import 'package:test_app/core/widgets/transactions_list_widget.dart';
 import 'package:test_app/injection_container.dart';
-import 'package:test_app/core/utils/ui_helpers.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -26,7 +28,7 @@ class HomeScreen extends StatelessWidget {
           }
         },
         child: Scaffold(
-          appBar: _buildAppBar(context),
+          appBar: _buildAppBar(),
           body: _buildBody(),
           bottomNavigationBar: const AppBottomNavigationBar(currentIndex: 0),
         ),
@@ -34,40 +36,28 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  PreferredSizeWidget _buildAppBar(BuildContext context) {
-    return AppBar(
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      surfaceTintColor: Colors.transparent,
-      automaticallyImplyLeading: false,
-      flexibleSpace: _buildAppBarBackground(),
-      title: _buildAppBarTitle(),
-    );
-  }
-
-  Widget _buildAppBarBackground() {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [Color.fromARGB(255, 88, 90, 231), Color(0xFF8B5CF6)],
-        ),
+  PreferredSizeWidget _buildAppBar() {
+    return CustomAppBar(
+      height: AppDimensions.appBarHeightHome,
+      title: Transform.translate(
+        offset: const Offset(0, AppDimensions.appBarTitleOffsetY),
+        child: _buildAppBarContent(),
       ),
     );
   }
 
-  Widget _buildAppBarTitle() {
+  Widget _buildAppBarContent() {
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
-        _buildLogoIcon(),
+        _buildAppBarIcon(),
         const SizedBox(width: AppDimensions.radiusLarge),
-        _buildAppName(),
+        _buildAppBarTitle(),
       ],
     );
   }
 
-  Widget _buildLogoIcon() {
+  Widget _buildAppBarIcon() {
     return Container(
       padding: const EdgeInsets.all(AppDimensions.paddingSmall),
       decoration: BoxDecoration(
@@ -84,13 +74,13 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildAppName() {
+  Widget _buildAppBarTitle() {
     return const Text(
       'VaultFlow',
       style: TextStyle(
         fontSize: AppDimensions.fontSizeXXLarge,
         fontWeight: FontWeight.bold,
-        color: Colors.white,
+        color: AppColors.categoryTitleText,
         letterSpacing: 0.5,
       ),
     );
@@ -120,7 +110,7 @@ class HomeScreen extends StatelessWidget {
       child: CustomScrollView(
         slivers: [
           _buildDashboardSection(context, summary),
-          TransactionsList(transactions: recentTransactions),
+          _buildRecentTransactionsSection(recentTransactions),
         ],
       ),
     );
@@ -130,19 +120,15 @@ class HomeScreen extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.all(AppDimensions.paddingLarge),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            DashboardSummary(summary: summary),
-            const SizedBox(height: AppDimensions.paddingXLarge),
-            Text(
-              'Recent Transactions',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const SizedBox(height: AppDimensions.paddingMedium),
-          ],
-        ),
+        child: DashboardSummary(summary: summary),
       ),
+    );
+  }
+
+  Widget _buildRecentTransactionsSection(recentTransactions) {
+    return SliverPadding(
+      padding: const EdgeInsets.only(top: AppDimensions.paddingLarge),
+      sliver: TransactionsList(transactions: recentTransactions),
     );
   }
 }

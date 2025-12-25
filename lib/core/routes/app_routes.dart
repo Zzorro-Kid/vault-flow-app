@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/features/auth/presentation/pages/auth_screen.dart';
+import 'package:test_app/features/category/presentation/pages/category_screen.dart';
 import 'package:test_app/features/home/presentation/pages/home_sceen.dart';
 // import 'package:test_app/features/transaction/presentation/pages/add_transaction_screen.dart';
 // import 'package:test_app/features/transaction/presentation/pages/transaction_list_screen.dart';
-// import 'package:test_app/features/category/presentation/pages/category_list_screen.dart';
-// import 'package:test_app/features/category/presentation/pages/add_category_screen.dart';
 // import 'package:test_app/features/reports/presentation/pages/reports_screen.dart';
 // import 'package:test_app/features/settings/presentation/pages/settings_screen.dart';
 
@@ -27,6 +26,9 @@ class AppRouter {
 
       case home:
         return _createFadeRoute(const HomeScreen());
+
+      case categoryList:
+        return _createFadeRoute(const CategoryScreen());
 
       // case addTransaction:
       //   return MaterialPageRoute(builder: (_) => const AddTransactionScreen());
@@ -71,8 +73,8 @@ class AppRouter {
   PageRouteBuilder<dynamic> _createFadeRoute(Widget page) {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => page,
-      transitionDuration: const Duration(milliseconds: 100),
-      reverseTransitionDuration: const Duration(milliseconds: 100),
+      transitionDuration: const Duration(milliseconds: 90),
+      reverseTransitionDuration: const Duration(milliseconds: 90),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         return FadeTransition(opacity: animation, child: child);
       },

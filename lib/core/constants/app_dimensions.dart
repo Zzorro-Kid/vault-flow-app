@@ -43,8 +43,11 @@ class AppDimensions {
 
   // App Bar
   static const double appBarHeight = 56.0;
+  static const double appBarHeightHome = 53.0;
+  static const double appBarHeightOther = 40.0;
   static const double appBarIconPaddingEnd = 14.0;
   static const double appBarIconContainerRadius = 12.0;
+  static const double appBarTitleOffsetY = 0.5;
 
   // Bottom Navigation
   static const double bottomNavHeight = 60.0;

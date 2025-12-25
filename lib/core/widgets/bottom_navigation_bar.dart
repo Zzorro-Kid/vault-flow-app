@@ -5,6 +5,7 @@ import 'package:test_app/core/themes/app_colors.dart';
 class AppBottomNavigationBar extends StatelessWidget {
   final int currentIndex;
   const AppBottomNavigationBar({super.key, required this.currentIndex});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -103,37 +104,63 @@ class AppBottomNavigationBar extends StatelessWidget {
             horizontal: AppDimensions.bottomNavItemPaddingHorizontal,
             vertical: AppDimensions.bottomNavItemPaddingVertical,
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                isSelected ? selectedIcon : icon,
-                color: isSelected ? AppColors.primary : Colors.white60,
-                size: AppDimensions.bottomNavIconSize,
-              ),
-              const SizedBox(height: AppDimensions.bottomNavIconTextSpacing),
-              Text(
-                label,
-                style: TextStyle(
-                  fontSize: AppDimensions.bottomNavFontSize,
-                  color: isSelected ? AppColors.primary : Colors.white60,
-                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-                  height: 1.0,
-                ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
-              ),
-            ],
+          child: _buildNavItemContent(
+            icon: icon,
+            selectedIcon: selectedIcon,
+            label: label,
+            isSelected: isSelected,
           ),
         ),
       ),
     );
   }
 
+  Widget _buildNavItemContent({
+    required IconData icon,
+    required IconData selectedIcon,
+    required String label,
+    required bool isSelected,
+  }) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        _buildNavItemIcon(icon, selectedIcon, isSelected),
+        const SizedBox(height: AppDimensions.bottomNavIconTextSpacing),
+        _buildNavItemLabel(label, isSelected),
+      ],
+    );
+  }
+
+  Widget _buildNavItemIcon(
+    IconData icon,
+    IconData selectedIcon,
+    bool isSelected,
+  ) {
+    return Icon(
+      isSelected ? selectedIcon : icon,
+      color: isSelected ? AppColors.primary : Colors.white60,
+      size: AppDimensions.bottomNavIconSize,
+    );
+  }
+
+  Widget _buildNavItemLabel(String label, bool isSelected) {
+    return Text(
+      label,
+      style: TextStyle(
+        fontSize: AppDimensions.bottomNavFontSize,
+        color: isSelected ? AppColors.primary : Colors.white60,
+        fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+        height: 1.0,
+      ),
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      textAlign: TextAlign.center,
+    );
+  }
+
   void _handleNavItemTap(BuildContext context, bool isSelected, String route) {
     if (!isSelected) {
-      // ........
+      Navigator.pushReplacementNamed(context, route);
     }
   }
 }

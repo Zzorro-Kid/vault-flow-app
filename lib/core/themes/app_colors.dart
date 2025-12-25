@@ -47,4 +47,24 @@ class AppColors {
   static const Color incomeEnd = Color(0xFF44A08D);
   static const Color expensesStart = Color(0xFFB06AB3);
   static const Color expensesEnd = Color(0xFF8E44AD);
+
+  // AppBar Gradient Colors
+  static const Color appBarGradientEdge = Color.fromARGB(195, 24, 32, 92);
+  static const Color appBarGradientCenter = Color.fromARGB(162, 88, 90, 231);
+
+  // Section Header Colors
+  static const Color sectionHeaderText = Colors.white70;
+
+  // Category Item Colors
+  static const Color categoryBorder = Color(0x1AFFFFFF);
+  static const Color categoryTitleText = Colors.white;
+
+  // Empty State Colors
+  static const Color emptyStateIcon = Colors.white38;
+  static const Color emptyStateText = Colors.white54;
+
+  // Transaction Item Colors
+  static const Color transactionBorder = Color(0x1AFFFFFF);
+  static const Color transactionDescriptionText = Colors.white;
+  static const Color transactionSubtitleText = Color(0x99FFFFFF);
 }

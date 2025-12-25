@@ -11,47 +11,84 @@ class TransactionsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (transactions.isEmpty) {
-      return _buildEmptyState(context);
-    }
-
     return _buildTransactionsList(context);
   }
 
-  Widget _buildEmptyState(BuildContext context) {
-    return SliverFillRemaining(
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.receipt_long_outlined,
-              size: AppDimensions.iconXXLarge,
-              color: Colors.white.withValues(alpha: 0.3),
-            ),
-            const SizedBox(height: AppDimensions.paddingMedium),
-            Text(
-              'No transactions yet',
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: Colors.white.withValues(alpha: 0.5),
-              ),
-            ),
-          ],
-        ),
+  Widget _buildTransactionsList(BuildContext context) {
+    if (transactions.isEmpty) {
+      return _buildEmptyTransactionsList(context);
+    }
+    return _buildPopulatedTransactionsList(context);
+  }
+
+  Widget _buildEmptyTransactionsList(BuildContext context) {
+    return SliverPadding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppDimensions.paddingLarge,
+      ),
+      sliver: SliverList(
+        delegate: SliverChildListDelegate([
+          _buildHeader(context),
+          _buildEmptyStateContent(context),
+        ]),
       ),
     );
   }
 
-  Widget _buildTransactionsList(BuildContext context) {
+  Widget _buildPopulatedTransactionsList(BuildContext context) {
     return SliverPadding(
       padding: const EdgeInsets.symmetric(
-        horizontal: AppDimensions.paddingMedium,
+        horizontal: AppDimensions.paddingLarge,
       ),
       sliver: SliverList(
         delegate: SliverChildBuilderDelegate((context, index) {
-          final tx = transactions[index];
+          if (index == 0) {
+            return _buildHeader(context);
+          }
+          final tx = transactions[index - 1];
           return _buildTransactionItem(context, tx);
-        }, childCount: transactions.length),
+        }, childCount: transactions.length + 1),
+      ),
+    );
+  }
+
+  Widget _buildHeader(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: AppDimensions.paddingMedium),
+      child: _buildRecentTransactionsTitle(context),
+    );
+  }
+
+  Widget _buildRecentTransactionsTitle(BuildContext context) {
+    return Text(
+      'Recent Transactions',
+      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+        fontWeight: FontWeight.bold,
+        color: AppColors.categoryTitleText,
+      ),
+    );
+  }
+
+  Widget _buildEmptyStateContent(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: AppDimensions.paddingXLarge,
+      ),
+      child: Column(
+        children: [
+          Icon(
+            Icons.receipt_long_outlined,
+            size: AppDimensions.iconXXLarge,
+            color: AppColors.emptyStateIcon,
+          ),
+          const SizedBox(height: AppDimensions.paddingMedium),
+          Text(
+            'No transactions yet',
+            style: Theme.of(
+              context,
+            ).textTheme.bodyLarge?.copyWith(color: AppColors.emptyStateText),
+          ),
+        ],
       ),
     );
   }
@@ -77,7 +114,7 @@ class TransactionsList extends StatelessWidget {
       color: AppColors.surfaceDark,
       borderRadius: BorderRadius.circular(AppDimensions.radiusXLarge),
       border: Border.all(
-        color: Colors.white.withValues(alpha: 0.1),
+        color: AppColors.transactionBorder,
         width: AppDimensions.borderWidthThin,
       ),
     );
@@ -107,37 +144,6 @@ class TransactionsList extends StatelessWidget {
     );
   }
 
-  Widget _buildDescriptionText(BuildContext context, String description) {
-    return Text(
-      description,
-      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-        fontWeight: FontWeight.w600,
-        color: Colors.white,
-      ),
-    );
-  }
-
-  Widget _buildCategoryAndDateText(BuildContext context, TransactionData tx) {
-    final dateFormat = DateFormat('MMM dd');
-
-    return Text(
-      '${tx.category.name} • ${dateFormat.format(tx.date)}',
-      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-        color: Colors.white.withValues(alpha: 0.6),
-      ),
-    );
-  }
-
-  Widget _buildAmountText(BuildContext context, double amount, bool isIncome) {
-    return Text(
-      '${isIncome ? '+' : '-'}\$${amount.toStringAsFixed(2)}',
-      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-        color: isIncome ? AppColors.incomeStart : AppColors.expensesStart,
-        fontWeight: FontWeight.bold,
-      ),
-    );
-  }
-
   IconData _getCategoryIcon(String iconName) {
     switch (iconName) {
       case 'music':
@@ -157,5 +163,36 @@ class TransactionsList extends StatelessWidget {
       default:
         return Icons.category;
     }
+  }
+
+  Widget _buildDescriptionText(BuildContext context, String description) {
+    return Text(
+      description,
+      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+        fontWeight: FontWeight.w600,
+        color: AppColors.transactionDescriptionText,
+      ),
+    );
+  }
+
+  Widget _buildCategoryAndDateText(BuildContext context, TransactionData tx) {
+    final dateFormat = DateFormat('MMM dd');
+
+    return Text(
+      '${tx.category.name} • ${dateFormat.format(tx.date)}',
+      style: Theme.of(
+        context,
+      ).textTheme.bodySmall?.copyWith(color: AppColors.transactionSubtitleText),
+    );
+  }
+
+  Widget _buildAmountText(BuildContext context, double amount, bool isIncome) {
+    return Text(
+      '${isIncome ? '+' : '-'}\$${amount.toStringAsFixed(2)}',
+      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+        color: isIncome ? AppColors.incomeStart : AppColors.expensesStart,
+        fontWeight: FontWeight.bold,
+      ),
+    );
   }
 }

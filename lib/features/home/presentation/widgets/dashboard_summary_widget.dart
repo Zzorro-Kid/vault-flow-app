@@ -23,7 +23,13 @@ class DashboardSummary extends StatelessWidget {
   }
 
   Widget _buildDashboardTitle(BuildContext context) {
-    return Text('Dashboard', style: Theme.of(context).textTheme.titleLarge);
+    return Text(
+      'Dashboard',
+      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+        fontWeight: FontWeight.bold,
+        color: AppColors.categoryTitleText,
+      ),
+    );
   }
 
   Widget _buildExpensesAndIncomeCards(BuildContext context) {
