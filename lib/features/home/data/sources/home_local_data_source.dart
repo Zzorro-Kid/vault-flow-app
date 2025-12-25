@@ -1,5 +1,6 @@
 import 'package:test_app/core/data/models/transaction_data_model.dart';
 import 'package:test_app/core/data/sources/base_local_data_source.dart';
+import 'package:test_app/core/secure_prefs.dart';
 import 'package:test_app/features/home/data/models/dashboard_summary_data_model.dart';
 
 abstract class HomeLocalDataSource {
@@ -9,13 +10,25 @@ abstract class HomeLocalDataSource {
 
 class HomeLocalDataSourceImpl extends BaseLocalDataSource
     implements HomeLocalDataSource {
-  HomeLocalDataSourceImpl();
+  final SecurePrefs _securePrefs;
+
+  HomeLocalDataSourceImpl({required SecurePrefs securePrefs})
+      : _securePrefs = securePrefs;
+
+  @override
+  SecurePrefs get securePrefs => _securePrefs;
 
   @override
   Future<DashboardSummaryDataModel> getDashboardSummary() async {
     return executeStorageRead(() async {
-      // todo: Implement reading from encrypted local storage
-      return DashboardSummaryDataModel.initial();
+      final transactions = await getAllTransactions();
+      final summary = calculateFinancialSummary(transactions);
+
+      return DashboardSummaryDataModel(
+        totalBalance: summary.totalBalance,
+        totalIncome: summary.totalIncome,
+        totalExpenses: summary.totalExpenses,
+      );
     }, errorMessage: 'Failed to get dashboard summary');
   }
 
@@ -24,8 +37,11 @@ class HomeLocalDataSourceImpl extends BaseLocalDataSource
     int limit = 10,
   }) async {
     return executeStorageRead(() async {
-      // todo: Implement reading from encrypted local storage
-      return <TransactionDataModel>[];
+      final transactions = await getAllTransactions();
+
+      transactions.sort((a, b) => b.date.compareTo(a.date));
+
+      return transactions.take(limit).toList();
     }, errorMessage: 'Failed to get recent transactions');
   }
 }

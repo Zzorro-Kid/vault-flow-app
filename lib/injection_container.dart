@@ -83,6 +83,6 @@ void _initHome() {
   );
 
   sl.registerLazySingleton<HomeLocalDataSource>(
-    () => HomeLocalDataSourceImpl(),
+    () => HomeLocalDataSourceImpl(securePrefs: sl()),
   );
 }

@@ -11,6 +11,7 @@ class AppConstants {
   static const String keyThemeMode = 'theme_mode';
   static const String keyEncryptionKey = 'encryption_key';
   static const String keyPasswordHash = 'password_hash';
+  static const String keyTransactions = 'transactions_data';
 
   // Encryption
   static const String aesEncryptionKey = 'aes_encryption_key';
