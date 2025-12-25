@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:test_app/core/domain/entities/category_data.dart';
+import 'package:test_app/features/category/domain/entities/category_data.dart';
 
 class TransactionData extends Equatable {
   final String id;

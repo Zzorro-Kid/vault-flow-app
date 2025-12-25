@@ -1,4 +1,4 @@
-import 'package:test_app/core/domain/entities/category_data.dart';
+import 'package:test_app/features/category/domain/entities/category_data.dart';
 
 class CategoryDataModel extends CategoryData {
   const CategoryDataModel({
@@ -36,6 +36,16 @@ class CategoryDataModel extends CategoryData {
       icon: icon ?? this.icon,
       color: color ?? this.color,
       type: type ?? this.type,
+    );
+  }
+
+  factory CategoryDataModel.fromEntity(CategoryData entity) {
+    return CategoryDataModel(
+      id: entity.id,
+      name: entity.name,
+      icon: entity.icon,
+      color: entity.color,
+      type: entity.type,
     );
   }
 }

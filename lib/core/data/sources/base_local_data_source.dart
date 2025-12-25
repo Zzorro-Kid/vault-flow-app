@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:test_app/core/data/models/financial_summary_data_model.dart';
 import 'package:test_app/core/data/models/transaction_data_model.dart';
+import 'package:test_app/features/category/data/models/category_data_model.dart';
 import 'package:test_app/core/errors/exceptions.dart';
 import 'package:test_app/core/secure_prefs.dart';
 
@@ -85,6 +86,34 @@ abstract class BaseLocalDataSource {
           (json) => TransactionDataModel.fromJson(json as Map<String, dynamic>),
         )
         .toList();
+  }
+
+  Future<List<CategoryDataModel>> getAllCategories() async {
+    if (securePrefs == null) {
+      throw Exception('SecurePrefs is not initialized');
+    }
+
+    final categoriesJson = await securePrefs!.categories;
+
+    if (categoriesJson == null || categoriesJson.isEmpty) {
+      return [];
+    }
+
+    final List<dynamic> jsonList = json.decode(categoriesJson) as List<dynamic>;
+
+    return jsonList
+        .map((json) => CategoryDataModel.fromJson(json as Map<String, dynamic>))
+        .toList();
+  }
+
+  Future<void> saveCategories(List<CategoryDataModel> categories) async {
+    if (securePrefs == null) {
+      throw Exception('SecurePrefs is not initialized');
+    }
+
+    final jsonList = categories.map((c) => c.toJson()).toList();
+    final categoriesJson = json.encode(jsonList);
+    await securePrefs!.setCategories(categoriesJson);
   }
 
   FinancialSummaryModel calculateFinancialSummary(

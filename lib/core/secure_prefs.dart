@@ -45,6 +45,21 @@ class SecurePrefs {
     await _secureStorage.delete(key: AppConstants.keyTransactions);
   }
 
+  Future<void> setCategories(String categoriesJson) async {
+    await _secureStorage.write(
+      key: AppConstants.keyCategories,
+      value: categoriesJson,
+    );
+  }
+
+  Future<String?> get categories async {
+    return await _secureStorage.read(key: AppConstants.keyCategories);
+  }
+
+  Future<void> deleteCategories() async {
+    await _secureStorage.delete(key: AppConstants.keyCategories);
+  }
+
   Future<void> clearAll() async {
     await _secureStorage.deleteAll();
   }

@@ -1,4 +1,4 @@
-import 'package:test_app/core/data/models/category_data_model.dart';
+import 'package:test_app/features/category/data/models/category_data_model.dart';
 import 'package:test_app/core/domain/entities/transaction_data.dart';
 
 class TransactionDataModel extends TransactionData {
