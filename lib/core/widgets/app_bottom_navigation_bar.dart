@@ -4,16 +4,15 @@ import 'package:test_app/core/themes/app_colors.dart';
 
 class AppBottomNavigationBar extends StatelessWidget {
   final int currentIndex;
-
   const AppBottomNavigationBar({super.key, required this.currentIndex});
-
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: _buildContainerDecoration(),
       child: SafeArea(
+        top: false,
         child: Padding(
-          padding: _buildContentPadding(),
+          padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 6.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: _buildNavigationItems(context),
@@ -33,13 +32,6 @@ class AppBottomNavigationBar extends StatelessWidget {
           offset: const Offset(0, -2),
         ),
       ],
-    );
-  }
-
-  EdgeInsets _buildContentPadding() {
-    return const EdgeInsets.symmetric(
-      horizontal: AppDimensions.paddingMedium,
-      vertical: AppDimensions.paddingSmall,
     );
   }
 
@@ -97,20 +89,35 @@ class AppBottomNavigationBar extends StatelessWidget {
     required String route,
   }) {
     final isSelected = currentIndex == index;
-
-    return InkWell(
-      onTap: () => _handleNavItemTap(context, isSelected, route),
-      borderRadius: BorderRadius.circular(AppDimensions.radiusLarge),
-      child: Container(
-        padding: _buildNavItemPadding(),
-        decoration: _buildNavItemDecoration(isSelected),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _buildNavIcon(isSelected, icon, selectedIcon),
-            const SizedBox(height: 4),
-            _buildNavLabel(isSelected, label),
-          ],
+    return Expanded(
+      child: InkWell(
+        onTap: () => _handleNavItemTap(context, isSelected, route),
+        borderRadius: BorderRadius.circular(8.0),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 4.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                isSelected ? selectedIcon : icon,
+                color: isSelected ? AppColors.primary : Colors.white60,
+                size: 22.0,
+              ),
+              const SizedBox(height: 3),
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: 10.0,
+                  color: isSelected ? AppColors.primary : Colors.white60,
+                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                  height: 1.0,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -120,40 +127,5 @@ class AppBottomNavigationBar extends StatelessWidget {
     if (!isSelected) {
       // ........
     }
-  }
-
-  EdgeInsets _buildNavItemPadding() {
-    return const EdgeInsets.symmetric(
-      horizontal: AppDimensions.paddingMedium,
-      vertical: AppDimensions.paddingSmall,
-    );
-  }
-
-  BoxDecoration _buildNavItemDecoration(bool isSelected) {
-    return BoxDecoration(
-      color: isSelected
-          ? AppColors.primary.withValues(alpha: 0.1)
-          : Colors.transparent,
-      borderRadius: BorderRadius.circular(AppDimensions.radiusLarge),
-    );
-  }
-
-  Widget _buildNavIcon(bool isSelected, IconData icon, IconData selectedIcon) {
-    return Icon(
-      isSelected ? selectedIcon : icon,
-      color: isSelected ? AppColors.primary : Colors.white60,
-      size: AppDimensions.iconMedium,
-    );
-  }
-
-  Widget _buildNavLabel(bool isSelected, String label) {
-    return Text(
-      label,
-      style: TextStyle(
-        fontSize: AppDimensions.fontSizeSmall,
-        color: isSelected ? AppColors.primary : Colors.white60,
-        fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-      ),
-    );
   }
 }
