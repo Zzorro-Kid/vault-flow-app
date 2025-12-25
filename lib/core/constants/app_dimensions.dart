@@ -48,6 +48,14 @@ class AppDimensions {
 
   // Bottom Navigation
   static const double bottomNavHeight = 60.0;
+  static const double bottomNavIconSize = 22.0;
+  static const double bottomNavFontSize = 10.0;
+  static const double bottomNavPaddingHorizontal = 4.0;
+  static const double bottomNavPaddingVertical = 6.0;
+  static const double bottomNavItemPaddingHorizontal = 2.0;
+  static const double bottomNavItemPaddingVertical = 4.0;
+  static const double bottomNavIconTextSpacing = 3.0;
+  static const double bottomNavBorderRadius = 8.0;
 
   // Font Sizes
   static const double fontSizeSmall = 12.0;

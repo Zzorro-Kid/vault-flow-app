@@ -12,7 +12,10 @@ class AppBottomNavigationBar extends StatelessWidget {
       child: SafeArea(
         top: false,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 6.0),
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppDimensions.bottomNavPaddingHorizontal,
+            vertical: AppDimensions.bottomNavPaddingVertical,
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: _buildNavigationItems(context),
@@ -92,22 +95,27 @@ class AppBottomNavigationBar extends StatelessWidget {
     return Expanded(
       child: InkWell(
         onTap: () => _handleNavItemTap(context, isSelected, route),
-        borderRadius: BorderRadius.circular(8.0),
+        borderRadius: BorderRadius.circular(
+          AppDimensions.bottomNavBorderRadius,
+        ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 4.0),
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppDimensions.bottomNavItemPaddingHorizontal,
+            vertical: AppDimensions.bottomNavItemPaddingVertical,
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
                 isSelected ? selectedIcon : icon,
                 color: isSelected ? AppColors.primary : Colors.white60,
-                size: 22.0,
+                size: AppDimensions.bottomNavIconSize,
               ),
-              const SizedBox(height: 3),
+              const SizedBox(height: AppDimensions.bottomNavIconTextSpacing),
               Text(
                 label,
                 style: TextStyle(
-                  fontSize: 10.0,
+                  fontSize: AppDimensions.bottomNavFontSize,
                   color: isSelected ? AppColors.primary : Colors.white60,
                   fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
                   height: 1.0,
