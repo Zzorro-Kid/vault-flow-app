@@ -62,6 +62,7 @@ class AuthCubit extends Cubit<AuthCubitState> {
     });
   }
 
+  // logout i'll move when i'll implement settings cubit
   Future<void> logout() async {
     emit(AuthCubitLoading());
 
