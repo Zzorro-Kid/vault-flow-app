@@ -85,6 +85,8 @@ class AuthLocalDataSourceImpl extends BaseLocalDataSource
     return executeStorageWrite(() async {
       await securePrefs.deletePasswordHash();
       await securePrefs.deleteEncryptionKey();
+      await securePrefs.deleteTransactions();
+      await securePrefs.deleteCategories();
       await sharedPrefs.setHasPassword(false);
       await sharedPrefs.setIsFirstLaunch(true);
     }, errorMessage: 'Failed to clear auth data');

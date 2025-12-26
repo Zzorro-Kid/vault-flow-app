@@ -51,7 +51,7 @@ class HomeScreen extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         _buildAppBarIcon(),
-        const SizedBox(width: AppDimensions.radiusLarge),
+        const SizedBox(width: AppDimensions.radiusMedium),
         _buildAppBarTitle(),
       ],
     );

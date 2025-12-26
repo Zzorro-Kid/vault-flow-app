@@ -34,14 +34,6 @@ class SharedPrefs {
         AppConstants.defaultCurrency;
   }
 
-  Future<bool> setThemeMode(String themeMode) async {
-    return _sharedPreferences.setString(AppConstants.keyThemeMode, themeMode);
-  }
-
-  String get themeMode {
-    return _sharedPreferences.getString(AppConstants.keyThemeMode) ?? 'system';
-  }
-
   Future<bool> clearAll() async {
     return _sharedPreferences.clear();
   }

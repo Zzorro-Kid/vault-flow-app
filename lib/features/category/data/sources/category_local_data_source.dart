@@ -1,4 +1,3 @@
-import 'package:test_app/core/constants/default_categories.dart';
 import 'package:test_app/core/data/sources/base_local_data_source.dart';
 import 'package:test_app/core/secure_prefs.dart';
 import 'package:test_app/features/category/data/models/category_data_model.dart';
@@ -17,22 +16,11 @@ class CategoryLocalDataSourceImpl extends BaseLocalDataSource
 
   CategoryLocalDataSourceImpl({required this.securePrefs});
 
-  @override
+  @override //todo: method getAllCategories have the same name as it has in base_local_data_source, fix it
   Future<List<CategoryDataModel>> getAllCategories() async {
     return executeStorageRead(() async {
-      final categories = await super.getAllCategories();
-
-      if (categories.isEmpty) {
-        final defaultCategories = _getDefaultCategories();
-        await saveCategories(defaultCategories);
-        return defaultCategories;
-      }
-      return categories;
+      return await super.getAllCategories();
     }, errorMessage: 'Failed to get categories');
-  }
-
-  List<CategoryDataModel> _getDefaultCategories() {
-    return DefaultCategories.all;
   }
 
   @override
