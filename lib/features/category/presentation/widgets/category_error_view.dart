@@ -32,7 +32,7 @@ class CategoryErrorView extends StatelessWidget {
     return const Icon(
       Icons.error_outline,
       size: AppDimensions.iconXXLarge,
-      color: AppColors.expensesStart,
+      color: AppColors.error,
     );
   }
 

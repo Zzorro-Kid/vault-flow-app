@@ -67,4 +67,11 @@ class AppColors {
   static const Color transactionBorder = Color(0x1AFFFFFF);
   static const Color transactionDescriptionText = Colors.white;
   static const Color transactionSubtitleText = Color(0x99FFFFFF);
+
+  // Dialog Input Colors
+  static const Color dialogInputText = Colors.white;
+  static const Color dialogInputBorder = Colors.white;
+
+  // Button Colors
+  static const Color buttonTransparent = Colors.transparent;
 }

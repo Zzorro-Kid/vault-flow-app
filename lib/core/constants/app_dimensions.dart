@@ -75,4 +75,8 @@ class AppDimensions {
 
   // Border Width
   static const double borderWidthThin = 1.0;
+  static const double borderWidthMedium = 3.0;
+
+  // Color Picker
+  static const double colorPickerSize = 40.0;
 }

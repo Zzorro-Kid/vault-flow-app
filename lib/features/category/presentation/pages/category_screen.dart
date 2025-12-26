@@ -9,8 +9,10 @@ import 'package:test_app/core/widgets/loading_indicator.dart';
 import 'package:test_app/features/category/domain/entities/category_data.dart';
 import 'package:test_app/features/category/presentation/cubit/category_cubit.dart';
 import 'package:test_app/features/category/presentation/cubit/category_state.dart';
+import 'package:test_app/features/category/presentation/widgets/add_category_dialog.dart';
 import 'package:test_app/features/category/presentation/widgets/category_error_view.dart';
 import 'package:test_app/features/category/presentation/widgets/category_item.dart';
+import 'package:test_app/features/category/presentation/widgets/edit_category_dialog.dart';
 import 'package:test_app/features/category/presentation/widgets/empty_categories_view.dart';
 import 'package:test_app/injection_container.dart';
 
@@ -27,19 +29,14 @@ class CategoryScreen extends StatelessWidget {
             case CategoryError():
               UiHelpers.showErrorSnackBar(context, state.message);
             case CategoryOperationSuccess():
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(state.message),
-                  backgroundColor: AppColors.incomeStart,
-                ),
-              );
+              _showOperationSnackBar(context, state.message);
             default:
               break;
           }
         },
         child: Scaffold(
           appBar: _buildAppBar(),
-          body: _buildBody(),
+          body: Stack(children: [_buildBody(), _buildFloatingActionButton()]),
           bottomNavigationBar: const AppBottomNavigationBar(currentIndex: 2),
         ),
       ),
@@ -144,9 +141,16 @@ class CategoryScreen extends StatelessWidget {
       ),
       sliver: SliverList(
         delegate: SliverChildBuilderDelegate(
-          (context, index) => CategoryItem(
-            category: categories[index],
-            onDelete: () => _showDeleteConfirmation(context, categories[index]),
+          (context, index) => Dismissible(
+            key: Key(categories[index].id),
+            direction: DismissDirection.endToStart,
+            background: _buildDismissBackground(),
+            confirmDismiss: (direction) =>
+                _confirmDelete(context, categories[index]),
+            child: CategoryItem(
+              category: categories[index],
+              onTap: () => _showEditCategoryDialog(context, categories[index]),
+            ),
           ),
           childCount: categories.length,
         ),
@@ -154,29 +158,149 @@ class CategoryScreen extends StatelessWidget {
     );
   }
 
-  void _showDeleteConfirmation(BuildContext context, CategoryData category) {
-    showDialog(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: const Text('Delete Category'),
-        content: Text('Are you sure you want to delete "${category.name}"?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-              context.read<CategoryCubit>().deleteCategory(category.id);
-              Navigator.pop(dialogContext);
-            },
-            child: const Text(
-              'Delete',
-              style: TextStyle(color: AppColors.expensesStart),
-            ),
-          ),
-        ],
+  Widget _buildFloatingActionButton() {
+    return Positioned(
+      right: AppDimensions.paddingMedium,
+      bottom: AppDimensions.paddingMedium,
+      child: Builder(
+        builder: (builderContext) => FloatingActionButton(
+          onPressed: () => _showAddCategoryDialog(builderContext),
+          backgroundColor: AppColors.primary,
+          child: const Icon(Icons.add, color: Colors.white),
+        ),
       ),
     );
+  }
+
+  void _showAddCategoryDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AddCategoryDialog(
+        onAdd: (category) {
+          context.read<CategoryCubit>().addCategory(category);
+          Navigator.pop(dialogContext);
+        },
+      ),
+    );
+  }
+
+  void _showEditCategoryDialog(BuildContext context, CategoryData category) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) => EditCategoryDialog(
+        category: category,
+        onSave: (updatedCategory) {
+          context.read<CategoryCubit>().updateCategory(updatedCategory);
+          Navigator.pop(dialogContext);
+        },
+      ),
+    );
+  }
+
+  Widget _buildDismissBackground() {
+    return Container(
+      margin: const EdgeInsets.only(bottom: AppDimensions.paddingMedium),
+      alignment: Alignment.centerRight,
+      padding: const EdgeInsets.only(right: AppDimensions.paddingLarge),
+      decoration: BoxDecoration(
+        color: AppColors.error,
+        borderRadius: BorderRadius.circular(AppDimensions.radiusLarge),
+      ),
+      child: const Icon(
+        Icons.delete_outline,
+        color: Colors.white,
+        size: AppDimensions.iconLarge,
+      ),
+    );
+  }
+
+  Future<bool?> _confirmDelete(BuildContext context, CategoryData category) {
+    return showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        backgroundColor: AppColors.surfaceDark,
+        title: _buildDeleteDialogTitle(),
+        content: _buildDeleteDialogContent(category.name),
+        actions: _buildDeleteDialogActions(dialogContext, context, category.id),
+      ),
+    );
+  }
+
+  Widget _buildDeleteDialogTitle() {
+    return const Text(
+      'Delete Category',
+      style: TextStyle(color: AppColors.categoryTitleText),
+    );
+  }
+
+  Widget _buildDeleteDialogContent(String categoryName) {
+    return Text(
+      'Are you sure you want to delete "$categoryName"?',
+      style: const TextStyle(color: AppColors.sectionHeaderText),
+    );
+  }
+
+  List<Widget> _buildDeleteDialogActions(
+    BuildContext dialogContext,
+    BuildContext parentContext,
+    String categoryId,
+  ) {
+    return [
+      _buildCancelButton(dialogContext),
+      _buildDeleteButton(dialogContext, parentContext, categoryId),
+    ];
+  }
+
+  Widget _buildCancelButton(BuildContext dialogContext) {
+    return TextButton(
+      onPressed: () => Navigator.pop(dialogContext, false),
+      child: const Text('Cancel'),
+    );
+  }
+
+  Widget _buildDeleteButton(
+    BuildContext dialogContext,
+    BuildContext parentContext,
+    String categoryId,
+  ) {
+    return TextButton(
+      onPressed: () {
+        parentContext.read<CategoryCubit>().deleteCategory(categoryId);
+        Navigator.pop(dialogContext, true);
+      },
+      child: const Text(
+        'Delete',
+        style: TextStyle(color: AppColors.expensesStart),
+      ),
+    );
+  }
+
+  void _showOperationSnackBar(BuildContext context, String message) {
+    final backgroundColor = _getSnackBarColor(message);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message), backgroundColor: backgroundColor),
+    );
+  }
+
+  Color _getSnackBarColor(String message) {
+    final operationType = _getOperationType(message);
+
+    switch (operationType) {
+      case 'deleted':
+        return AppColors.error;
+      case 'updated':
+        return AppColors.primary;
+      case 'added':
+      default:
+        return AppColors.incomeStart;
+    }
+  }
+
+  String _getOperationType(String message) {
+    final lowerMessage = message.toLowerCase();
+    if (lowerMessage.contains('deleted')) return 'deleted';
+    if (lowerMessage.contains('updated')) return 'updated';
+    return 'added';
   }
 }

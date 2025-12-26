@@ -1,7 +1,6 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:test_app/core/blocs/theme_change_cubit/theme_cubit.dart';
 import 'package:test_app/core/secure_prefs.dart';
 import 'package:test_app/core/shared_prefs.dart';
 import 'package:test_app/core/usecases/get_recent_transactions_usecase.dart';
@@ -46,8 +45,6 @@ Future<void> _initCore() async {
 
   sl.registerLazySingleton(() => SharedPrefs(sl()));
   sl.registerLazySingleton(() => SecurePrefs(sl()));
-
-  sl.registerLazySingleton(() => ThemeCubit(sharedPrefs: sl()));
 }
 
 void _initAuth() {

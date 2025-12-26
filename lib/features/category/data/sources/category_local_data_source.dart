@@ -23,7 +23,9 @@ class CategoryLocalDataSourceImpl extends BaseLocalDataSource
       final categories = await super.getAllCategories();
 
       if (categories.isEmpty) {
-        return _getDefaultCategories();
+        final defaultCategories = _getDefaultCategories();
+        await saveCategories(defaultCategories);
+        return defaultCategories;
       }
       return categories;
     }, errorMessage: 'Failed to get categories');

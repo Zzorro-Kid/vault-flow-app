@@ -5,13 +5,9 @@ import 'package:test_app/features/category/domain/entities/category_data.dart';
 
 class CategoryItem extends StatelessWidget {
   final CategoryData category;
-  final VoidCallback onDelete;
+  final VoidCallback? onTap;
 
-  const CategoryItem({
-    super.key,
-    required this.category,
-    required this.onDelete,
-  });
+  const CategoryItem({super.key, required this.category, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +40,7 @@ class CategoryItem extends StatelessWidget {
       leading: _buildCategoryIcon(),
       title: _buildCategoryTitle(),
       subtitle: _buildCategorySubtitle(isIncome),
-      trailing: _buildDeleteButton(),
+      onTap: onTap,
     );
   }
 
@@ -104,13 +100,6 @@ class CategoryItem extends StatelessWidget {
         color: isIncome ? AppColors.incomeStart : AppColors.expensesStart,
         fontSize: AppDimensions.fontSizeSmall,
       ),
-    );
-  }
-
-  Widget _buildDeleteButton() {
-    return IconButton(
-      icon: const Icon(Icons.delete_outline, color: AppColors.expensesStart),
-      onPressed: onDelete,
     );
   }
 }

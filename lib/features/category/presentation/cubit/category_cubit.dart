@@ -33,17 +33,22 @@ class CategoryCubit extends Cubit<CategoryState> {
   Future<void> addCategory(CategoryData category) async {
     final result = await addCategoryUseCase(category);
 
-    result.fold((failure) => emit(CategoryError(failure.message)), (_) {
-      emit(const CategoryOperationSuccess('Category added successfully'));
-      loadCategories();
-    });
+    result.fold(
+      (failure) {
+        emit(CategoryError(failure.message));
+      },
+      (_) {
+        emit(const CategoryOperationSuccess('Category added successfully!'));
+        loadCategories();
+      },
+    );
   }
 
   Future<void> updateCategory(CategoryData category) async {
     final result = await updateCategoryUseCase(category);
 
     result.fold((failure) => emit(CategoryError(failure.message)), (_) {
-      emit(const CategoryOperationSuccess('Category updated successfully'));
+      emit(const CategoryOperationSuccess('Category updated successfully!'));
       loadCategories();
     });
   }
@@ -52,7 +57,7 @@ class CategoryCubit extends Cubit<CategoryState> {
     final result = await deleteCategoryUseCase(categoryId);
 
     result.fold((failure) => emit(CategoryError(failure.message)), (_) {
-      emit(const CategoryOperationSuccess('Category deleted successfully'));
+      emit(const CategoryOperationSuccess('Category deleted'));
       loadCategories();
     });
   }
