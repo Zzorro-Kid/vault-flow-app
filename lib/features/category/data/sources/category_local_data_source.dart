@@ -19,14 +19,14 @@ class CategoryLocalDataSourceImpl extends BaseLocalDataSource
   @override //todo: method getAllCategories have the same name as it has in base_local_data_source, fix it
   Future<List<CategoryDataModel>> getAllCategories() async {
     return executeStorageRead(() async {
-      return await super.getAllCategories();
+      return await super.loadCategoriesFromStorage();
     }, errorMessage: 'Failed to get categories');
   }
 
   @override
   Future<void> addCategory(CategoryDataModel category) async {
     return executeStorageWrite(() async {
-      final categories = await super.getAllCategories();
+      final categories = await super.loadCategoriesFromStorage();
       categories.add(category);
       await saveCategories(categories);
     }, errorMessage: 'Failed to add category');
@@ -35,7 +35,7 @@ class CategoryLocalDataSourceImpl extends BaseLocalDataSource
   @override
   Future<void> updateCategory(CategoryDataModel category) async {
     return executeStorageWrite(() async {
-      final categories = await super.getAllCategories();
+      final categories = await super.loadCategoriesFromStorage();
       final index = categories.indexWhere((c) => c.id == category.id);
 
       if (index != -1) {
@@ -48,7 +48,7 @@ class CategoryLocalDataSourceImpl extends BaseLocalDataSource
   @override
   Future<void> deleteCategory(String categoryId) async {
     return executeStorageWrite(() async {
-      final categories = await super.getAllCategories();
+      final categories = await super.loadCategoriesFromStorage();
       categories.removeWhere((c) => c.id == categoryId);
       await saveCategories(categories);
     }, errorMessage: 'Failed to delete category');

@@ -88,7 +88,7 @@ abstract class BaseLocalDataSource {
         .toList();
   }
 
-  Future<List<CategoryDataModel>> getAllCategories() async {
+  Future<List<CategoryDataModel>> loadCategoriesFromStorage() async {
     if (securePrefs == null) {
       throw Exception('SecurePrefs is not initialized');
     }
