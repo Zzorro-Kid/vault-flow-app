@@ -46,6 +46,7 @@ class CategoryScreen extends StatelessWidget {
   PreferredSizeWidget _buildAppBar() {
     return CustomAppBar(
       height: AppDimensions.appBarHeightOther,
+      topPadding: AppDimensions.appBarTopPadding,
       title: Transform.translate(
         offset: const Offset(0, AppDimensions.appBarTitleOffsetY),
         child: const Text(
