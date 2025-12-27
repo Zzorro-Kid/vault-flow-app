@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:test_app/core/data/models/financial_summary_data_model.dart';
-import 'package:test_app/core/data/models/transaction_data_model.dart';
+import 'package:test_app/features/add_transaction/data/models/transaction_data_model.dart';
 import 'package:test_app/features/category/data/models/category_data_model.dart';
 import 'package:test_app/core/errors/exceptions.dart';
 import 'package:test_app/core/secure_prefs.dart';

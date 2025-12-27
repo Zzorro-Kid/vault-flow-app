@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:test_app/core/domain/entities/transaction_data.dart';
+import 'package:test_app/features/add_transaction/data/models/transaction_data.dart';
 import 'package:test_app/core/usecases/get_recent_transactions_usecase.dart';
 import 'package:test_app/core/usecases/usecase.dart';
 import 'package:test_app/features/home/domain/entities/dashboard_summary_data.dart';
