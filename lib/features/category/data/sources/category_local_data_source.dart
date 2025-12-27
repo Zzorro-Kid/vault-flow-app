@@ -16,7 +16,7 @@ class CategoryLocalDataSourceImpl extends BaseLocalDataSource
 
   CategoryLocalDataSourceImpl({required this.securePrefs});
 
-  @override //todo: method getAllCategories have the same name as it has in base_local_data_source, fix it
+  @override
   Future<List<CategoryDataModel>> getAllCategories() async {
     return executeStorageRead(() async {
       return await super.loadCategoriesFromStorage();
