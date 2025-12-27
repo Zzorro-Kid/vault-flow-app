@@ -1,11 +1,9 @@
-class FinancialSummaryModel {
-  final double totalBalance;
-  final double totalIncome;
-  final double totalExpenses;
+import 'package:test_app/features/add_transaction/domain/entities/financial_summary_data.dart';
 
-  const FinancialSummaryModel({
-    required this.totalBalance,
-    required this.totalIncome,
-    required this.totalExpenses,
+class FinancialSummaryDataModel extends FinancialSummaryData {
+  const FinancialSummaryDataModel({
+    required super.totalBalance,
+    required super.totalIncome,
+    required super.totalExpenses,
   });
 }

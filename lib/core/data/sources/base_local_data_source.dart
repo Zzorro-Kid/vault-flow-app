@@ -116,7 +116,7 @@ abstract class BaseLocalDataSource {
     await securePrefs!.setCategories(categoriesJson);
   }
 
-  FinancialSummaryModel calculateFinancialSummary(
+  FinancialSummaryDataModel calculateFinancialSummary(
     List<TransactionDataModel> transactions,
   ) {
     double totalBalance = 0.0;
@@ -133,7 +133,7 @@ abstract class BaseLocalDataSource {
       }
     }
 
-    return FinancialSummaryModel(
+    return FinancialSummaryDataModel(
       totalBalance: totalBalance,
       totalIncome: totalIncome,
       totalExpenses: totalExpenses,
