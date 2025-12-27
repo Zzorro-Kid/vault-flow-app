@@ -18,7 +18,7 @@ class HomeLocalDataSourceImpl extends BaseLocalDataSource
   @override
   Future<DashboardSummaryDataModel> getDashboardSummary() async {
     return executeStorageRead(() async {
-      final transactions = await getAllTransactions();
+      final transactions = await loadTransactionsFromStorage();
       final summary = calculateFinancialSummary(transactions);
 
       return DashboardSummaryDataModel(
@@ -34,7 +34,7 @@ class HomeLocalDataSourceImpl extends BaseLocalDataSource
     int limit = 10,
   }) async {
     return executeStorageRead(() async {
-      final transactions = await getAllTransactions();
+      final transactions = await loadTransactionsFromStorage();
 
       transactions.sort((a, b) => b.date.compareTo(a.date));
 

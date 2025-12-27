@@ -67,7 +67,7 @@ abstract class BaseLocalDataSource {
     }
   }
 
-  Future<List<TransactionDataModel>> getAllTransactions() async {
+  Future<List<TransactionDataModel>> loadTransactionsFromStorage() async {
     if (securePrefs == null) {
       throw Exception('SecurePrefs is not initialized');
     }
@@ -86,6 +86,16 @@ abstract class BaseLocalDataSource {
           (json) => TransactionDataModel.fromJson(json as Map<String, dynamic>),
         )
         .toList();
+  }
+
+  Future<void> saveTransactions(List<TransactionDataModel> transactions) async {
+    if (securePrefs == null) {
+      throw Exception('SecurePrefs is not initialized');
+    }
+
+    final jsonList = transactions.map((t) => t.toJson()).toList();
+    final transactionsJson = json.encode(jsonList);
+    await securePrefs!.setTransactions(transactionsJson);
   }
 
   Future<List<CategoryDataModel>> loadCategoriesFromStorage() async {

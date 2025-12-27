@@ -21,6 +21,14 @@ import 'package:test_app/features/category/domain/usecases/delete_category_useca
 import 'package:test_app/features/category/domain/usecases/get_all_categories_usecase.dart';
 import 'package:test_app/features/category/domain/usecases/update_category_usecase.dart';
 import 'package:test_app/features/category/presentation/cubit/category_cubit.dart';
+import 'package:test_app/features/add_transaction/data/repositories/transaction_repository_impl.dart';
+import 'package:test_app/features/add_transaction/data/sources/transaction_local_data_source.dart';
+import 'package:test_app/features/add_transaction/domain/repositories/transaction_repository.dart';
+import 'package:test_app/features/add_transaction/domain/usecases/add_transaction_usecase.dart';
+import 'package:test_app/features/add_transaction/domain/usecases/delete_transaction_usecase.dart';
+import 'package:test_app/features/add_transaction/domain/usecases/get_all_transactions_usecase.dart';
+import 'package:test_app/features/add_transaction/domain/usecases/update_transaction_usecase.dart';
+import 'package:test_app/features/add_transaction/presentation/cubit/transaction_cubit.dart';
 import 'package:test_app/features/home/data/repositories/home_repository_impl.dart';
 import 'package:test_app/features/home/data/sources/home_local_data_source.dart';
 import 'package:test_app/features/home/domain/repositories/home_repository.dart';
@@ -34,6 +42,7 @@ Future<void> init() async {
   _initAuth();
   _initHome();
   _initCategory();
+  _initTransaction();
 }
 
 Future<void> _initCore() async {
@@ -114,5 +123,29 @@ void _initCategory() {
 
   sl.registerLazySingleton<CategoryLocalDataSource>(
     () => CategoryLocalDataSourceImpl(securePrefs: sl()),
+  );
+}
+
+void _initTransaction() {
+  sl.registerFactory(
+    () => TransactionCubit(
+      getAllTransactionsUseCase: sl(),
+      addTransactionUseCase: sl(),
+      updateTransactionUseCase: sl(),
+      deleteTransactionUseCase: sl(),
+    ),
+  );
+
+  sl.registerLazySingleton(() => GetAllTransactionsUseCase(sl()));
+  sl.registerLazySingleton(() => AddTransactionUseCase(sl()));
+  sl.registerLazySingleton(() => UpdateTransactionUseCase(sl()));
+  sl.registerLazySingleton(() => DeleteTransactionUseCase(sl()));
+
+  sl.registerLazySingleton<TransactionRepository>(
+    () => TransactionRepositoryImpl(localDataSource: sl()),
+  );
+
+  sl.registerLazySingleton<TransactionLocalDataSource>(
+    () => TransactionLocalDataSourceImpl(securePrefs: sl()),
   );
 }

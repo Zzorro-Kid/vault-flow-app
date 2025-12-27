@@ -52,4 +52,15 @@ class TransactionDataModel extends TransactionData {
       type: type ?? this.type,
     );
   }
+
+  factory TransactionDataModel.fromEntity(TransactionData entity) {
+    return TransactionDataModel(
+      id: entity.id,
+      amount: entity.amount,
+      category: CategoryDataModel.fromEntity(entity.category),
+      description: entity.description,
+      date: entity.date,
+      type: entity.type,
+    );
+  }
 }

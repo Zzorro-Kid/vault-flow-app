@@ -6,29 +6,29 @@ import 'package:test_app/core/utils/ui_helpers.dart';
 import 'package:test_app/core/widgets/bottom_navigation_bar.dart';
 import 'package:test_app/core/widgets/custom_app_bar.dart';
 import 'package:test_app/core/widgets/loading_indicator.dart';
-import 'package:test_app/features/category/domain/entities/category_data.dart';
+import 'package:test_app/features/add_transaction/domain/entities/transaction_data.dart';
+import 'package:test_app/features/add_transaction/presentation/cubit/transaction_cubit.dart';
+import 'package:test_app/features/add_transaction/presentation/cubit/transaction_state.dart';
+import 'package:test_app/features/add_transaction/presentation/widgets/add_transaction_dialog.dart';
+import 'package:test_app/features/add_transaction/presentation/widgets/empty_transactions_view.dart';
+import 'package:test_app/features/add_transaction/presentation/widgets/transaction_error_view.dart';
+import 'package:test_app/features/add_transaction/presentation/widgets/transaction_item.dart';
 import 'package:test_app/features/category/presentation/cubit/category_cubit.dart';
-import 'package:test_app/features/category/presentation/cubit/category_state.dart';
-import 'package:test_app/features/category/presentation/widgets/add_category_dialog.dart';
-import 'package:test_app/features/category/presentation/widgets/category_error_view.dart';
-import 'package:test_app/features/category/presentation/widgets/category_item.dart';
-import 'package:test_app/features/category/presentation/widgets/edit_category_dialog.dart';
-import 'package:test_app/features/category/presentation/widgets/empty_categories_view.dart';
 import 'package:test_app/injection_container.dart';
 
-class CategoryScreen extends StatelessWidget {
-  const CategoryScreen({super.key});
+class TransactionScreen extends StatelessWidget {
+  const TransactionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => sl<CategoryCubit>()..loadCategories(),
-      child: BlocListener<CategoryCubit, CategoryState>(
+      create: (_) => sl<TransactionCubit>()..loadTransactions(),
+      child: BlocListener<TransactionCubit, TransactionState>(
         listener: (context, state) {
           switch (state) {
-            case CategoryError():
+            case TransactionError():
               UiHelpers.showErrorSnackBar(context, state.message);
-            case CategoryOperationSuccess():
+            case TransactionOperationSuccess():
               _showOperationSnackBar(context, state.message);
             default:
               break;
@@ -37,7 +37,7 @@ class CategoryScreen extends StatelessWidget {
         child: Scaffold(
           appBar: _buildAppBar(),
           body: Stack(children: [_buildBody(), _buildFloatingActionButton()]),
-          bottomNavigationBar: const AppBottomNavigationBar(currentIndex: 2),
+          bottomNavigationBar: const AppBottomNavigationBar(currentIndex: 1),
         ),
       ),
     );
@@ -50,7 +50,7 @@ class CategoryScreen extends StatelessWidget {
       title: Transform.translate(
         offset: const Offset(0, AppDimensions.appBarTitleOffsetY),
         child: const Text(
-          'Categories',
+          'Transactions',
           style: TextStyle(
             fontSize: AppDimensions.fontSizeXXLarge,
             fontWeight: FontWeight.bold,
@@ -62,14 +62,14 @@ class CategoryScreen extends StatelessWidget {
   }
 
   Widget _buildBody() {
-    return BlocBuilder<CategoryCubit, CategoryState>(
+    return BlocBuilder<TransactionCubit, TransactionState>(
       builder: (context, state) {
         return switch (state) {
-          CategoryLoading() => const LoadingIndicator(),
-          CategoryLoaded() => _buildCategoryList(state.categories),
-          CategoryError() => CategoryErrorView(
+          TransactionLoading() => const LoadingIndicator(),
+          TransactionLoaded() => _buildTransactionList(state.transactions),
+          TransactionError() => TransactionErrorView(
             message: state.message,
-            onRetry: () => context.read<CategoryCubit>().loadCategories(),
+            onRetry: () => context.read<TransactionCubit>().loadTransactions(),
           ),
           _ => const SizedBox.shrink(),
         };
@@ -77,38 +77,44 @@ class CategoryScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildCategoryList(List<CategoryData> categories) {
-    if (categories.isEmpty) {
-      return const EmptyCategoriesView();
+  Widget _buildTransactionList(List<TransactionData> transactions) {
+    if (transactions.isEmpty) {
+      return const EmptyTransactionsView();
     }
 
-    final expenseCategories = _filterCategoriesByType(categories, 'expense');
-    final incomeCategories = _filterCategoriesByType(categories, 'income');
+    final expenseTransactions = _filterTransactionsByType(
+      transactions,
+      'expense',
+    );
+    final incomeTransactions = _filterTransactionsByType(
+      transactions,
+      'income',
+    );
 
     return CustomScrollView(
       slivers: [
-        if (expenseCategories.isNotEmpty)
-          ..._buildCategorySection('Expense Categories', expenseCategories),
-        if (incomeCategories.isNotEmpty)
-          ..._buildCategorySection('Income Categories', incomeCategories),
+        if (expenseTransactions.isNotEmpty)
+          ..._buildTransactionSection('Expenses', expenseTransactions),
+        if (incomeTransactions.isNotEmpty)
+          ..._buildTransactionSection('Income', incomeTransactions),
       ],
     );
   }
 
-  List<CategoryData> _filterCategoriesByType(
-    List<CategoryData> categories,
+  List<TransactionData> _filterTransactionsByType(
+    List<TransactionData> transactions,
     String type,
   ) {
-    return categories.where((c) => c.type == type).toList();
+    return transactions.where((t) => t.type == type).toList();
   }
 
-  List<Widget> _buildCategorySection(
+  List<Widget> _buildTransactionSection(
     String title,
-    List<CategoryData> categories,
+    List<TransactionData> transactions,
   ) {
     return [
       _buildSectionHeaderSliver(title),
-      _buildCategoryListSliver(categories),
+      _buildTransactionListSliver(transactions),
     ];
   }
 
@@ -135,7 +141,7 @@ class CategoryScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildCategoryListSliver(List<CategoryData> categories) {
+  Widget _buildTransactionListSliver(List<TransactionData> transactions) {
     return SliverPadding(
       padding: const EdgeInsets.symmetric(
         horizontal: AppDimensions.paddingMedium,
@@ -143,26 +149,23 @@ class CategoryScreen extends StatelessWidget {
       sliver: SliverList(
         delegate: SliverChildBuilderDelegate(
           (context, index) =>
-              _buildDismissibleCategoryItem(context, categories[index]),
-          childCount: categories.length,
+              _buildDismissibleTransactionItem(context, transactions[index]),
+          childCount: transactions.length,
         ),
       ),
     );
   }
 
-  Widget _buildDismissibleCategoryItem(
+  Widget _buildDismissibleTransactionItem(
     BuildContext context,
-    CategoryData category,
+    TransactionData transaction,
   ) {
     return Dismissible(
-      key: Key(category.id),
+      key: Key(transaction.id),
       direction: DismissDirection.endToStart,
       background: _buildDismissBackground(),
-      confirmDismiss: (direction) => _confirmDelete(context, category),
-      child: CategoryItem(
-        category: category,
-        onTap: () => _showEditCategoryDialog(context, category),
-      ),
+      confirmDismiss: (direction) => _confirmDelete(context, transaction),
+      child: TransactionItem(transaction: transaction),
     );
   }
 
@@ -172,7 +175,7 @@ class CategoryScreen extends StatelessWidget {
       bottom: AppDimensions.paddingMedium,
       child: Builder(
         builder: (builderContext) => FloatingActionButton(
-          onPressed: () => _showAddCategoryDialog(builderContext),
+          onPressed: () => _showAddTransactionDialog(builderContext),
           backgroundColor: AppColors.primary,
           child: const Icon(Icons.add, color: Colors.white),
         ),
@@ -180,27 +183,17 @@ class CategoryScreen extends StatelessWidget {
     );
   }
 
-  void _showAddCategoryDialog(BuildContext context) {
+  void _showAddTransactionDialog(BuildContext context) {
     showDialog(
       context: context,
-      builder: (dialogContext) => AddCategoryDialog(
-        onAdd: (category) {
-          context.read<CategoryCubit>().addCategory(category);
-          Navigator.pop(dialogContext);
-        },
-      ),
-    );
-  }
-
-  void _showEditCategoryDialog(BuildContext context, CategoryData category) {
-    showDialog(
-      context: context,
-      builder: (dialogContext) => EditCategoryDialog(
-        category: category,
-        onSave: (updatedCategory) {
-          context.read<CategoryCubit>().updateCategory(updatedCategory);
-          Navigator.pop(dialogContext);
-        },
+      builder: (dialogContext) => BlocProvider(
+        create: (_) => sl<CategoryCubit>()..loadCategories(),
+        child: AddTransactionDialog(
+          onAdd: (transaction) {
+            context.read<TransactionCubit>().addTransaction(transaction);
+            Navigator.pop(dialogContext);
+          },
+        ),
       ),
     );
   }
@@ -230,28 +223,35 @@ class CategoryScreen extends StatelessWidget {
     );
   }
 
-  Future<bool?> _confirmDelete(BuildContext context, CategoryData category) {
+  Future<bool?> _confirmDelete(
+    BuildContext context,
+    TransactionData transaction,
+  ) {
     return showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
         backgroundColor: AppColors.surfaceDark,
         title: _buildDeleteDialogTitle(),
-        content: _buildDeleteDialogContent(category.name),
-        actions: _buildDeleteDialogActions(dialogContext, context, category.id),
+        content: _buildDeleteDialogContent(transaction.description),
+        actions: _buildDeleteDialogActions(
+          dialogContext,
+          context,
+          transaction.id,
+        ),
       ),
     );
   }
 
   Widget _buildDeleteDialogTitle() {
     return const Text(
-      'Delete Category',
+      'Delete Transaction',
       style: TextStyle(color: AppColors.categoryTitleText),
     );
   }
 
-  Widget _buildDeleteDialogContent(String categoryName) {
+  Widget _buildDeleteDialogContent(String transactionTitle) {
     return Text(
-      'Are you sure you want to delete "$categoryName"?',
+      'Are you sure you want to delete "$transactionTitle"?',
       style: const TextStyle(color: AppColors.sectionHeaderText),
     );
   }
@@ -259,11 +259,11 @@ class CategoryScreen extends StatelessWidget {
   List<Widget> _buildDeleteDialogActions(
     BuildContext dialogContext,
     BuildContext parentContext,
-    String categoryId,
+    String transactionId,
   ) {
     return [
       _buildCancelButton(dialogContext),
-      _buildDeleteButton(dialogContext, parentContext, categoryId),
+      _buildDeleteButton(dialogContext, parentContext, transactionId),
     ];
   }
 
@@ -277,11 +277,11 @@ class CategoryScreen extends StatelessWidget {
   Widget _buildDeleteButton(
     BuildContext dialogContext,
     BuildContext parentContext,
-    String categoryId,
+    String transactionId,
   ) {
     return TextButton(
       onPressed: () {
-        parentContext.read<CategoryCubit>().deleteCategory(categoryId);
+        parentContext.read<TransactionCubit>().deleteTransaction(transactionId);
         Navigator.pop(dialogContext, true);
       },
       child: const Text(
