@@ -5,11 +5,8 @@ import 'package:test_app/core/themes/app_colors.dart';
 import 'package:test_app/core/utils/list_helpers.dart';
 import 'package:test_app/features/transaction/domain/entities/transaction_data.dart';
 import 'package:test_app/features/transaction/presentation/cubit/transaction_cubit.dart';
-import 'package:test_app/features/transaction/presentation/widgets/add_transaction_dialog.dart';
 import 'package:test_app/features/transaction/presentation/widgets/empty_transactions_view.dart';
 import 'package:test_app/features/transaction/presentation/widgets/transaction_item.dart';
-import 'package:test_app/features/category/presentation/cubit/category_cubit.dart';
-import 'package:test_app/injection_container.dart';
 
 class TransactionLoadedView extends StatelessWidget {
   final List<TransactionData> transactions;
@@ -34,17 +31,12 @@ class TransactionLoadedView extends StatelessWidget {
       'income',
     );
 
-    return Stack(
-      children: [
-        CustomScrollView(
-          slivers: [
-            if (expenseTransactions.isNotEmpty)
-              ..._buildTransactionSection(context, 'Expenses', expenseTransactions),
-            if (incomeTransactions.isNotEmpty)
-              ..._buildTransactionSection(context, 'Income', incomeTransactions),
-          ],
-        ),
-        _buildFloatingActionButton(context),
+    return CustomScrollView(
+      slivers: [
+        if (expenseTransactions.isNotEmpty)
+          ..._buildTransactionSection(context, 'Expenses', expenseTransactions),
+        if (incomeTransactions.isNotEmpty)
+          ..._buildTransactionSection(context, 'Income', incomeTransactions),
       ],
     );
   }
@@ -125,32 +117,6 @@ class TransactionLoadedView extends StatelessWidget {
     );
   }
 
-  Widget _buildFloatingActionButton(BuildContext context) {
-    return Positioned(
-      right: AppDimensions.paddingMedium,
-      bottom: AppDimensions.paddingMedium,
-      child: FloatingActionButton(
-        onPressed: () => _showAddTransactionDialog(context),
-        backgroundColor: AppColors.primary,
-        child: const Icon(Icons.add, color: Colors.white),
-      ),
-    );
-  }
-
-  void _showAddTransactionDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (dialogContext) => BlocProvider(
-        create: (_) => sl<CategoryCubit>()..loadCategories(),
-        child: AddTransactionDialog(
-          onAdd: (transaction) {
-            context.read<TransactionCubit>().addTransaction(transaction);
-            Navigator.pop(dialogContext);
-          },
-        ),
-      ),
-    );
-  }
 
   Widget _buildDismissBackground() {
     return Container(

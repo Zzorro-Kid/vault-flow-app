@@ -34,6 +34,11 @@ import 'package:test_app/features/home/data/sources/home_local_data_source.dart'
 import 'package:test_app/features/home/domain/repositories/home_repository.dart';
 import 'package:test_app/features/home/domain/usecases/get_dashboard_summary_usecase.dart';
 import 'package:test_app/features/home/presentation/cubit/home_cubit.dart';
+import 'package:test_app/features/statistics/data/repositories/statistics_repository_impl.dart';
+import 'package:test_app/features/statistics/data/sources/statistics_local_data_source.dart';
+import 'package:test_app/features/statistics/domain/repositories/statistics_repository.dart';
+import 'package:test_app/features/statistics/domain/usecases/get_statistics_usecase.dart';
+import 'package:test_app/features/statistics/presentation/cubit/statistics_cubit.dart';
 
 final sl = GetIt.instance;
 
@@ -43,6 +48,7 @@ Future<void> init() async {
   _initHome();
   _initCategory();
   _initTransaction();
+  _initStatistics();
 }
 
 Future<void> _initCore() async {
@@ -147,5 +153,19 @@ void _initTransaction() {
 
   sl.registerLazySingleton<TransactionLocalDataSource>(
     () => TransactionLocalDataSourceImpl(securePrefs: sl()),
+  );
+}
+
+void _initStatistics() {
+  sl.registerFactory(() => StatisticsCubit(getStatisticsUseCase: sl()));
+
+  sl.registerLazySingleton(() => GetStatisticsUseCase(sl()));
+
+  sl.registerLazySingleton<StatisticsRepository>(
+    () => StatisticsRepositoryImpl(localDataSource: sl()),
+  );
+
+  sl.registerLazySingleton<StatisticsLocalDataSource>(
+    () => StatisticsLocalDataSourceImpl(securePrefs: sl()),
   );
 }

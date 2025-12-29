@@ -149,4 +149,37 @@ abstract class BaseLocalDataSource {
       totalExpenses: totalExpenses,
     );
   }
+
+  List<TransactionDataModel> filterTransactionsByPeriod(
+    List<TransactionDataModel> transactions,
+    String period,
+  ) {
+    final now = DateTime.now();
+    DateTime startDate;
+
+    switch (period) {
+      case 'day':
+        startDate = DateTime(now.year, now.month, now.day);
+        break;
+      case 'week':
+        startDate = now.subtract(Duration(days: now.weekday - 1));
+        startDate = DateTime(startDate.year, startDate.month, startDate.day);
+        break;
+      case 'month':
+        startDate = DateTime(now.year, now.month, 1);
+        break;
+      case 'year':
+        startDate = DateTime(now.year, 1, 1);
+        break;
+      default:
+        startDate = DateTime(now.year, now.month, 1);
+    }
+
+    return transactions
+        .where(
+          (t) =>
+              t.date.isAfter(startDate) || t.date.isAtSameMomentAs(startDate),
+        )
+        .toList();
+  }
 }

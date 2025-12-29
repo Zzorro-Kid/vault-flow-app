@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:test_app/core/widgets/bottom_navigation_bar.dart';
 import 'package:test_app/features/category/presentation/pages/category_screen.dart';
 import 'package:test_app/features/home/presentation/pages/home_sceen.dart';
+import 'package:test_app/features/statistics/presentation/pages/statistics_screen.dart';
 import 'package:test_app/features/transaction/presentation/pages/transaction_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   final int initialIndex;
 
-  const MainNavigationScreen({
-    super.key,
-    this.initialIndex = 0,
-  });
+  const MainNavigationScreen({super.key, this.initialIndex = 0});
 
   @override
   State<MainNavigationScreen> createState() => _MainNavigationScreenState();
@@ -23,7 +21,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     HomeScreen(),
     TransactionScreen(),
     CategoryScreen(),
-    Center(child: Text('Stats - Coming Soon')), // TODO: Stats screen
+    StatisticsScreen(),
     Center(child: Text('Settings - Coming Soon')), // TODO: Settings screen
   ];
 
@@ -36,10 +34,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        index: _currentIndex,
-        children: _screens,
-      ),
+      body: IndexedStack(index: _currentIndex, children: _screens),
       bottomNavigationBar: AppBottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) {

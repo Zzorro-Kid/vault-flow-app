@@ -5,7 +5,6 @@ import 'package:test_app/core/themes/app_colors.dart';
 import 'package:test_app/core/utils/list_helpers.dart';
 import 'package:test_app/features/category/domain/entities/category_data.dart';
 import 'package:test_app/features/category/presentation/cubit/category_cubit.dart';
-import 'package:test_app/features/category/presentation/widgets/add_category_dialog.dart';
 import 'package:test_app/features/category/presentation/widgets/category_item.dart';
 import 'package:test_app/features/category/presentation/widgets/edit_category_dialog.dart';
 import 'package:test_app/features/category/presentation/widgets/empty_categories_view.dart';
@@ -27,17 +26,12 @@ class CategoryLoadedView extends StatelessWidget {
     final expenseCategories = _filterCategoriesByType(categories, 'expense');
     final incomeCategories = _filterCategoriesByType(categories, 'income');
 
-    return Stack(
-      children: [
-        CustomScrollView(
-          slivers: [
-            if (expenseCategories.isNotEmpty)
-              ..._buildCategorySection(context, 'Expense Categories', expenseCategories),
-            if (incomeCategories.isNotEmpty)
-              ..._buildCategorySection(context, 'Income Categories', incomeCategories),
-          ],
-        ),
-        _buildFloatingActionButton(context),
+    return CustomScrollView(
+      slivers: [
+        if (expenseCategories.isNotEmpty)
+          ..._buildCategorySection(context, 'Expense Categories', expenseCategories),
+        if (incomeCategories.isNotEmpty)
+          ..._buildCategorySection(context, 'Income Categories', incomeCategories),
       ],
     );
   }
@@ -121,29 +115,6 @@ class CategoryLoadedView extends StatelessWidget {
     );
   }
 
-  Widget _buildFloatingActionButton(BuildContext context) {
-    return Positioned(
-      right: AppDimensions.paddingMedium,
-      bottom: AppDimensions.paddingMedium,
-      child: FloatingActionButton(
-        onPressed: () => _showAddCategoryDialog(context),
-        backgroundColor: AppColors.primary,
-        child: const Icon(Icons.add, color: Colors.white),
-      ),
-    );
-  }
-
-  void _showAddCategoryDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (dialogContext) => AddCategoryDialog(
-        onAdd: (category) {
-          context.read<CategoryCubit>().addCategory(category);
-          Navigator.pop(dialogContext);
-        },
-      ),
-    );
-  }
 
   void _showEditCategoryDialog(BuildContext context, CategoryData category) {
     showDialog(

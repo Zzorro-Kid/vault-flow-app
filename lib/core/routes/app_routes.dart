@@ -9,9 +9,7 @@ class AppRouter {
   static const String editTransaction = '/edit-transaction';
   static const String transactionList = '/transaction-list';
   static const String categoryList = '/category-list';
-  static const String addCategory = '/add-category';
-  static const String editCategory = '/edit-category';
-  static const String reports = '/reports';
+  static const String stats = '/statistics';
   static const String settings = '/settings';
 
   Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -28,8 +26,8 @@ class AppRouter {
       case addTransaction:
         return _createFadeRoute(const MainNavigationScreen(initialIndex: 1));
 
-      // case stats:
-      //   return MaterialPageRoute(builder: (_) => const StatsScreen());
+      case stats:
+        return _createFadeRoute(const MainNavigationScreen(initialIndex: 3));
 
       // case settings:
       //   return MaterialPageRoute(builder: (_) => const SettingsScreen());
