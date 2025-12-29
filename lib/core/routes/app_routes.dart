@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:test_app/core/widgets/main_navigation_screen.dart';
 import 'package:test_app/features/auth/presentation/pages/auth_screen.dart';
-import 'package:test_app/features/category/presentation/pages/category_screen.dart';
-import 'package:test_app/features/home/presentation/pages/home_sceen.dart';
-import 'package:test_app/features/transaction/presentation/pages/transaction_screen.dart';
-// import 'package:test_app/features/reports/presentation/pages/reports_screen.dart';
-// import 'package:test_app/features/settings/presentation/pages/settings_screen.dart';
 
 class AppRouter {
   static const String auth = '/auth';
@@ -24,38 +20,16 @@ class AppRouter {
         return _createFadeRoute(const AuthScreen());
 
       case home:
-        return _createFadeRoute(const HomeScreen());
+        return _createFadeRoute(const MainNavigationScreen(initialIndex: 0));
 
       case categoryList:
-        return _createFadeRoute(const CategoryScreen());
+        return _createFadeRoute(const MainNavigationScreen(initialIndex: 2));
 
       case addTransaction:
-        return _createFadeRoute(const TransactionScreen());
+        return _createFadeRoute(const MainNavigationScreen(initialIndex: 1));
 
-      // case editTransaction:
-      //   final args = settings.arguments as Map<String, dynamic>?;
-      //   return MaterialPageRoute(
-      //     builder: (_) =>
-      //         AddTransactionScreen(transactionId: args?['transactionId']),
-      //   );
-
-      // case transactionList:
-      //   return MaterialPageRoute(builder: (_) => const TransactionListScreen());
-
-      // case categoryList:
-      //   return MaterialPageRoute(builder: (_) => const CategoryListScreen());
-
-      // case addCategory:
-      //   return MaterialPageRoute(builder: (_) => const AddCategoryScreen());
-
-      // case editCategory:
-      //   final args = settings.arguments as Map<String, dynamic>?;
-      //   return MaterialPageRoute(
-      //     builder: (_) => AddCategoryScreen(categoryId: args?['categoryId']),
-      //   );
-
-      // case reports:
-      //   return MaterialPageRoute(builder: (_) => const ReportsScreen());
+      // case stats:
+      //   return MaterialPageRoute(builder: (_) => const StatsScreen());
 
       // case settings:
       //   return MaterialPageRoute(builder: (_) => const SettingsScreen());

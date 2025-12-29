@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_app/core/utils/ui_helpers.dart';
-import 'package:test_app/core/widgets/bottom_navigation_bar.dart';
 import 'package:test_app/core/widgets/loading_indicator.dart';
 import 'package:test_app/features/category/presentation/cubit/category_cubit.dart';
 import 'package:test_app/features/category/presentation/cubit/category_state.dart';
@@ -31,7 +30,6 @@ class CategoryScreen extends StatelessWidget {
         child: Scaffold(
           appBar: const CategoryAppBar(),
           body: _buildBody(),
-          bottomNavigationBar: const AppBottomNavigationBar(currentIndex: 2),
         ),
       ),
     );
