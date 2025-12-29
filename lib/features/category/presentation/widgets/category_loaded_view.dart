@@ -1,0 +1,246 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:test_app/core/constants/app_dimensions.dart';
+import 'package:test_app/core/themes/app_colors.dart';
+import 'package:test_app/core/utils/list_helpers.dart';
+import 'package:test_app/features/category/domain/entities/category_data.dart';
+import 'package:test_app/features/category/presentation/cubit/category_cubit.dart';
+import 'package:test_app/features/category/presentation/widgets/add_category_dialog.dart';
+import 'package:test_app/features/category/presentation/widgets/category_item.dart';
+import 'package:test_app/features/category/presentation/widgets/edit_category_dialog.dart';
+import 'package:test_app/features/category/presentation/widgets/empty_categories_view.dart';
+
+class CategoryLoadedView extends StatelessWidget {
+  final List<CategoryData> categories;
+
+  const CategoryLoadedView({
+    super.key,
+    required this.categories,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (categories.isEmpty) {
+      return const EmptyCategoriesView();
+    }
+
+    final expenseCategories = _filterCategoriesByType(categories, 'expense');
+    final incomeCategories = _filterCategoriesByType(categories, 'income');
+
+    return Stack(
+      children: [
+        CustomScrollView(
+          slivers: [
+            if (expenseCategories.isNotEmpty)
+              ..._buildCategorySection(context, 'Expense Categories', expenseCategories),
+            if (incomeCategories.isNotEmpty)
+              ..._buildCategorySection(context, 'Income Categories', incomeCategories),
+          ],
+        ),
+        _buildFloatingActionButton(context),
+      ],
+    );
+  }
+
+  List<CategoryData> _filterCategoriesByType(
+    List<CategoryData> categories,
+    String type,
+  ) {
+    return ListHelpers.filterByType(
+      items: categories,
+      type: type,
+      getType: (category) => category.type,
+    );
+  }
+
+  List<Widget> _buildCategorySection(
+    BuildContext context,
+    String title,
+    List<CategoryData> categories,
+  ) {
+    return [
+      _buildSectionHeaderSliver(title),
+      _buildCategoryListSliver(context, categories),
+    ];
+  }
+
+  Widget _buildSectionHeaderSliver(String title) {
+    return SliverPadding(
+      padding: const EdgeInsets.fromLTRB(
+        AppDimensions.paddingMedium,
+        AppDimensions.paddingLarge,
+        AppDimensions.paddingMedium,
+        AppDimensions.paddingSmall,
+      ),
+      sliver: SliverToBoxAdapter(child: _buildSectionHeader(title)),
+    );
+  }
+
+  Widget _buildSectionHeader(String title) {
+    return Text(
+      title,
+      style: const TextStyle(
+        fontSize: AppDimensions.fontSizeXLarge,
+        fontWeight: FontWeight.bold,
+        color: AppColors.sectionHeaderText,
+      ),
+    );
+  }
+
+  Widget _buildCategoryListSliver(
+    BuildContext context,
+    List<CategoryData> categories,
+  ) {
+    return SliverPadding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppDimensions.paddingMedium,
+      ),
+      sliver: SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (context, index) =>
+              _buildDismissibleCategoryItem(context, categories[index]),
+          childCount: categories.length,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDismissibleCategoryItem(
+    BuildContext context,
+    CategoryData category,
+  ) {
+    return Dismissible(
+      key: Key(category.id),
+      direction: DismissDirection.endToStart,
+      background: _buildDismissBackground(),
+      confirmDismiss: (direction) => _confirmDelete(context, category),
+      child: CategoryItem(
+        category: category,
+        onTap: () => _showEditCategoryDialog(context, category),
+      ),
+    );
+  }
+
+  Widget _buildFloatingActionButton(BuildContext context) {
+    return Positioned(
+      right: AppDimensions.paddingMedium,
+      bottom: AppDimensions.paddingMedium,
+      child: FloatingActionButton(
+        onPressed: () => _showAddCategoryDialog(context),
+        backgroundColor: AppColors.primary,
+        child: const Icon(Icons.add, color: Colors.white),
+      ),
+    );
+  }
+
+  void _showAddCategoryDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AddCategoryDialog(
+        onAdd: (category) {
+          context.read<CategoryCubit>().addCategory(category);
+          Navigator.pop(dialogContext);
+        },
+      ),
+    );
+  }
+
+  void _showEditCategoryDialog(BuildContext context, CategoryData category) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) => EditCategoryDialog(
+        category: category,
+        onSave: (updatedCategory) {
+          context.read<CategoryCubit>().updateCategory(updatedCategory);
+          Navigator.pop(dialogContext);
+        },
+      ),
+    );
+  }
+
+  Widget _buildDismissBackground() {
+    return Container(
+      margin: const EdgeInsets.only(bottom: AppDimensions.paddingMedium),
+      alignment: Alignment.centerRight,
+      padding: const EdgeInsets.only(right: AppDimensions.paddingLarge),
+      decoration: _buildDismissBackgroundDecoration(),
+      child: _buildDeleteIcon(),
+    );
+  }
+
+  BoxDecoration _buildDismissBackgroundDecoration() {
+    return BoxDecoration(
+      color: AppColors.error,
+      borderRadius: BorderRadius.circular(AppDimensions.radiusLarge),
+    );
+  }
+
+  Widget _buildDeleteIcon() {
+    return const Icon(
+      Icons.delete_outline,
+      color: Colors.white,
+      size: AppDimensions.iconLarge,
+    );
+  }
+
+  Future<bool?> _confirmDelete(BuildContext context, CategoryData category) {
+    return showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        backgroundColor: AppColors.surfaceDark,
+        title: _buildDeleteDialogTitle(),
+        content: _buildDeleteDialogContent(category.name),
+        actions: _buildDeleteDialogActions(dialogContext, context, category.id),
+      ),
+    );
+  }
+
+  Widget _buildDeleteDialogTitle() {
+    return const Text(
+      'Delete Category',
+      style: TextStyle(color: AppColors.categoryTitleText),
+    );
+  }
+
+  Widget _buildDeleteDialogContent(String categoryName) {
+    return Text(
+      'Are you sure you want to delete "$categoryName"?',
+      style: const TextStyle(color: AppColors.sectionHeaderText),
+    );
+  }
+
+  List<Widget> _buildDeleteDialogActions(
+    BuildContext dialogContext,
+    BuildContext parentContext,
+    String categoryId,
+  ) {
+    return [
+      _buildCancelButton(dialogContext),
+      _buildDeleteButton(dialogContext, parentContext, categoryId),
+    ];
+  }
+
+  Widget _buildCancelButton(BuildContext dialogContext) {
+    return TextButton(
+      onPressed: () => Navigator.pop(dialogContext, false),
+      child: const Text('Cancel'),
+    );
+  }
+
+  Widget _buildDeleteButton(
+    BuildContext dialogContext,
+    BuildContext parentContext,
+    String categoryId,
+  ) {
+    return TextButton(
+      onPressed: () {
+        parentContext.read<CategoryCubit>().deleteCategory(categoryId);
+        Navigator.pop(dialogContext, true);
+      },
+      child: const Text(
+        'Delete',
+        style: TextStyle(color: AppColors.expensesStart),
+      ),
+    );
+  }
+}

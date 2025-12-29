@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:test_app/core/constants/app_dimensions.dart';
-import 'package:test_app/core/themes/app_colors.dart';
 import 'package:test_app/core/utils/ui_helpers.dart';
 import 'package:test_app/core/widgets/bottom_navigation_bar.dart';
-import 'package:test_app/core/widgets/custom_app_bar.dart';
 import 'package:test_app/core/widgets/loading_indicator.dart';
-import 'package:test_app/core/widgets/transactions_list_widget.dart';
 import 'package:test_app/features/home/presentation/cubit/home_cubit.dart';
-import 'package:test_app/features/home/presentation/widgets/dashboard_summary_widget.dart';
+import 'package:test_app/features/home/presentation/widgets/home_app_bar.dart';
+import 'package:test_app/features/home/presentation/widgets/home_loaded_view.dart';
 import 'package:test_app/injection_container.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -28,61 +25,10 @@ class HomeScreen extends StatelessWidget {
           }
         },
         child: Scaffold(
-          appBar: _buildAppBar(),
+          appBar: const HomeAppBar(),
           body: _buildBody(),
           bottomNavigationBar: const AppBottomNavigationBar(currentIndex: 0),
         ),
-      ),
-    );
-  }
-
-  PreferredSizeWidget _buildAppBar() {
-    return CustomAppBar(
-      height: AppDimensions.appBarHeightHome,
-      topPadding: AppDimensions.appBarTopPadding,
-      title: Transform.translate(
-        offset: const Offset(0, AppDimensions.appBarTitleOffsetY),
-        child: _buildAppBarContent(),
-      ),
-    );
-  }
-
-  Widget _buildAppBarContent() {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        _buildAppBarIcon(),
-        const SizedBox(width: AppDimensions.radiusMedium),
-        _buildAppBarTitle(),
-      ],
-    );
-  }
-
-  Widget _buildAppBarIcon() {
-    return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingSmall),
-      decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.2),
-        borderRadius: BorderRadius.circular(
-          AppDimensions.appBarIconContainerRadius,
-        ),
-      ),
-      child: const Icon(
-        Icons.shield_outlined,
-        color: Colors.white,
-        size: AppDimensions.iconMedium,
-      ),
-    );
-  }
-
-  Widget _buildAppBarTitle() {
-    return const Text(
-      'VaultFlow',
-      style: TextStyle(
-        fontSize: AppDimensions.fontSizeXXLarge,
-        fontWeight: FontWeight.bold,
-        color: AppColors.categoryTitleText,
-        letterSpacing: 0.5,
       ),
     );
   }
@@ -94,42 +40,13 @@ class HomeScreen extends StatelessWidget {
           HomeLoading() ||
           HomeInitial() => const LoadingIndicator(message: 'Loading...'),
           HomeLoaded(:final summary, :final recentTransactions) =>
-            _buildLoadedContent(context, summary, recentTransactions),
+            HomeLoadedView(
+              summary: summary,
+              recentTransactions: recentTransactions,
+            ),
           _ => const Center(child: Text('Something went wrong')),
         };
       },
-    );
-  }
-
-  Widget _buildLoadedContent(
-    BuildContext context,
-    summary,
-    recentTransactions,
-  ) {
-    return RefreshIndicator(
-      onRefresh: () => context.read<HomeCubit>().refreshHomeData(),
-      child: CustomScrollView(
-        slivers: [
-          _buildDashboardSection(context, summary),
-          _buildRecentTransactionsSection(recentTransactions),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildDashboardSection(BuildContext context, summary) {
-    return SliverToBoxAdapter(
-      child: Padding(
-        padding: const EdgeInsets.all(AppDimensions.paddingLarge),
-        child: DashboardSummary(summary: summary),
-      ),
-    );
-  }
-
-  Widget _buildRecentTransactionsSection(recentTransactions) {
-    return SliverPadding(
-      padding: const EdgeInsets.only(top: AppDimensions.paddingLarge),
-      sliver: TransactionsList(transactions: recentTransactions),
     );
   }
 }
