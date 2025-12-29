@@ -1,4 +1,4 @@
-import 'package:test_app/features/add_transaction/domain/entities/financial_summary_data.dart';
+import 'package:test_app/features/transaction/domain/entities/financial_summary_data.dart';
 
 class FinancialSummaryDataModel extends FinancialSummaryData {
   const FinancialSummaryDataModel({

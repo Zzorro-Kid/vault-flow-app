@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:test_app/features/auth/presentation/pages/auth_screen.dart';
 import 'package:test_app/features/category/presentation/pages/category_screen.dart';
 import 'package:test_app/features/home/presentation/pages/home_sceen.dart';
-import 'package:test_app/features/add_transaction/presentation/pages/transaction_screen.dart';
+import 'package:test_app/features/transaction/presentation/pages/transaction_screen.dart';
 // import 'package:test_app/features/reports/presentation/pages/reports_screen.dart';
 // import 'package:test_app/features/settings/presentation/pages/settings_screen.dart';
 

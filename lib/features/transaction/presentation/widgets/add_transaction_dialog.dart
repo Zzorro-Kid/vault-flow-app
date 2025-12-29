@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_app/core/constants/app_dimensions.dart';
 import 'package:test_app/core/themes/app_colors.dart';
-import 'package:test_app/features/add_transaction/domain/entities/transaction_data.dart';
+import 'package:test_app/features/transaction/domain/entities/transaction_data.dart';
 import 'package:test_app/features/category/domain/entities/category_data.dart';
 import 'package:test_app/features/category/presentation/cubit/category_cubit.dart';
 import 'package:test_app/features/category/presentation/cubit/category_state.dart';

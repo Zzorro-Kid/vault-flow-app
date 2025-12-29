@@ -1,11 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_app/core/usecases/usecase.dart';
-import 'package:test_app/features/add_transaction/domain/entities/transaction_data.dart';
-import 'package:test_app/features/add_transaction/domain/usecases/add_transaction_usecase.dart';
-import 'package:test_app/features/add_transaction/domain/usecases/delete_transaction_usecase.dart';
-import 'package:test_app/features/add_transaction/domain/usecases/get_all_transactions_usecase.dart';
-import 'package:test_app/features/add_transaction/domain/usecases/update_transaction_usecase.dart';
-import 'package:test_app/features/add_transaction/presentation/cubit/transaction_state.dart';
+import 'package:test_app/features/transaction/domain/entities/transaction_data.dart';
+import 'package:test_app/features/transaction/domain/usecases/add_transaction_usecase.dart';
+import 'package:test_app/features/transaction/domain/usecases/delete_transaction_usecase.dart';
+import 'package:test_app/features/transaction/domain/usecases/get_all_transactions_usecase.dart';
+import 'package:test_app/features/transaction/domain/usecases/update_transaction_usecase.dart';
+import 'package:test_app/features/transaction/presentation/cubit/transaction_state.dart';
 
 class TransactionCubit extends Cubit<TransactionState> {
   final GetAllTransactionsUseCase getAllTransactionsUseCase;

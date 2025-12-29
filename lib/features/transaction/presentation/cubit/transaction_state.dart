@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:test_app/features/add_transaction/domain/entities/transaction_data.dart';
+import 'package:test_app/features/transaction/domain/entities/transaction_data.dart';
 
 sealed class TransactionState extends Equatable {
   const TransactionState();
