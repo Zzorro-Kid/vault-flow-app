@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/core/constants/app_dimensions.dart';
+import 'package:test_app/core/constants/category_constants.dart';
 import 'package:test_app/core/themes/app_colors.dart';
 import 'package:test_app/features/category/domain/entities/category_data.dart';
 
@@ -24,29 +25,6 @@ class _EditCategoryDialogState extends State<EditCategoryDialog> {
   late String _selectedIcon;
   late int _selectedColor;
   late String _selectedType;
-
-  final List<Map<String, dynamic>> _availableIcons = [
-    {'name': 'category', 'icon': Icons.category},
-    {'name': 'restaurant', 'icon': Icons.restaurant},
-    {'name': 'directions_car', 'icon': Icons.directions_car},
-    {'name': 'shopping_cart', 'icon': Icons.shopping_cart},
-    {'name': 'movie', 'icon': Icons.movie},
-    {'name': 'local_hospital', 'icon': Icons.local_hospital},
-    {'name': 'account_balance_wallet', 'icon': Icons.account_balance_wallet},
-    {'name': 'work', 'icon': Icons.work},
-    {'name': 'trending_up', 'icon': Icons.trending_up},
-  ];
-
-  final List<int> _availableColors = [
-    0xFF4CAF50,
-    0xFFF44336,
-    0xFF2196F3,
-    0xFFFF9800,
-    0xFF9C27B0,
-    0xFFFFEB3B,
-    0xFF00BCD4,
-    0xFFE91E63,
-  ];
 
   @override
   void initState() {
@@ -230,7 +208,7 @@ class _EditCategoryDialogState extends State<EditCategoryDialog> {
     return Wrap(
       spacing: AppDimensions.paddingSmall,
       runSpacing: AppDimensions.paddingSmall,
-      children: _availableIcons.map((iconData) {
+      children: CategoryConstants.availableIcons.map((iconData) {
         return _buildIconItem(iconData);
       }).toList(),
     );
@@ -293,7 +271,7 @@ class _EditCategoryDialogState extends State<EditCategoryDialog> {
     return Wrap(
       spacing: AppDimensions.paddingSmall,
       runSpacing: AppDimensions.paddingSmall,
-      children: _availableColors.map((color) {
+      children: CategoryConstants.availableColors.map((color) {
         return _buildColorItem(color);
       }).toList(),
     );

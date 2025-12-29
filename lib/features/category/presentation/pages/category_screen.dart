@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_app/core/constants/app_dimensions.dart';
 import 'package:test_app/core/themes/app_colors.dart';
+import 'package:test_app/core/utils/list_helpers.dart';
 import 'package:test_app/core/utils/ui_helpers.dart';
 import 'package:test_app/core/widgets/bottom_navigation_bar.dart';
 import 'package:test_app/core/widgets/custom_app_bar.dart';
@@ -99,7 +100,11 @@ class CategoryScreen extends StatelessWidget {
     List<CategoryData> categories,
     String type,
   ) {
-    return categories.where((c) => c.type == type).toList();
+    return ListHelpers.filterByType(
+      items: categories,
+      type: type,
+      getType: (category) => category.type,
+    );
   }
 
   List<Widget> _buildCategorySection(
@@ -292,31 +297,11 @@ class CategoryScreen extends StatelessWidget {
   }
 
   void _showOperationSnackBar(BuildContext context, String message) {
-    final backgroundColor = _getSnackBarColor(message);
-
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message), backgroundColor: backgroundColor),
+      SnackBar(
+        content: Text(message),
+        backgroundColor: UiHelpers.getOperationSnackBarColor(message),
+      ),
     );
-  }
-
-  Color _getSnackBarColor(String message) {
-    final operationType = _getOperationType(message);
-
-    switch (operationType) {
-      case 'deleted':
-        return AppColors.error;
-      case 'updated':
-        return AppColors.primary;
-      case 'added':
-      default:
-        return AppColors.incomeStart;
-    }
-  }
-
-  String _getOperationType(String message) {
-    final lowerMessage = message.toLowerCase();
-    if (lowerMessage.contains('deleted')) return 'deleted';
-    if (lowerMessage.contains('updated')) return 'updated';
-    return 'added';
   }
 }

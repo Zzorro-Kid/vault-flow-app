@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/core/constants/app_dimensions.dart';
 import 'package:test_app/core/themes/app_colors.dart';
+import 'package:test_app/core/utils/icon_mapper.dart';
 import 'package:test_app/features/category/domain/entities/category_data.dart';
 
 class CategoryItem extends StatelessWidget {
@@ -52,34 +53,11 @@ class CategoryItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppDimensions.radiusLarge),
       ),
       child: Icon(
-        _getIconData(category.icon),
+        IconMapper.getIconData(category.icon),
         color: Color(category.color),
         size: AppDimensions.iconMedium,
       ),
     );
-  }
-
-  IconData _getIconData(String iconName) {
-    switch (iconName) {
-      case 'restaurant':
-        return Icons.restaurant;
-      case 'directions_car':
-        return Icons.directions_car;
-      case 'shopping_cart':
-        return Icons.shopping_cart;
-      case 'movie':
-        return Icons.movie;
-      case 'local_hospital':
-        return Icons.local_hospital;
-      case 'account_balance_wallet':
-        return Icons.account_balance_wallet;
-      case 'work':
-        return Icons.work;
-      case 'trending_up':
-        return Icons.trending_up;
-      default:
-        return Icons.category;
-    }
   }
 
   Widget _buildCategoryTitle() {
