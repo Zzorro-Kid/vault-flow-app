@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_app/core/utils/ui_helpers.dart';
+import 'package:test_app/core/widgets/bottom_navigation_bar.dart';
 import 'package:test_app/core/widgets/custom_app_bar.dart';
 import 'package:test_app/core/widgets/loading_indicator.dart';
 import 'package:test_app/features/statistics/domain/entities/statistics_data.dart';
@@ -10,22 +11,30 @@ import 'package:test_app/features/statistics/presentation/widgets/daily_trend_ch
 import 'package:test_app/features/statistics/presentation/widgets/period_selector.dart';
 import 'package:test_app/features/statistics/presentation/widgets/statistics_error_view.dart';
 import 'package:test_app/features/statistics/presentation/widgets/statistics_summary_card.dart';
+import 'package:test_app/injection_container.dart';
 
 class StatisticsScreen extends StatelessWidget {
   const StatisticsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<StatisticsCubit, StatisticsState>(
-      listener: (context, state) {
-        switch (state) {
-          case StatisticsError():
-            UiHelpers.showErrorSnackBar(context, state.message);
-          default:
-            break;
-        }
-      },
-      child: Scaffold(appBar: _buildAppBar(), body: _buildBody()),
+    return BlocProvider(
+      create: (_) => sl<StatisticsCubit>()..loadStatistics(),
+      child: BlocListener<StatisticsCubit, StatisticsState>(
+        listener: (context, state) {
+          switch (state) {
+            case StatisticsError():
+              UiHelpers.showErrorSnackBar(context, state.message);
+            default:
+              break;
+          }
+        },
+        child: Scaffold(
+          appBar: _buildAppBar(),
+          body: _buildBody(),
+          bottomNavigationBar: const AppBottomNavigationBar(currentIndex: 3),
+        ),
+      ),
     );
   }
 

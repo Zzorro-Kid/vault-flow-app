@@ -4,6 +4,7 @@ import 'package:test_app/core/constants/app_dimensions.dart';
 import 'package:test_app/core/themes/app_colors.dart';
 import 'package:test_app/core/utils/list_helpers.dart';
 import 'package:test_app/core/utils/ui_helpers.dart';
+import 'package:test_app/core/widgets/bottom_navigation_bar.dart';
 import 'package:test_app/core/widgets/custom_app_bar.dart';
 import 'package:test_app/core/widgets/loading_indicator.dart';
 import 'package:test_app/features/category/domain/entities/category_data.dart';
@@ -39,6 +40,7 @@ class CategoryScreen extends StatelessWidget {
           body: Stack(
             children: [_buildBody(), _buildFloatingActionButton(context)],
           ),
+          bottomNavigationBar: const AppBottomNavigationBar(currentIndex: 2),
         ),
       ),
     );
