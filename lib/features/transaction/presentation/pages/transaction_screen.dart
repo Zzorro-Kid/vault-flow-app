@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:test_app/core/constants/app_dimensions.dart';
 import 'package:test_app/core/themes/app_colors.dart';
+import 'package:test_app/core/utils/list_helpers.dart';
 import 'package:test_app/core/utils/ui_helpers.dart';
+import 'package:test_app/core/widgets/custom_app_bar.dart';
 import 'package:test_app/core/widgets/loading_indicator.dart';
 import 'package:test_app/features/category/presentation/cubit/category_cubit.dart';
+import 'package:test_app/features/transaction/domain/entities/transaction_data.dart';
 import 'package:test_app/features/transaction/presentation/cubit/transaction_cubit.dart';
 import 'package:test_app/features/transaction/presentation/cubit/transaction_state.dart';
 import 'package:test_app/features/transaction/presentation/widgets/add_transaction_dialog.dart';
-import 'package:test_app/features/transaction/presentation/widgets/transaction_app_bar.dart';
+import 'package:test_app/features/transaction/presentation/widgets/empty_transactions_view.dart';
 import 'package:test_app/features/transaction/presentation/widgets/transaction_error_view.dart';
-import 'package:test_app/features/transaction/presentation/widgets/transaction_loaded_view.dart';
+import 'package:test_app/features/transaction/presentation/widgets/transaction_item.dart';
 import 'package:test_app/injection_container.dart';
 
 class TransactionScreen extends StatelessWidget {
@@ -31,9 +35,28 @@ class TransactionScreen extends StatelessWidget {
           }
         },
         child: Scaffold(
-          appBar: const TransactionAppBar(),
-          body: _buildBody(),
-          floatingActionButton: _buildFAB(context),
+          appBar: _buildAppBar(),
+          body: Stack(
+            children: [_buildBody(), _buildFloatingActionButton(context)],
+          ),
+        ),
+      ),
+    );
+  }
+
+  PreferredSizeWidget _buildAppBar() {
+    return CustomAppBar(
+      height: AppDimensions.appBarHeightOther,
+      topPadding: AppDimensions.appBarTopPadding,
+      title: Transform.translate(
+        offset: const Offset(0, AppDimensions.appBarTitleOffsetY),
+        child: const Text(
+          'Transactions',
+          style: TextStyle(
+            fontSize: AppDimensions.fontSizeXXLarge,
+            fontWeight: FontWeight.bold,
+            color: AppColors.categoryTitleText,
+          ),
         ),
       ),
     );
@@ -44,15 +67,210 @@ class TransactionScreen extends StatelessWidget {
       builder: (context, state) {
         return switch (state) {
           TransactionLoading() => const LoadingIndicator(),
-          TransactionLoaded() =>
-            TransactionLoadedView(transactions: state.transactions),
+          TransactionLoaded() => _buildLoadedView(context, state.transactions),
           TransactionError() => TransactionErrorView(
-              message: state.message,
-              onRetry: () => context.read<TransactionCubit>().loadTransactions(),
-            ),
+            message: state.message,
+            onRetry: () => context.read<TransactionCubit>().loadTransactions(),
+          ),
           _ => const SizedBox.shrink(),
         };
       },
+    );
+  }
+
+  Widget _buildLoadedView(
+    BuildContext context,
+    List<TransactionData> transactions,
+  ) {
+    if (transactions.isEmpty) {
+      return const EmptyTransactionsView();
+    }
+
+    final expenseTransactions = _filterTransactionsByType(
+      transactions,
+      'expense',
+    );
+    final incomeTransactions = _filterTransactionsByType(
+      transactions,
+      'income',
+    );
+
+    return CustomScrollView(
+      slivers: [
+        if (expenseTransactions.isNotEmpty)
+          ..._buildTransactionSection(context, 'Expenses', expenseTransactions),
+        if (incomeTransactions.isNotEmpty)
+          ..._buildTransactionSection(context, 'Income', incomeTransactions),
+      ],
+    );
+  }
+
+  List<TransactionData> _filterTransactionsByType(
+    List<TransactionData> transactions,
+    String type,
+  ) {
+    return ListHelpers.filterByType(
+      items: transactions,
+      type: type,
+      getType: (transaction) => transaction.type,
+    );
+  }
+
+  List<Widget> _buildTransactionSection(
+    BuildContext context,
+    String title,
+    List<TransactionData> transactions,
+  ) {
+    return [
+      _buildSectionHeaderSliver(title),
+      _buildTransactionListSliver(context, transactions),
+    ];
+  }
+
+  Widget _buildSectionHeaderSliver(String title) {
+    return SliverPadding(
+      padding: const EdgeInsets.fromLTRB(
+        AppDimensions.paddingMedium,
+        AppDimensions.paddingLarge,
+        AppDimensions.paddingMedium,
+        AppDimensions.paddingSmall,
+      ),
+      sliver: SliverToBoxAdapter(child: _buildSectionHeader(title)),
+    );
+  }
+
+  Widget _buildSectionHeader(String title) {
+    return Text(
+      title,
+      style: const TextStyle(
+        fontSize: AppDimensions.fontSizeXLarge,
+        fontWeight: FontWeight.bold,
+        color: AppColors.sectionHeaderText,
+      ),
+    );
+  }
+
+  Widget _buildTransactionListSliver(
+    BuildContext context,
+    List<TransactionData> transactions,
+  ) {
+    return SliverPadding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppDimensions.paddingMedium,
+      ),
+      sliver: SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (context, index) =>
+              _buildDismissibleTransactionItem(context, transactions[index]),
+          childCount: transactions.length,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDismissibleTransactionItem(
+    BuildContext context,
+    TransactionData transaction,
+  ) {
+    return Dismissible(
+      key: Key(transaction.id),
+      direction: DismissDirection.endToStart,
+      background: _buildDismissBackground(),
+      confirmDismiss: (direction) => _confirmDelete(context, transaction),
+      child: TransactionItem(transaction: transaction),
+    );
+  }
+
+  Widget _buildDismissBackground() {
+    return Container(
+      margin: const EdgeInsets.only(bottom: AppDimensions.paddingMedium),
+      alignment: Alignment.centerRight,
+      padding: const EdgeInsets.only(right: AppDimensions.paddingLarge),
+      decoration: _buildDismissBackgroundDecoration(),
+      child: _buildDeleteIcon(),
+    );
+  }
+
+  BoxDecoration _buildDismissBackgroundDecoration() {
+    return BoxDecoration(
+      color: AppColors.error,
+      borderRadius: BorderRadius.circular(AppDimensions.radiusLarge),
+    );
+  }
+
+  Widget _buildDeleteIcon() {
+    return const Icon(
+      Icons.delete_outline,
+      color: Colors.white,
+      size: AppDimensions.iconLarge,
+    );
+  }
+
+  Future<bool?> _confirmDelete(
+    BuildContext context,
+    TransactionData transaction,
+  ) {
+    return showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        backgroundColor: AppColors.surfaceDark,
+        title: _buildDeleteDialogTitle(),
+        content: _buildDeleteDialogContent(transaction.description),
+        actions: _buildDeleteDialogActions(
+          dialogContext,
+          context,
+          transaction.id,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDeleteDialogTitle() {
+    return const Text(
+      'Delete Transaction',
+      style: TextStyle(color: AppColors.categoryTitleText),
+    );
+  }
+
+  Widget _buildDeleteDialogContent(String transactionTitle) {
+    return Text(
+      'Are you sure you want to delete "$transactionTitle"?',
+      style: const TextStyle(color: AppColors.sectionHeaderText),
+    );
+  }
+
+  List<Widget> _buildDeleteDialogActions(
+    BuildContext dialogContext,
+    BuildContext parentContext,
+    String transactionId,
+  ) {
+    return [
+      _buildCancelButton(dialogContext),
+      _buildDeleteButton(dialogContext, parentContext, transactionId),
+    ];
+  }
+
+  Widget _buildCancelButton(BuildContext dialogContext) {
+    return TextButton(
+      onPressed: () => Navigator.pop(dialogContext, false),
+      child: const Text('Cancel'),
+    );
+  }
+
+  Widget _buildDeleteButton(
+    BuildContext dialogContext,
+    BuildContext parentContext,
+    String transactionId,
+  ) {
+    return TextButton(
+      onPressed: () {
+        parentContext.read<TransactionCubit>().deleteTransaction(transactionId);
+        Navigator.pop(dialogContext, true);
+      },
+      child: const Text(
+        'Delete',
+        style: TextStyle(color: AppColors.expensesStart),
+      ),
     );
   }
 
@@ -65,11 +283,17 @@ class TransactionScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildFAB(BuildContext context) {
-    return FloatingActionButton(
-      onPressed: () => _showAddTransactionDialog(context),
-      backgroundColor: AppColors.primary,
-      child: const Icon(Icons.add, color: Colors.white),
+  Widget _buildFloatingActionButton(BuildContext context) {
+    return Positioned(
+      right: AppDimensions.paddingMedium,
+      bottom: AppDimensions.paddingMedium,
+      child: Builder(
+        builder: (builderContext) => FloatingActionButton(
+          onPressed: () => _showAddTransactionDialog(builderContext),
+          backgroundColor: AppColors.primary,
+          child: const Icon(Icons.add, color: Colors.white),
+        ),
+      ),
     );
   }
 
