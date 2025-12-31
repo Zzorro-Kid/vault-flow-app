@@ -7,6 +7,7 @@ class AppDimensions {
   static const double paddingXLarge = 32.0;
 
   // Border Radius
+  static const double radiusXSmall = 3.0;
   static const double radiusSmall = 4.0;
   static const double radiusMedium = 8.0;
   static const double radiusLarge = 12.0;
@@ -80,4 +81,43 @@ class AppDimensions {
 
   // Color Picker
   static const double colorPickerSize = 40.0;
+
+  // Statistics
+  static const double categoryIconSize = 40.0;
+  static const double categoryIconRadius = 10.0;
+  static const double progressBarMinHeight = 6.0;
+  static const double emptyStateIconSize = 64.0;
+  static const double emptyStatePadding = 40.0;
+  static const double cardPaddingLarge = 20.0;
+
+  // Daily Trend Chart
+  static const double chartHeight = 200.0;
+  static const double chartBarWidth = 20.0;
+  static const double chartBarMaxHeight = 160.0;
+  static const double chartBarSpacing = 4.0;
+  static const double chartShadowBlurRadius = 10.0;
+  static const double legendColorBoxSize = 12.0;
+  static const double legendItemSpacing = 6.0;
+  static const double legendSpacing = 24.0;
+  static const double fontSizeDateLabel = 11.0;
+  static const double fontSizeLegend = 13.0;
+
+  // Period Selector
+  static const double periodButtonPaddingVertical = 12.0;
+
+  // Statistics Summary Card
+  static const double summaryCardShadowBlurRadius = 12.0;
+  static const double summaryCardShadowOffsetY = 4.0;
+  static const double summaryCardIconSize = 32.0;
+  static const double summaryCardTrendIconPadding = 12.0;
+  static const double summaryCardItemIconSize = 16.0;
+  static const double summaryCardItemIconSpacing = 6.0;
+  static const double summaryCardItemSpacing = 12.0;
+  static const double summaryCardBalanceSpacing = 20.0;
+  static const double summaryCardBalanceTitleSpacing = 4.0;
+  static const double summaryCardItemVerticalSpacing = 8.0;
+  static const double fontSizeBalanceTitle = 16.0;
+  static const double fontSizeBalance = 28.0;
+  static const double fontSizeSummaryItemLabel = 12.0;
+  static const double fontSizeSummaryItemAmount = 18.0;
 }

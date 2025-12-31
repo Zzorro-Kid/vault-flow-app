@@ -74,4 +74,18 @@ class AppColors {
 
   // Button Colors
   static const Color buttonTransparent = Colors.transparent;
+
+  // Statistics Colors
+  static const Color cardBackground = Colors.white;
+  static const Color progressBarBackground = Color(0xFFE5E7EB); // Colors.grey[200]
+  static const Color emptyStateIconGrey = Colors.grey;
+  static const Color emptyStateTextGrey = Colors.grey;
+
+  // Period Selector Colors
+  static const Color periodButtonTextActive = Colors.white;
+  static const Color periodButtonTextInactive = Color(0xFF616161); // Colors.grey[700]
+
+  // Summary Card Colors
+  static const Color summaryCardText = Colors.white;
+  static const Color summaryCardTextSecondary = Colors.white70;
 }

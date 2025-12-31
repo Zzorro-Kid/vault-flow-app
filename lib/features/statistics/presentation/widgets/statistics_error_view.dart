@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:test_app/core/constants/app_dimensions.dart';
+import 'package:test_app/core/themes/app_colors.dart';
 
 class StatisticsErrorView extends StatelessWidget {
   final String message;
@@ -16,21 +18,37 @@ class StatisticsErrorView extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(Icons.error_outline, size: 64, color: Colors.red),
-          const SizedBox(height: 16),
-          Text(
-            message,
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 16),
-          ),
-          const SizedBox(height: 24),
-          ElevatedButton.icon(
-            onPressed: onRetry,
-            icon: const Icon(Icons.refresh),
-            label: const Text('Retry'),
-          ),
+          _buildErrorIcon(),
+          const SizedBox(height: AppDimensions.spacingMedium),
+          _buildErrorMessage(),
+          const SizedBox(height: AppDimensions.spacingLarge),
+          _buildRetryButton(),
         ],
       ),
+    );
+  }
+
+  Widget _buildErrorIcon() {
+    return const Icon(
+      Icons.error_outline,
+      size: AppDimensions.emptyStateIconSize,
+      color: AppColors.error,
+    );
+  }
+
+  Widget _buildErrorMessage() {
+    return Text(
+      message,
+      textAlign: TextAlign.center,
+      style: const TextStyle(fontSize: AppDimensions.fontSizeLarge),
+    );
+  }
+
+  Widget _buildRetryButton() {
+    return ElevatedButton.icon(
+      onPressed: onRetry,
+      icon: const Icon(Icons.refresh),
+      label: const Text('Retry'),
     );
   }
 }

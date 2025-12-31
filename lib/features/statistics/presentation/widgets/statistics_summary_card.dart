@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:test_app/core/constants/app_dimensions.dart';
 import 'package:test_app/core/themes/app_colors.dart';
 import 'package:test_app/core/utils/currency_formatter.dart';
 import 'package:test_app/features/statistics/domain/entities/statistics_data.dart';
+import 'package:test_app/core/utils/period_formatter.dart';
 
 class StatisticsSummaryCard extends StatelessWidget {
   final StatisticsData statistics;
@@ -11,103 +13,146 @@ class StatisticsSummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [AppColors.balanceStart, AppColors.balanceEnd],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.balanceStart.withValues(alpha: 0.3),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      padding: const EdgeInsets.all(20),
+      decoration: _buildContainerDecoration(),
+      padding: const EdgeInsets.all(AppDimensions.cardPaddingLarge),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Summary for ${_formatPeriod(statistics.period)}',
-            style: const TextStyle(
-              color: Colors.white70,
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          const SizedBox(height: 16),
+          _buildPeriodHeader(),
+          const SizedBox(height: AppDimensions.spacingMedium),
           _buildBalanceRow(),
-          const SizedBox(height: 20),
-          Row(
-            children: [
-              Expanded(
-                child: _buildSummaryItem(
-                  'Income',
-                  statistics.totalIncome,
-                  AppColors.incomeStart,
-                  Icons.arrow_downward,
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: _buildSummaryItem(
-                  'Expenses',
-                  statistics.totalExpense,
-                  AppColors.expensesStart,
-                  Icons.arrow_upward,
-                ),
-              ),
-            ],
-          ),
+          const SizedBox(height: AppDimensions.summaryCardBalanceSpacing),
+          _buildIncomeExpenseRow(),
         ],
       ),
     );
   }
 
-  Widget _buildBalanceRow() {
-    final isPositive = statistics.balance >= 0;
+  BoxDecoration _buildContainerDecoration() {
+    return BoxDecoration(
+      gradient: _buildGradient(),
+      borderRadius: BorderRadius.circular(AppDimensions.radiusXLarge),
+      boxShadow: [_buildBoxShadow()],
+    );
+  }
 
+  LinearGradient _buildGradient() {
+    return const LinearGradient(
+      colors: [AppColors.balanceStart, AppColors.balanceEnd],
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    );
+  }
+
+  BoxShadow _buildBoxShadow() {
+    return BoxShadow(
+      color: AppColors.balanceStart.withValues(alpha: 0.3),
+      blurRadius: AppDimensions.summaryCardShadowBlurRadius,
+      offset: const Offset(0, AppDimensions.summaryCardShadowOffsetY),
+    );
+  }
+
+  Widget _buildPeriodHeader() {
+    return Text(
+      'Summary for ${PeriodFormatter.format(statistics.period)}',
+      style: const TextStyle(
+        color: AppColors.summaryCardTextSecondary,
+        fontSize: AppDimensions.fontSizeMedium,
+        fontWeight: FontWeight.w500,
+      ),
+    );
+  }
+
+  Widget _buildIncomeExpenseRow() {
+    return Row(
+      children: [
+        _buildIncomeItem(),
+        const SizedBox(width: AppDimensions.summaryCardItemSpacing),
+        _buildExpenseItem(),
+      ],
+    );
+  }
+
+  Widget _buildIncomeItem() {
+    return _buildSummaryItem(
+      'Income',
+      statistics.totalIncome,
+      AppColors.incomeStart,
+      Icons.arrow_downward,
+    );
+  }
+
+  Widget _buildExpenseItem() {
+    return _buildSummaryItem(
+      'Expenses',
+      statistics.totalExpense,
+      AppColors.expensesStart,
+      Icons.arrow_upward,
+    );
+  }
+
+  Widget _buildBalanceRow() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [_buildBalanceInfo(), _buildTrendIcon()],
+    );
+  }
+
+  Widget _buildBalanceInfo() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Net Balance',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              CurrencyFormatter.format(statistics.balance, 'USD'),
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-        Container(
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.2),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Icon(
-            isPositive ? Icons.trending_up : Icons.trending_down,
-            color: Colors.white,
-            size: 32,
-          ),
-        ),
+        _buildBalanceTitle(),
+        const SizedBox(height: AppDimensions.summaryCardBalanceTitleSpacing),
+        _buildBalanceAmount(),
       ],
+    );
+  }
+
+  Widget _buildBalanceTitle() {
+    return const Text(
+      'Net Balance',
+      style: TextStyle(
+        color: AppColors.summaryCardText,
+        fontSize: AppDimensions.fontSizeBalanceTitle,
+        fontWeight: FontWeight.w600,
+      ),
+    );
+  }
+
+  Widget _buildBalanceAmount() {
+    return Text(
+      CurrencyFormatter.format(statistics.balance, 'USD'),
+      style: const TextStyle(
+        color: AppColors.summaryCardText,
+        fontSize: AppDimensions.fontSizeBalance,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+
+  Widget _buildTrendIcon() {
+    final isPositive = statistics.balance >= 0;
+
+    return Container(
+      padding: const EdgeInsets.all(AppDimensions.summaryCardTrendIconPadding),
+      decoration: _buildTrendIconDecoration(),
+      child: _buildTrendIconWidget(isPositive),
+    );
+  }
+
+  BoxDecoration _buildTrendIconDecoration() {
+    return BoxDecoration(
+      color: AppColors.summaryCardText.withValues(alpha: 0.2),
+      borderRadius: BorderRadius.circular(AppDimensions.radiusLarge),
+    );
+  }
+
+  Widget _buildTrendIconWidget(bool isPositive) {
+    return Icon(
+      isPositive ? Icons.trending_up : Icons.trending_down,
+      color: AppColors.summaryCardText,
+      size: AppDimensions.summaryCardIconSize,
     );
   }
 
@@ -117,50 +162,76 @@ class StatisticsSummaryCard extends StatelessWidget {
     Color color,
     IconData icon,
   ) {
+    return Expanded(child: _buildSummaryItemContainer(label, amount, icon));
+  }
+
+  Widget _buildSummaryItemContainer(
+    String label,
+    double amount,
+    IconData icon,
+  ) {
     return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(icon, color: Colors.white, size: 16),
-              const SizedBox(width: 6),
-              Text(
-                label,
-                style: const TextStyle(
-                  color: Colors.white70,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Text(
-            CurrencyFormatter.format(amount, 'USD'),
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
+      padding: const EdgeInsets.all(AppDimensions.paddingMedium),
+      decoration: _buildSummaryItemDecoration(),
+      child: _buildSummaryItemColumn(label, amount, icon),
+    );
+  }
+
+  Widget _buildSummaryItemColumn(String label, double amount, IconData icon) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildSummaryItemHeader(label, icon),
+        const SizedBox(height: AppDimensions.summaryCardItemVerticalSpacing),
+        _buildSummaryItemAmount(amount),
+      ],
+    );
+  }
+
+  BoxDecoration _buildSummaryItemDecoration() {
+    return BoxDecoration(
+      color: AppColors.summaryCardText.withValues(alpha: 0.15),
+      borderRadius: BorderRadius.circular(AppDimensions.radiusLarge),
+    );
+  }
+
+  Widget _buildSummaryItemHeader(String label, IconData icon) {
+    return Row(
+      children: [
+        _buildSummaryItemIcon(icon),
+        const SizedBox(width: AppDimensions.summaryCardItemIconSpacing),
+        _buildSummaryItemLabel(label),
+      ],
+    );
+  }
+
+  Widget _buildSummaryItemIcon(IconData icon) {
+    return Icon(
+      icon,
+      color: AppColors.summaryCardText,
+      size: AppDimensions.summaryCardItemIconSize,
+    );
+  }
+
+  Widget _buildSummaryItemLabel(String label) {
+    return Text(
+      label,
+      style: const TextStyle(
+        color: AppColors.summaryCardTextSecondary,
+        fontSize: AppDimensions.fontSizeSummaryItemLabel,
+        fontWeight: FontWeight.w500,
       ),
     );
   }
 
-  String _formatPeriod(String period) {
-    return switch (period) {
-      'day' => 'Today',
-      'week' => 'This Week',
-      'month' => 'This Month',
-      'year' => 'This Year',
-      _ => 'This Month',
-    };
+  Widget _buildSummaryItemAmount(double amount) {
+    return Text(
+      CurrencyFormatter.format(amount, 'USD'),
+      style: const TextStyle(
+        color: AppColors.summaryCardText,
+        fontSize: AppDimensions.fontSizeSummaryItemAmount,
+        fontWeight: FontWeight.bold,
+      ),
+    );
   }
 }

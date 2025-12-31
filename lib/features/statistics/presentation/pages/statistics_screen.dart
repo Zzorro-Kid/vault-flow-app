@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:test_app/core/constants/app_dimensions.dart';
+import 'package:test_app/core/themes/app_colors.dart';
 import 'package:test_app/core/utils/ui_helpers.dart';
 import 'package:test_app/core/widgets/bottom_navigation_bar.dart';
 import 'package:test_app/core/widgets/custom_app_bar.dart';
@@ -39,13 +41,17 @@ class StatisticsScreen extends StatelessWidget {
   }
 
   PreferredSizeWidget _buildAppBar() {
-    return const CustomAppBar(
-      title: Text(
-        'Statistics',
-        style: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
+    return CustomAppBar(
+      height: AppDimensions.appBarHeightOther,
+      title: Transform.translate(
+        offset: const Offset(0, AppDimensions.appBarTitleOffsetY),
+        child: const Text(
+          'Statistics',
+          style: TextStyle(
+            fontSize: AppDimensions.fontSizeXXLarge,
+            fontWeight: FontWeight.bold,
+            color: AppColors.categoryTitleText,
+          ),
         ),
       ),
     );
@@ -72,27 +78,35 @@ class StatisticsScreen extends StatelessWidget {
       onRefresh: () => context.read<StatisticsCubit>().refreshStatistics(),
       child: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppDimensions.paddingMedium),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            PeriodSelector(
-              currentPeriod: context.read<StatisticsCubit>().currentPeriod,
-              onPeriodChanged: (period) {
-                context.read<StatisticsCubit>().changePeriod(period);
-              },
-            ),
-            const SizedBox(height: 16),
+            _buildPeriodSelector(context),
+            const SizedBox(height: AppDimensions.spacingMedium),
             StatisticsSummaryCard(statistics: statistics),
-            const SizedBox(height: 16),
-            CategoryBreakdownChart(
-              categoryBreakdown: statistics.categoryBreakdown,
-            ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppDimensions.spacingMedium),
+            _buildCategoryBreakdown(statistics),
+            const SizedBox(height: AppDimensions.spacingMedium),
             DailyTrendChart(dailyTrends: statistics.dailyTrends),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildPeriodSelector(BuildContext context) {
+    return PeriodSelector(
+      currentPeriod: context.read<StatisticsCubit>().currentPeriod,
+      onPeriodChanged: (period) {
+        context.read<StatisticsCubit>().changePeriod(period);
+      },
+    );
+  }
+
+  Widget _buildCategoryBreakdown(StatisticsData statistics) {
+    return CategoryBreakdownChart(
+      categoryBreakdown: statistics.categoryBreakdown,
     );
   }
 }
