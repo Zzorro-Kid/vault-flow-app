@@ -6,7 +6,7 @@ import 'package:test_app/core/utils/ui_helpers.dart';
 import 'package:test_app/core/widgets/bottom_navigation_bar.dart';
 import 'package:test_app/core/widgets/custom_app_bar.dart';
 import 'package:test_app/core/widgets/loading_indicator.dart';
-import 'package:test_app/core/widgets/transactions_list_widget.dart';
+import 'package:test_app/features/home/presentation/widgets/transactions_list.dart';
 import 'package:test_app/features/home/domain/entities/dashboard_summary_data.dart';
 import 'package:test_app/features/home/presentation/cubit/home_cubit.dart';
 import 'package:test_app/features/home/presentation/widgets/dashboard_summary_widget.dart';

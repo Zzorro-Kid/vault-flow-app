@@ -27,7 +27,7 @@ class DashboardSummary extends StatelessWidget {
       'Dashboard',
       style: Theme.of(context).textTheme.titleLarge?.copyWith(
         fontWeight: FontWeight.bold,
-        color: AppColors.categoryTitleText,
+        color: AppColors.sectionHeaderText,
       ),
     );
   }
