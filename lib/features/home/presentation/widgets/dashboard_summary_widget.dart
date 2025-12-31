@@ -35,26 +35,34 @@ class DashboardSummary extends StatelessWidget {
   Widget _buildExpensesAndIncomeCards(BuildContext context) {
     return Row(
       children: [
-        Expanded(
-          child: _buildSummaryCard(
-            context: context,
-            icon: Icons.trending_down,
-            title: 'Expenses',
-            amount: summary.totalExpenses,
-            gradient: _buildExpensesGradient(),
-          ),
-        ),
+        _buildExpensesCard(context),
         const SizedBox(width: AppDimensions.paddingMedium),
-        Expanded(
-          child: _buildSummaryCard(
-            context: context,
-            icon: Icons.trending_up,
-            title: 'Incomes',
-            amount: summary.totalIncome,
-            gradient: _buildIncomeGradient(),
-          ),
-        ),
+        _buildIncomeCard(context),
       ],
+    );
+  }
+
+  Widget _buildExpensesCard(BuildContext context) {
+    return Expanded(
+      child: _buildSummaryCard(
+        context: context,
+        icon: Icons.trending_down,
+        title: 'Expenses',
+        amount: summary.totalExpenses,
+        gradient: _buildExpensesGradient(),
+      ),
+    );
+  }
+
+  Widget _buildIncomeCard(BuildContext context) {
+    return Expanded(
+      child: _buildSummaryCard(
+        context: context,
+        icon: Icons.trending_up,
+        title: 'Incomes',
+        amount: summary.totalIncome,
+        gradient: _buildIncomeGradient(),
+      ),
     );
   }
 
@@ -122,14 +130,18 @@ class DashboardSummary extends StatelessWidget {
     return BoxDecoration(
       gradient: gradient,
       borderRadius: BorderRadius.circular(AppDimensions.radiusXXLarge),
-      boxShadow: [
-        BoxShadow(
-          color: gradient.colors.first.withValues(alpha: 0.3),
-          blurRadius: AppDimensions.shadowBlurRadius,
-          offset: const Offset(0, AppDimensions.shadowOffsetY),
-        ),
-      ],
+      boxShadow: _buildCardBoxShadow(gradient),
     );
+  }
+
+  List<BoxShadow> _buildCardBoxShadow(LinearGradient gradient) {
+    return [
+      BoxShadow(
+        color: gradient.colors.first.withValues(alpha: 0.3),
+        blurRadius: AppDimensions.shadowBlurRadius,
+        offset: const Offset(0, AppDimensions.shadowOffsetY),
+      ),
+    ];
   }
 
   Widget _buildCardIcon(IconData icon) {
