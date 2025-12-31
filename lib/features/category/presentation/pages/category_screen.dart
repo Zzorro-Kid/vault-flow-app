@@ -49,16 +49,24 @@ class CategoryScreen extends StatelessWidget {
   PreferredSizeWidget _buildAppBar() {
     return CustomAppBar(
       height: AppDimensions.appBarHeightOther,
-      title: Transform.translate(
-        offset: const Offset(0, AppDimensions.appBarTitleOffsetY),
-        child: const Text(
-          'Categories',
-          style: TextStyle(
-            fontSize: AppDimensions.fontSizeXXLarge,
-            fontWeight: FontWeight.bold,
-            color: AppColors.categoryTitleText,
-          ),
-        ),
+      title: _buildAppBarTitle(),
+    );
+  }
+
+  Widget _buildAppBarTitle() {
+    return Transform.translate(
+      offset: const Offset(0, AppDimensions.appBarTitleOffsetY),
+      child: _buildAppBarTitleText(),
+    );
+  }
+
+  Widget _buildAppBarTitleText() {
+    return const Text(
+      'Categories',
+      style: TextStyle(
+        fontSize: AppDimensions.fontSizeXXLarge,
+        fontWeight: FontWeight.bold,
+        color: AppColors.categoryTitleText,
       ),
     );
   }
@@ -84,25 +92,52 @@ class CategoryScreen extends StatelessWidget {
       return const EmptyCategoriesView();
     }
 
-    final expenseCategories = _filterCategoriesByType(categories, 'expense');
-    final incomeCategories = _filterCategoriesByType(categories, 'income');
+    return _buildCategoriesScrollView(context, categories);
+  }
+
+  Widget _buildCategoriesScrollView(
+    BuildContext context,
+    List<CategoryData> categories,
+  ) {
+    final expenseCategories = _getExpenseCategories(categories);
+    final incomeCategories = _getIncomeCategories(categories);
 
     return CustomScrollView(
-      slivers: [
-        if (expenseCategories.isNotEmpty)
-          ..._buildCategorySection(
-            context,
-            'Expense Categories',
-            expenseCategories,
-          ),
-        if (incomeCategories.isNotEmpty)
-          ..._buildCategorySection(
-            context,
-            'Income Categories',
-            incomeCategories,
-          ),
-      ],
+      slivers: _buildCategorySlivers(
+        context,
+        expenseCategories,
+        incomeCategories,
+      ),
     );
+  }
+
+  List<CategoryData> _getExpenseCategories(List<CategoryData> categories) {
+    return _filterCategoriesByType(categories, 'expense');
+  }
+
+  List<CategoryData> _getIncomeCategories(List<CategoryData> categories) {
+    return _filterCategoriesByType(categories, 'income');
+  }
+
+  List<Widget> _buildCategorySlivers(
+    BuildContext context,
+    List<CategoryData> expenseCategories,
+    List<CategoryData> incomeCategories,
+  ) {
+    return [
+      if (expenseCategories.isNotEmpty)
+        ..._buildCategorySection(
+          context,
+          'Expense Categories',
+          expenseCategories,
+        ),
+      if (incomeCategories.isNotEmpty)
+        ..._buildCategorySection(
+          context,
+          'Income Categories',
+          incomeCategories,
+        ),
+    ];
   }
 
   List<CategoryData> _filterCategoriesByType(

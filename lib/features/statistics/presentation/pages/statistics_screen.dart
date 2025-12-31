@@ -43,16 +43,24 @@ class StatisticsScreen extends StatelessWidget {
   PreferredSizeWidget _buildAppBar() {
     return CustomAppBar(
       height: AppDimensions.appBarHeightOther,
-      title: Transform.translate(
-        offset: const Offset(0, AppDimensions.appBarTitleOffsetY),
-        child: const Text(
-          'Statistics',
-          style: TextStyle(
-            fontSize: AppDimensions.fontSizeXXLarge,
-            fontWeight: FontWeight.bold,
-            color: AppColors.categoryTitleText,
-          ),
-        ),
+      title: _buildAppBarTitle(),
+    );
+  }
+
+  Widget _buildAppBarTitle() {
+    return Transform.translate(
+      offset: const Offset(0, AppDimensions.appBarTitleOffsetY),
+      child: _buildAppBarTitleText(),
+    );
+  }
+
+  Widget _buildAppBarTitleText() {
+    return const Text(
+      'Statistics',
+      style: TextStyle(
+        fontSize: AppDimensions.fontSizeXXLarge,
+        fontWeight: FontWeight.bold,
+        color: AppColors.categoryTitleText,
       ),
     );
   }
