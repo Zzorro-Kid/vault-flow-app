@@ -49,16 +49,24 @@ class TransactionScreen extends StatelessWidget {
   PreferredSizeWidget _buildAppBar() {
     return CustomAppBar(
       height: AppDimensions.appBarHeightOther,
-      title: Transform.translate(
-        offset: const Offset(0, AppDimensions.appBarTitleOffsetY),
-        child: const Text(
-          'Transactions',
-          style: TextStyle(
-            fontSize: AppDimensions.fontSizeXXLarge,
-            fontWeight: FontWeight.bold,
-            color: AppColors.categoryTitleText,
-          ),
-        ),
+      title: _buildAppBarTitle(),
+    );
+  }
+
+  Widget _buildAppBarTitle() {
+    return Transform.translate(
+      offset: const Offset(0, AppDimensions.appBarTitleOffsetY),
+      child: _buildAppBarTitleText(),
+    );
+  }
+
+  Widget _buildAppBarTitleText() {
+    return const Text(
+      'Transactions',
+      style: TextStyle(
+        fontSize: AppDimensions.fontSizeXXLarge,
+        fontWeight: FontWeight.bold,
+        color: AppColors.categoryTitleText,
       ),
     );
   }
@@ -87,23 +95,48 @@ class TransactionScreen extends StatelessWidget {
       return const EmptyTransactionsView();
     }
 
-    final expenseTransactions = _filterTransactionsByType(
-      transactions,
-      'expense',
-    );
-    final incomeTransactions = _filterTransactionsByType(
-      transactions,
-      'income',
-    );
+    return _buildTransactionsScrollView(context, transactions);
+  }
+
+  Widget _buildTransactionsScrollView(
+    BuildContext context,
+    List<TransactionData> transactions,
+  ) {
+    final expenseTransactions = _getExpenseTransactions(transactions);
+    final incomeTransactions = _getIncomeTransactions(transactions);
 
     return CustomScrollView(
-      slivers: [
-        if (expenseTransactions.isNotEmpty)
-          ..._buildTransactionSection(context, 'Expenses', expenseTransactions),
-        if (incomeTransactions.isNotEmpty)
-          ..._buildTransactionSection(context, 'Income', incomeTransactions),
-      ],
+      slivers: _buildTransactionSlivers(
+        context,
+        expenseTransactions,
+        incomeTransactions,
+      ),
     );
+  }
+
+  List<TransactionData> _getExpenseTransactions(
+    List<TransactionData> transactions,
+  ) {
+    return _filterTransactionsByType(transactions, 'expense');
+  }
+
+  List<TransactionData> _getIncomeTransactions(
+    List<TransactionData> transactions,
+  ) {
+    return _filterTransactionsByType(transactions, 'income');
+  }
+
+  List<Widget> _buildTransactionSlivers(
+    BuildContext context,
+    List<TransactionData> expenseTransactions,
+    List<TransactionData> incomeTransactions,
+  ) {
+    return [
+      if (expenseTransactions.isNotEmpty)
+        ..._buildTransactionSection(context, 'Expenses', expenseTransactions),
+      if (incomeTransactions.isNotEmpty)
+        ..._buildTransactionSection(context, 'Income', incomeTransactions),
+    ];
   }
 
   List<TransactionData> _filterTransactionsByType(
