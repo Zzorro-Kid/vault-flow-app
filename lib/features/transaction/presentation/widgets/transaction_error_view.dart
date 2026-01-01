@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/core/constants/app_dimensions.dart';
-import 'package:test_app/core/themes/app_colors.dart';
+import 'package:test_app/core/constants/app_colors.dart';
 
 class TransactionErrorView extends StatelessWidget {
   final String message;
@@ -50,9 +50,7 @@ class TransactionErrorView extends StatelessWidget {
   Widget _buildRetryButton() {
     return ElevatedButton(
       onPressed: onRetry,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.primary,
-      ),
+      style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
       child: const Text('Retry'),
     );
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/core/constants/app_dimensions.dart';
-import 'package:test_app/core/themes/app_colors.dart';
+import 'package:test_app/core/constants/app_colors.dart';
 import 'package:test_app/features/statistics/domain/entities/daily_trend_data.dart';
 import 'package:test_app/core/utils/chart_calculator.dart';
 import 'package:intl/intl.dart';

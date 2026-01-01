@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:device_preview_plus/device_preview_plus.dart';
 import 'package:test_app/core/routes/app_routes.dart';
-import 'package:test_app/core/themes/app_theme.dart';
+import 'package:test_app/core/constants/app_theme.dart';
 import 'package:test_app/injection_container.dart' as di;
 
 void main() async {

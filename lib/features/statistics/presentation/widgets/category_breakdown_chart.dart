@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/core/constants/app_dimensions.dart';
-import 'package:test_app/core/themes/app_colors.dart';
+import 'package:test_app/core/constants/app_colors.dart';
 import 'package:test_app/core/utils/currency_formatter.dart';
 import 'package:test_app/features/statistics/domain/entities/category_breakdown_data.dart';
 import 'package:test_app/core/utils/category_icon_mapper.dart';
@@ -153,10 +153,7 @@ class CategoryBreakdownChart extends StatelessWidget {
   Widget _buildCategoryAmount(CategoryBreakdownData breakdown) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        _buildAmountText(breakdown),
-        _buildPercentageText(breakdown),
-      ],
+      children: [_buildAmountText(breakdown), _buildPercentageText(breakdown)],
     );
   }
 

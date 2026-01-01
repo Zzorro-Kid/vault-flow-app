@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/core/constants/app_dimensions.dart';
 import 'package:test_app/core/constants/category_constants.dart';
-import 'package:test_app/core/themes/app_colors.dart';
+import 'package:test_app/core/constants/app_colors.dart';
 import 'package:test_app/core/utils/id_generator.dart';
 import 'package:test_app/features/category/domain/entities/category_data.dart';
 
@@ -281,7 +281,9 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
       color: Color(color),
       shape: BoxShape.circle,
       border: Border.all(
-        color: isSelected ? AppColors.dialogInputBorder : AppColors.buttonTransparent,
+        color: isSelected
+            ? AppColors.dialogInputBorder
+            : AppColors.buttonTransparent,
         width: AppDimensions.borderWidthMedium,
       ),
     );

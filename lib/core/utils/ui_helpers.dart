@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/core/themes/app_colors.dart';
+import 'package:test_app/core/constants/app_colors.dart';
 
 class UiHelpers {
   UiHelpers._();
