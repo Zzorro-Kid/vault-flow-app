@@ -3,6 +3,10 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test_app/core/secure_prefs.dart';
 import 'package:test_app/core/shared_prefs.dart';
+import 'package:test_app/core/services/storage_service.dart';
+import 'package:test_app/core/services/auth_service.dart';
+import 'package:test_app/core/services/export_service.dart';
+import 'package:test_app/core/services/financial_service.dart';
 import 'package:test_app/core/usecases/get_recent_transactions_usecase.dart';
 import 'package:test_app/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:test_app/features/auth/data/sources/auth_local_data_source.dart';
@@ -76,6 +80,16 @@ Future<void> _initCore() async {
 
   sl.registerLazySingleton(() => SharedPrefs(sl()));
   sl.registerLazySingleton(() => SecurePrefs(sl()));
+
+  // Register core services
+  sl.registerLazySingleton(() => StorageService(securePrefs: sl()));
+  sl.registerLazySingleton(() => const AuthService());
+  sl.registerLazySingleton(() => FinancialService());
+  sl.registerLazySingleton(
+    () => ExportService(
+      calculateFinancialSummary: sl<FinancialService>().calculateFinancialSummary,
+    ),
+  );
 }
 
 void _initAuth() {
@@ -100,7 +114,14 @@ void _initAuth() {
   );
 
   sl.registerLazySingleton<AuthLocalDataSource>(
-    () => AuthLocalDataSourceImpl(sharedPrefs: sl(), securePrefs: sl()),
+    () => AuthLocalDataSourceImpl(
+      sharedPrefs: sl(),
+      securePrefs: sl(),
+      storageService: sl(),
+      authService: sl(),
+      exportService: sl(),
+      financialService: sl(),
+    ),
   );
 }
 
@@ -120,7 +141,12 @@ void _initHome() {
   );
 
   sl.registerLazySingleton<HomeLocalDataSource>(
-    () => HomeLocalDataSourceImpl(securePrefs: sl()),
+    () => HomeLocalDataSourceImpl(
+      storageService: sl(),
+      authService: sl(),
+      exportService: sl(),
+      financialService: sl(),
+    ),
   );
 }
 
@@ -144,7 +170,12 @@ void _initCategory() {
   );
 
   sl.registerLazySingleton<CategoryLocalDataSource>(
-    () => CategoryLocalDataSourceImpl(securePrefs: sl()),
+    () => CategoryLocalDataSourceImpl(
+      storageService: sl(),
+      authService: sl(),
+      exportService: sl(),
+      financialService: sl(),
+    ),
   );
 }
 
@@ -168,7 +199,12 @@ void _initTransaction() {
   );
 
   sl.registerLazySingleton<TransactionLocalDataSource>(
-    () => TransactionLocalDataSourceImpl(securePrefs: sl()),
+    () => TransactionLocalDataSourceImpl(
+      storageService: sl(),
+      authService: sl(),
+      exportService: sl(),
+      financialService: sl(),
+    ),
   );
 }
 
@@ -182,7 +218,12 @@ void _initStatistics() {
   );
 
   sl.registerLazySingleton<StatisticsLocalDataSource>(
-    () => StatisticsLocalDataSourceImpl(securePrefs: sl()),
+    () => StatisticsLocalDataSourceImpl(
+      storageService: sl(),
+      authService: sl(),
+      exportService: sl(),
+      financialService: sl(),
+    ),
   );
 }
 
@@ -223,6 +264,12 @@ void _initSettings() {
   );
 
   sl.registerLazySingleton<SettingsLocalDataSource>(
-    () => SettingsLocalDataSourceImpl(securePrefs: sl()),
+    () => SettingsLocalDataSourceImpl(
+      securePrefs: sl(),
+      storageService: sl(),
+      authService: sl(),
+      exportService: sl(),
+      financialService: sl(),
+    ),
   );
 }

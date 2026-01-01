@@ -1,6 +1,5 @@
 import 'package:test_app/features/transaction/data/models/transaction_data_model.dart';
 import 'package:test_app/core/data/sources/base_local_data_source.dart';
-import 'package:test_app/core/secure_prefs.dart';
 
 abstract class TransactionLocalDataSource {
   Future<List<TransactionDataModel>> getAllTransactions();
@@ -11,10 +10,12 @@ abstract class TransactionLocalDataSource {
 
 class TransactionLocalDataSourceImpl extends BaseLocalDataSource
     implements TransactionLocalDataSource {
-  @override
-  final SecurePrefs securePrefs;
-
-  TransactionLocalDataSourceImpl({required this.securePrefs});
+  TransactionLocalDataSourceImpl({
+    required super.storageService,
+    required super.authService,
+    required super.exportService,
+    required super.financialService,
+  });
 
   @override
   Future<List<TransactionDataModel>> getAllTransactions() async {

@@ -1,6 +1,5 @@
 import 'package:test_app/features/transaction/data/models/transaction_data_model.dart';
 import 'package:test_app/core/data/sources/base_local_data_source.dart';
-import 'package:test_app/core/secure_prefs.dart';
 import 'package:test_app/features/home/data/models/dashboard_summary_data_model.dart';
 
 abstract class HomeLocalDataSource {
@@ -10,10 +9,12 @@ abstract class HomeLocalDataSource {
 
 class HomeLocalDataSourceImpl extends BaseLocalDataSource
     implements HomeLocalDataSource {
-  @override
-  final SecurePrefs securePrefs;
-
-  HomeLocalDataSourceImpl({required this.securePrefs});
+  HomeLocalDataSourceImpl({
+    required super.storageService,
+    required super.authService,
+    required super.exportService,
+    required super.financialService,
+  });
 
   @override
   Future<DashboardSummaryDataModel> getDashboardSummary() async {

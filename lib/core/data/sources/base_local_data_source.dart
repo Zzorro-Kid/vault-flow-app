@@ -1,19 +1,26 @@
-import 'dart:convert';
-import 'dart:io';
-import 'package:crypto/crypto.dart';
-import 'package:csv/csv.dart';
-import 'package:intl/intl.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
 import 'package:test_app/features/transaction/data/models/financial_summary_data_model.dart';
 import 'package:test_app/features/transaction/data/models/transaction_data_model.dart';
 import 'package:test_app/features/category/data/models/category_data_model.dart';
 import 'package:test_app/core/errors/exceptions.dart';
-import 'package:test_app/core/secure_prefs.dart';
+import 'package:test_app/core/services/storage_service.dart';
+import 'package:test_app/core/services/auth_service.dart';
+import 'package:test_app/core/services/export_service.dart';
+import 'package:test_app/core/services/financial_service.dart';
+import 'package:test_app/core/enums/period_type.dart';
 
 abstract class BaseLocalDataSource {
-  SecurePrefs? get securePrefs => null;
+  final StorageService storageService;
+  final AuthService authService;
+  final ExportService exportService;
+  final FinancialService financialService;
+
+  BaseLocalDataSource({
+    required this.storageService,
+    required this.authService,
+    required this.exportService,
+    required this.financialService,
+  });
+
   Future<T> executeDataSourceCall<T>(
     Future<T> Function() call, {
     String? errorMessage,
@@ -75,62 +82,19 @@ abstract class BaseLocalDataSource {
   }
 
   Future<List<TransactionDataModel>> loadTransactionsFromStorage() async {
-    if (securePrefs == null) {
-      throw Exception('SecurePrefs is not initialized');
-    }
-
-    final transactionsJson = await securePrefs!.transactions;
-
-    if (transactionsJson == null || transactionsJson.isEmpty) {
-      return [];
-    }
-
-    final List<dynamic> jsonList =
-        json.decode(transactionsJson) as List<dynamic>;
-
-    return jsonList
-        .map(
-          (json) => TransactionDataModel.fromJson(json as Map<String, dynamic>),
-        )
-        .toList();
+    return await storageService.loadTransactions();
   }
 
   Future<void> saveTransactions(List<TransactionDataModel> transactions) async {
-    if (securePrefs == null) {
-      throw Exception('SecurePrefs is not initialized');
-    }
-
-    final jsonList = transactions.map((t) => t.toJson()).toList();
-    final transactionsJson = json.encode(jsonList);
-    await securePrefs!.setTransactions(transactionsJson);
+    await storageService.saveTransactions(transactions);
   }
 
   Future<List<CategoryDataModel>> loadCategoriesFromStorage() async {
-    if (securePrefs == null) {
-      throw Exception('SecurePrefs is not initialized');
-    }
-
-    final categoriesJson = await securePrefs!.categories;
-
-    if (categoriesJson == null || categoriesJson.isEmpty) {
-      return [];
-    }
-
-    final List<dynamic> jsonList = json.decode(categoriesJson) as List<dynamic>;
-
-    return jsonList
-        .map((json) => CategoryDataModel.fromJson(json as Map<String, dynamic>))
-        .toList();
+    return await storageService.loadCategories();
   }
 
   Future<void> saveCategories(List<CategoryDataModel> categories) async {
-    if (securePrefs == null) {
-      throw Exception('SecurePrefs is not initialized');
-    }
-
-    final jsonList = categories.map((c) => c.toJson()).toList();
-    final categoriesJson = json.encode(jsonList);
-    await securePrefs!.setCategories(categoriesJson);
+    await storageService.saveCategories(categories);
   }
 
   Future<T?> loadModelFromStorage<T>({
@@ -138,18 +102,11 @@ abstract class BaseLocalDataSource {
     required Future<String?> Function(String userId) getter,
     required T Function(Map<String, dynamic>) fromJson,
   }) async {
-    if (securePrefs == null) {
-      throw Exception('SecurePrefs is not initialized');
-    }
-
-    final jsonString = await getter(userId);
-
-    if (jsonString == null || jsonString.isEmpty) {
-      return null;
-    }
-
-    final Map<String, dynamic> jsonMap = json.decode(jsonString);
-    return fromJson(jsonMap);
+    return await storageService.loadModel<T>(
+      userId: userId,
+      getter: getter,
+      fromJson: fromJson,
+    );
   }
 
   Future<void> saveModelToStorage<T>({
@@ -158,13 +115,12 @@ abstract class BaseLocalDataSource {
     required Future<void> Function(String userId, String json) setter,
     required Map<String, dynamic> Function(T) toJson,
   }) async {
-    if (securePrefs == null) {
-      throw Exception('SecurePrefs is not initialized');
-    }
-
-    final jsonMap = toJson(model);
-    final jsonString = json.encode(jsonMap);
-    await setter(userId, jsonString);
+    await storageService.saveModel<T>(
+      userId: userId,
+      model: model,
+      setter: setter,
+      toJson: toJson,
+    );
   }
 
   Future<void> updateModelField<T>({
@@ -173,32 +129,24 @@ abstract class BaseLocalDataSource {
     required Future<void> Function(T model) saver,
     required T Function(T model) updater,
   }) async {
-    if (securePrefs == null) {
-      throw Exception('SecurePrefs is not initialized');
-    }
-
-    final currentModel = await getter(userId);
-    final updatedModel = updater(currentModel);
-    await saver(updatedModel);
+    await storageService.updateModelField<T>(
+      userId: userId,
+      getter: getter,
+      saver: saver,
+      updater: updater,
+    );
   }
 
   Future<void> clearAllStorage() async {
-    if (securePrefs == null) {
-      throw Exception('SecurePrefs is not initialized');
-    }
-
-    await securePrefs!.clearAll();
+    await storageService.clearAll();
   }
 
   String hashPassword(String password) {
-    final bytes = utf8.encode(password);
-    final hash = sha256.convert(bytes);
-    return hash.toString();
+    return authService.hashPassword(password);
   }
 
   Future<bool> verifyPasswordHash(String password, String storedHash) async {
-    final inputHash = hashPassword(password);
-    return inputHash == storedHash;
+    return await authService.verifyPasswordHash(password, storedHash);
   }
 
   Future<void> changePasswordWithVerification({
@@ -207,197 +155,44 @@ abstract class BaseLocalDataSource {
     required Future<String?> Function() getStoredHash,
     required Future<void> Function(String hash) setNewHash,
   }) async {
-    final storedHash = await getStoredHash();
-
-    if (storedHash == null) {
-      throw AuthenticationException('No password set');
-    }
-
-    final isValid = await verifyPasswordHash(oldPassword, storedHash);
-    if (!isValid) {
-      throw AuthenticationException('Incorrect old password');
-    }
-
-    final newPasswordHash = hashPassword(newPassword);
-    await setNewHash(newPasswordHash);
+    await authService.changePasswordWithVerification(
+      oldPassword: oldPassword,
+      newPassword: newPassword,
+      getStoredHash: getStoredHash,
+      setNewHash: setNewHash,
+    );
   }
 
   Future<String> exportTransactionsToCSV({
     required List<TransactionDataModel> transactions,
     required String filePrefix,
   }) async {
-    if (transactions.isEmpty) {
-      throw ExportException('No transactions to export');
-    }
-
-    final List<List<dynamic>> rows = [
-      ['Date', 'Type', 'Category', 'Description', 'Amount'],
-    ];
-
-    for (final transaction in transactions) {
-      final dateFormat = DateFormat('dd.MM.yyyy HH:mm');
-      rows.add([
-        dateFormat.format(transaction.date),
-        transaction.type,
-        transaction.category.name,
-        transaction.description,
-        transaction.amount.toStringAsFixed(2),
-      ]);
-    }
-
-    final csvData = const ListToCsvConverter().convert(rows);
-    final directory = await getApplicationDocumentsDirectory();
-    final timestamp = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
-    final filePath = '${directory.path}/${filePrefix}_$timestamp.csv';
-    final file = File(filePath);
-    await file.writeAsString(csvData);
-
-    return filePath;
+    return await exportService.exportTransactionsToCSV(
+      transactions: transactions,
+      filePrefix: filePrefix,
+    );
   }
 
   Future<String> exportTransactionsToPDF({
     required List<TransactionDataModel> transactions,
     required String filePrefix,
   }) async {
-    if (transactions.isEmpty) {
-      throw ExportException('No transactions to export');
-    }
-
-    final pdf = pw.Document();
-    final dateFormat = DateFormat('dd.MM.yyyy HH:mm');
-
-    final summary = calculateFinancialSummary(transactions);
-
-    pdf.addPage(
-      pw.MultiPage(
-        pageFormat: PdfPageFormat.a4,
-        build: (pw.Context context) {
-          return [
-            pw.Header(
-              level: 0,
-              child: pw.Text(
-                'Transactions Report',
-                style: pw.TextStyle(
-                  fontSize: 24,
-                  fontWeight: pw.FontWeight.bold,
-                ),
-              ),
-            ),
-            pw.SizedBox(height: 20),
-            pw.Text(
-              'Generated: ${dateFormat.format(DateTime.now())}',
-              style: const pw.TextStyle(fontSize: 12),
-            ),
-            pw.SizedBox(height: 20),
-            pw.Container(
-              padding: const pw.EdgeInsets.all(10),
-              decoration: pw.BoxDecoration(border: pw.Border.all()),
-              child: pw.Column(
-                crossAxisAlignment: pw.CrossAxisAlignment.start,
-                children: [
-                  pw.Text(
-                    'Summary',
-                    style: pw.TextStyle(
-                      fontSize: 16,
-                      fontWeight: pw.FontWeight.bold,
-                    ),
-                  ),
-                  pw.SizedBox(height: 10),
-                  pw.Text(
-                    'Total Income: \$${summary.totalIncome.toStringAsFixed(2)}',
-                  ),
-                  pw.Text(
-                    'Total Expenses: \$${summary.totalExpenses.toStringAsFixed(2)}',
-                  ),
-                  pw.Text(
-                    'Balance: \$${summary.totalBalance.toStringAsFixed(2)}',
-                  ),
-                ],
-              ),
-            ),
-            pw.SizedBox(height: 20),
-            pw.TableHelper.fromTextArray(
-              headers: ['Date', 'Type', 'Category', 'Description', 'Amount'],
-              data: transactions.map((transaction) {
-                return [
-                  dateFormat.format(transaction.date),
-                  transaction.type,
-                  transaction.category.name,
-                  transaction.description,
-                  '\$${transaction.amount.toStringAsFixed(2)}',
-                ];
-              }).toList(),
-              headerStyle: pw.TextStyle(fontWeight: pw.FontWeight.bold),
-              cellAlignment: pw.Alignment.centerLeft,
-            ),
-          ];
-        },
-      ),
+    return await exportService.exportTransactionsToPDF(
+      transactions: transactions,
+      filePrefix: filePrefix,
     );
-
-    final directory = await getApplicationDocumentsDirectory();
-    final timestamp = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
-    final filePath = '${directory.path}/${filePrefix}_$timestamp.pdf';
-    final file = File(filePath);
-    await file.writeAsBytes(await pdf.save());
-
-    return filePath;
   }
 
   FinancialSummaryDataModel calculateFinancialSummary(
     List<TransactionDataModel> transactions,
   ) {
-    double totalBalance = 0.0;
-    double totalIncome = 0.0;
-    double totalExpenses = 0.0;
-
-    for (final transaction in transactions) {
-      if (transaction.type == 'income') {
-        totalIncome += transaction.amount;
-        totalBalance += transaction.amount;
-      } else if (transaction.type == 'expense') {
-        totalExpenses += transaction.amount;
-        totalBalance -= transaction.amount;
-      }
-    }
-
-    return FinancialSummaryDataModel(
-      totalBalance: totalBalance,
-      totalIncome: totalIncome,
-      totalExpenses: totalExpenses,
-    );
+    return financialService.calculateFinancialSummary(transactions);
   }
 
   List<TransactionDataModel> filterTransactionsByPeriod(
     List<TransactionDataModel> transactions,
-    String period,
+    PeriodType period,
   ) {
-    final now = DateTime.now();
-    DateTime startDate;
-
-    switch (period) {
-      case 'day':
-        startDate = DateTime(now.year, now.month, now.day);
-        break;
-      case 'week':
-        startDate = now.subtract(Duration(days: now.weekday - 1));
-        startDate = DateTime(startDate.year, startDate.month, startDate.day);
-        break;
-      case 'month':
-        startDate = DateTime(now.year, now.month, 1);
-        break;
-      case 'year':
-        startDate = DateTime(now.year, 1, 1);
-        break;
-      default:
-        startDate = DateTime(now.year, now.month, 1);
-    }
-
-    return transactions
-        .where(
-          (t) =>
-              t.date.isAfter(startDate) || t.date.isAtSameMomentAs(startDate),
-        )
-        .toList();
+    return financialService.filterTransactionsByPeriod(transactions, period);
   }
 }

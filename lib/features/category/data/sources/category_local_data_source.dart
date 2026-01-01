@@ -1,5 +1,4 @@
 import 'package:test_app/core/data/sources/base_local_data_source.dart';
-import 'package:test_app/core/secure_prefs.dart';
 import 'package:test_app/features/category/data/models/category_data_model.dart';
 
 abstract class CategoryLocalDataSource {
@@ -11,10 +10,12 @@ abstract class CategoryLocalDataSource {
 
 class CategoryLocalDataSourceImpl extends BaseLocalDataSource
     implements CategoryLocalDataSource {
-  @override
-  final SecurePrefs securePrefs;
-
-  CategoryLocalDataSourceImpl({required this.securePrefs});
+  CategoryLocalDataSourceImpl({
+    required super.storageService,
+    required super.authService,
+    required super.exportService,
+    required super.financialService,
+  });
 
   @override
   Future<List<CategoryDataModel>> getAllCategories() async {

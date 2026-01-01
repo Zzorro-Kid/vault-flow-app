@@ -16,13 +16,18 @@ abstract class SettingsLocalDataSource {
 
 class SettingsLocalDataSourceImpl extends BaseLocalDataSource
     implements SettingsLocalDataSource {
-  @override
   final SecurePrefs securePrefs;
 
   static const String _defaultCurrency = 'USD';
   static const String _defaultReportFrequency = 'monthly';
 
-  SettingsLocalDataSourceImpl({required this.securePrefs});
+  SettingsLocalDataSourceImpl({
+    required this.securePrefs,
+    required super.storageService,
+    required super.authService,
+    required super.exportService,
+    required super.financialService,
+  });
 
   @override
   Future<UserSettingsDataModel> getUserSettings(String userId) async {

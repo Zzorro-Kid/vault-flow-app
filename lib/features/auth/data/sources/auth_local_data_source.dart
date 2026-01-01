@@ -15,13 +15,15 @@ abstract class AuthLocalDataSource {
 class AuthLocalDataSourceImpl extends BaseLocalDataSource
     implements AuthLocalDataSource {
   final SharedPrefs sharedPrefs;
-
-  @override
   final SecurePrefs securePrefs;
 
   AuthLocalDataSourceImpl({
     required this.sharedPrefs,
     required this.securePrefs,
+    required super.storageService,
+    required super.authService,
+    required super.exportService,
+    required super.financialService,
   });
 
   @override
@@ -54,7 +56,19 @@ class AuthLocalDataSourceImpl extends BaseLocalDataSource
         return false;
       }
 
-      return await verifyPasswordHash(password, storedHash);
+      final isValid = await verifyPasswordHash(password, storedHash);
+
+      if (isValid && authService.isLegacyHash(storedHash)) {
+        final newHash = await authService.migrateLegacyHash(
+          password: password,
+          currentHash: storedHash,
+        );
+        if (newHash != null) {
+          await securePrefs.setPasswordHash(newHash);
+        }
+      }
+
+      return isValid;
     }, errorMessage: 'Failed to verify password');
   }
 
