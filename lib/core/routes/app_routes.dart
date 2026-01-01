@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:test_app/features/auth/presentation/pages/auth_screen.dart';
 import 'package:test_app/features/category/presentation/pages/category_screen.dart';
 import 'package:test_app/features/home/presentation/pages/home_sceen.dart';
+import 'package:test_app/features/settings/presentation/pages/settings_screen.dart';
 import 'package:test_app/features/statistics/presentation/pages/statistics_screen.dart';
 import 'package:test_app/features/transaction/presentation/pages/transaction_screen.dart';
 
@@ -13,8 +14,8 @@ class AppRouter {
   static const String reports = '/reports';
   static const String settings = '/settings';
 
-  Route<dynamic> onGenerateRoute(RouteSettings settings) {
-    switch (settings.name) {
+  Route<dynamic> onGenerateRoute(RouteSettings routeSettings) {
+    switch (routeSettings.name) {
       case auth:
         return _createFadeRoute(const AuthScreen());
 
@@ -30,8 +31,8 @@ class AppRouter {
       case reports:
         return _createFadeRoute(const StatisticsScreen());
 
-      // case settings:
-      //   return MaterialPageRoute(builder: (_) => const SettingsScreen());
+      case settings:
+        return _createFadeRoute(const SettingsScreen());
 
       default:
         return MaterialPageRoute(

@@ -1,0 +1,308 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:test_app/core/constants/app_dimensions.dart';
+import 'package:test_app/core/themes/app_colors.dart';
+import 'package:test_app/core/utils/ui_helpers.dart';
+import 'package:test_app/core/widgets/bottom_navigation_bar.dart';
+import 'package:test_app/core/widgets/custom_app_bar.dart';
+import 'package:test_app/core/widgets/loading_indicator.dart';
+import 'package:test_app/features/settings/presentation/cubit/settings_cubit.dart';
+import 'package:test_app/features/settings/presentation/widgets/settings_section.dart';
+import 'package:test_app/features/settings/presentation/widgets/settings_tile.dart';
+import 'package:test_app/features/settings/presentation/widgets/change_password_dialog.dart';
+import 'package:test_app/features/settings/presentation/widgets/clear_data_dialog.dart';
+import 'package:test_app/injection_container.dart';
+
+class SettingsScreen extends StatelessWidget {
+  const SettingsScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => sl<SettingsCubit>()..loadAppInfo(),
+      child: BlocListener<SettingsCubit, SettingsState>(
+        listener: (context, state) {
+          _handleStateChanges(context, state);
+        },
+        child: Scaffold(
+          appBar: _buildAppBar(),
+          body: _buildBody(),
+          bottomNavigationBar: const AppBottomNavigationBar(currentIndex: 4),
+        ),
+      ),
+    );
+  }
+
+  void _handleStateChanges(BuildContext context, SettingsState state) {
+    switch (state) {
+      case SettingsError():
+        UiHelpers.showErrorSnackBar(context, state.message);
+      case SettingsPasswordChangeSuccess():
+        _showSuccessSnackBar(context, 'Password changed successfully');
+      case SettingsExportSuccess():
+        _showSuccessSnackBar(
+          context,
+          'Data exported successfully to: ${state.filePath}',
+        );
+      case SettingsClearDataSuccess():
+        _showSuccessSnackBar(context, 'Data cleared successfully');
+      case SettingsLogoutSuccess():
+        _navigateToAuth(context);
+      default:
+        break;
+    }
+  }
+
+  void _showSuccessSnackBar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message), backgroundColor: AppColors.success),
+    );
+  }
+
+  void _navigateToAuth(BuildContext context) {
+    Navigator.of(context).pushNamedAndRemoveUntil('/auth', (route) => false);
+  }
+
+  PreferredSizeWidget _buildAppBar() {
+    return CustomAppBar(
+      height: AppDimensions.appBarHeightOther,
+      title: _buildAppBarTitle(),
+    );
+  }
+
+  Widget _buildAppBarTitle() {
+    return Transform.translate(
+      offset: const Offset(0, AppDimensions.appBarTitleOffsetY),
+      child: const Text(
+        'Settings',
+        style: TextStyle(
+          fontSize: AppDimensions.fontSizeXXLarge,
+          fontWeight: FontWeight.bold,
+          color: AppColors.categoryTitleText,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBody() {
+    return BlocBuilder<SettingsCubit, SettingsState>(
+      builder: (context, state) {
+        if (state is SettingsLoading) {
+          return const LoadingIndicator(message: 'Loading settings...');
+        }
+
+        return _buildSettingsList(context);
+      },
+    );
+  }
+
+  Widget _buildSettingsList(BuildContext context) {
+    return ListView(
+      padding: const EdgeInsets.all(AppDimensions.paddingMedium),
+      children: [
+        _buildSecuritySection(context),
+        const SizedBox(height: AppDimensions.paddingLarge),
+        _buildDataSection(context),
+        const SizedBox(height: AppDimensions.paddingLarge),
+        _buildAboutSection(context),
+        const SizedBox(height: AppDimensions.paddingLarge),
+        _buildAccountSection(context),
+      ],
+    );
+  }
+
+  Widget _buildSecuritySection(BuildContext context) {
+    return SettingsSection(
+      title: 'Security',
+      children: [
+        SettingsTile(
+          icon: Icons.lock_outline,
+          title: 'Change Password',
+          subtitle: 'Update your security password',
+          onTap: () => _showChangePasswordDialog(context),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDataSection(BuildContext context) {
+    return SettingsSection(
+      title: 'Data Management',
+      children: [
+        SettingsTile(
+          icon: Icons.file_download_outlined,
+          title: 'Export to CSV',
+          subtitle: 'Export your transactions to CSV file',
+          onTap: () => _exportToCSV(context),
+        ),
+        SettingsTile(
+          icon: Icons.picture_as_pdf_outlined,
+          title: 'Export to PDF',
+          subtitle: 'Export your transactions to PDF file',
+          onTap: () => _exportToPDF(context),
+        ),
+        SettingsTile(
+          icon: Icons.delete_sweep_outlined,
+          title: 'Clear Old Data',
+          subtitle: 'Remove transactions older than a specific date',
+          onTap: () => _showClearOldDataDialog(context),
+        ),
+        SettingsTile(
+          icon: Icons.delete_forever_outlined,
+          title: 'Clear All Data',
+          subtitle: 'Remove all transactions permanently',
+          onTap: () => _showClearAllDataDialog(context),
+          isDestructive: true,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildAboutSection(BuildContext context) {
+    return BlocBuilder<SettingsCubit, SettingsState>(
+      builder: (context, state) {
+        final appInfo = state is SettingsAppInfoLoaded ? state.appInfo : null;
+
+        return SettingsSection(
+          title: 'About',
+          children: [
+            SettingsTile(
+              icon: Icons.info_outline,
+              title: 'App Version',
+              subtitle: appInfo != null
+                  ? '${appInfo.version} (${appInfo.buildNumber})'
+                  : 'Loading...',
+              trailing: const SizedBox.shrink(),
+            ),
+            SettingsTile(
+              icon: Icons.apps_outlined,
+              title: 'App Name',
+              subtitle: appInfo?.appName ?? 'Loading...',
+              trailing: const SizedBox.shrink(),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildAccountSection(BuildContext context) {
+    return SettingsSection(
+      title: 'Account',
+      children: [
+        SettingsTile(
+          icon: Icons.logout_outlined,
+          title: 'Logout',
+          subtitle: 'Sign out of your account',
+          onTap: () => _showLogoutDialog(context),
+          isDestructive: true,
+        ),
+      ],
+    );
+  }
+
+  void _showChangePasswordDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) => ChangePasswordDialog(
+        onConfirm: (oldPassword, newPassword) {
+          context.read<SettingsCubit>().updatePassword(
+            userId: 'user_id',
+            oldPassword: oldPassword,
+            newPassword: newPassword,
+          );
+          Navigator.pop(dialogContext);
+        },
+      ),
+    );
+  }
+
+  void _exportToCSV(BuildContext context) {
+    context.read<SettingsCubit>().exportToCSV('user_id');
+  }
+
+  void _exportToPDF(BuildContext context) {
+    context.read<SettingsCubit>().exportToPDF('user_id');
+  }
+
+  void _showClearOldDataDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) => ClearDataDialog(
+        title: 'Clear Old Data',
+        message:
+            'Select a date. All transactions before this date will be deleted.',
+        onConfirm: (date) {
+          context.read<SettingsCubit>().clearDataBeforeDate('user_id', date);
+          Navigator.pop(dialogContext);
+        },
+      ),
+    );
+  }
+
+  void _showClearAllDataDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        backgroundColor: AppColors.surfaceDark,
+        title: const Text(
+          'Clear All Data',
+          style: TextStyle(color: AppColors.categoryTitleText),
+        ),
+        content: const Text(
+          'Are you sure you want to delete ALL transactions? This action cannot be undone.',
+          style: TextStyle(color: AppColors.sectionHeaderText),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              context.read<SettingsCubit>().clearAll();
+              Navigator.pop(dialogContext);
+            },
+            child: const Text(
+              'Delete All',
+              style: TextStyle(color: AppColors.error),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        backgroundColor: AppColors.surfaceDark,
+        title: const Text(
+          'Logout',
+          style: TextStyle(color: AppColors.categoryTitleText),
+        ),
+        content: const Text(
+          'Are you sure you want to logout?',
+          style: TextStyle(color: AppColors.sectionHeaderText),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              context.read<SettingsCubit>().performLogout();
+              Navigator.pop(dialogContext);
+            },
+            child: const Text(
+              'Logout',
+              style: TextStyle(color: AppColors.error),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
