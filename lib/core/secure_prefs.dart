@@ -60,6 +60,23 @@ class SecurePrefs {
     await _secureStorage.delete(key: AppConstants.keyCategories);
   }
 
+  Future<void> setUserSettings(String userId, String settingsJson) async {
+    await _secureStorage.write(
+      key: '${AppConstants.keyUserSettings}_$userId',
+      value: settingsJson,
+    );
+  }
+
+  Future<String?> getUserSettings(String userId) async {
+    return await _secureStorage.read(
+      key: '${AppConstants.keyUserSettings}_$userId',
+    );
+  }
+
+  Future<void> deleteUserSettings(String userId) async {
+    await _secureStorage.delete(key: '${AppConstants.keyUserSettings}_$userId');
+  }
+
   Future<void> clearAll() async {
     await _secureStorage.deleteAll();
   }

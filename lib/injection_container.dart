@@ -39,6 +39,21 @@ import 'package:test_app/features/statistics/data/sources/statistics_local_data_
 import 'package:test_app/features/statistics/domain/repositories/statistics_repository.dart';
 import 'package:test_app/features/statistics/domain/usecases/get_statistics_usecase.dart';
 import 'package:test_app/features/statistics/presentation/cubit/statistics_cubit.dart';
+import 'package:test_app/features/settings/data/repositories/settings_repository_impl.dart';
+import 'package:test_app/features/settings/data/sources/settings_local_data_source.dart';
+import 'package:test_app/features/settings/domain/repositories/settings_repository.dart';
+import 'package:test_app/features/settings/domain/usecases/get_user_settings.dart';
+import 'package:test_app/features/settings/domain/usecases/save_user_settings.dart';
+import 'package:test_app/features/settings/domain/usecases/update_currency.dart';
+import 'package:test_app/features/settings/domain/usecases/update_report_frequency.dart';
+import 'package:test_app/features/settings/domain/usecases/change_password.dart';
+import 'package:test_app/features/settings/domain/usecases/export_data_to_csv.dart';
+import 'package:test_app/features/settings/domain/usecases/export_data_to_pdf.dart';
+import 'package:test_app/features/settings/domain/usecases/clear_old_data.dart';
+import 'package:test_app/features/settings/domain/usecases/clear_all_data.dart';
+import 'package:test_app/features/settings/domain/usecases/get_app_info.dart';
+import 'package:test_app/features/settings/domain/usecases/logout.dart';
+import 'package:test_app/features/settings/presentation/cubit/settings_cubit.dart';
 
 final sl = GetIt.instance;
 
@@ -49,6 +64,7 @@ Future<void> init() async {
   _initCategory();
   _initTransaction();
   _initStatistics();
+  _initSettings();
 }
 
 Future<void> _initCore() async {
@@ -167,5 +183,46 @@ void _initStatistics() {
 
   sl.registerLazySingleton<StatisticsLocalDataSource>(
     () => StatisticsLocalDataSourceImpl(securePrefs: sl()),
+  );
+}
+
+void _initSettings() {
+  sl.registerFactory(
+    () => SettingsCubit(
+      getUserSettings: sl(),
+      saveUserSettings: sl(),
+      updateCurrency: sl(),
+      updateReportFrequency: sl(),
+      changePassword: sl(),
+      exportDataToCSV: sl(),
+      exportDataToPDF: sl(),
+      clearOldData: sl(),
+      clearAllData: sl(),
+      getAppInfo: sl(),
+      logout: sl(),
+    ),
+  );
+
+  sl.registerLazySingleton(() => GetUserSettings(sl()));
+  sl.registerLazySingleton(() => SaveUserSettings(sl()));
+  sl.registerLazySingleton(() => UpdateCurrency(sl()));
+  sl.registerLazySingleton(() => UpdateReportFrequency(sl()));
+  sl.registerLazySingleton(() => ChangePassword(sl()));
+  sl.registerLazySingleton(() => ExportDataToCSV(sl()));
+  sl.registerLazySingleton(() => ExportDataToPDF(sl()));
+  sl.registerLazySingleton(() => ClearOldData(sl()));
+  sl.registerLazySingleton(() => ClearAllData(sl()));
+  sl.registerLazySingleton(() => GetAppInfo(sl()));
+  sl.registerLazySingleton(() => Logout(sl()));
+
+  sl.registerLazySingleton<SettingsRepository>(
+    () => SettingsRepositoryImpl(
+      localDataSource: sl(),
+      authLocalDataSource: sl(),
+    ),
+  );
+
+  sl.registerLazySingleton<SettingsLocalDataSource>(
+    () => SettingsLocalDataSourceImpl(securePrefs: sl()),
   );
 }

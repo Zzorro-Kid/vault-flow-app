@@ -29,13 +29,6 @@ class _LoginFormState extends State<LoginForm> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // RESET BUTTON (TEMPORARY)
-              TextButton(
-                onPressed: () {
-                  context.read<AuthCubit>().logout();
-                },
-                child: const Text('Reset App (Debug)'),
-              ),
               _buildIcon(),
               const SizedBox(height: AppDimensions.spacingLarge),
               _buildTitle(),

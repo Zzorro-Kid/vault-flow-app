@@ -1,4 +1,11 @@
 import 'dart:convert';
+import 'dart:io';
+import 'package:crypto/crypto.dart';
+import 'package:csv/csv.dart';
+import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
 import 'package:test_app/features/transaction/data/models/financial_summary_data_model.dart';
 import 'package:test_app/features/transaction/data/models/transaction_data_model.dart';
 import 'package:test_app/features/category/data/models/category_data_model.dart';
@@ -124,6 +131,217 @@ abstract class BaseLocalDataSource {
     final jsonList = categories.map((c) => c.toJson()).toList();
     final categoriesJson = json.encode(jsonList);
     await securePrefs!.setCategories(categoriesJson);
+  }
+
+  Future<T?> loadModelFromStorage<T>({
+    required String userId,
+    required Future<String?> Function(String userId) getter,
+    required T Function(Map<String, dynamic>) fromJson,
+  }) async {
+    if (securePrefs == null) {
+      throw Exception('SecurePrefs is not initialized');
+    }
+
+    final jsonString = await getter(userId);
+
+    if (jsonString == null || jsonString.isEmpty) {
+      return null;
+    }
+
+    final Map<String, dynamic> jsonMap = json.decode(jsonString);
+    return fromJson(jsonMap);
+  }
+
+  Future<void> saveModelToStorage<T>({
+    required String userId,
+    required T model,
+    required Future<void> Function(String userId, String json) setter,
+    required Map<String, dynamic> Function(T) toJson,
+  }) async {
+    if (securePrefs == null) {
+      throw Exception('SecurePrefs is not initialized');
+    }
+
+    final jsonMap = toJson(model);
+    final jsonString = json.encode(jsonMap);
+    await setter(userId, jsonString);
+  }
+
+  Future<void> updateModelField<T>({
+    required String userId,
+    required Future<T> Function(String userId) getter,
+    required Future<void> Function(T model) saver,
+    required T Function(T model) updater,
+  }) async {
+    if (securePrefs == null) {
+      throw Exception('SecurePrefs is not initialized');
+    }
+
+    final currentModel = await getter(userId);
+    final updatedModel = updater(currentModel);
+    await saver(updatedModel);
+  }
+
+  Future<void> clearAllStorage() async {
+    if (securePrefs == null) {
+      throw Exception('SecurePrefs is not initialized');
+    }
+
+    await securePrefs!.clearAll();
+  }
+
+  String hashPassword(String password) {
+    final bytes = utf8.encode(password);
+    final hash = sha256.convert(bytes);
+    return hash.toString();
+  }
+
+  Future<bool> verifyPasswordHash(String password, String storedHash) async {
+    final inputHash = hashPassword(password);
+    return inputHash == storedHash;
+  }
+
+  Future<void> changePasswordWithVerification({
+    required String oldPassword,
+    required String newPassword,
+    required Future<String?> Function() getStoredHash,
+    required Future<void> Function(String hash) setNewHash,
+  }) async {
+    final storedHash = await getStoredHash();
+
+    if (storedHash == null) {
+      throw AuthenticationException('No password set');
+    }
+
+    final isValid = await verifyPasswordHash(oldPassword, storedHash);
+    if (!isValid) {
+      throw AuthenticationException('Incorrect old password');
+    }
+
+    final newPasswordHash = hashPassword(newPassword);
+    await setNewHash(newPasswordHash);
+  }
+
+  Future<String> exportTransactionsToCSV({
+    required List<TransactionDataModel> transactions,
+    required String filePrefix,
+  }) async {
+    if (transactions.isEmpty) {
+      throw ExportException('No transactions to export');
+    }
+
+    final List<List<dynamic>> rows = [
+      ['Date', 'Type', 'Category', 'Description', 'Amount'],
+    ];
+
+    for (final transaction in transactions) {
+      final dateFormat = DateFormat('dd.MM.yyyy HH:mm');
+      rows.add([
+        dateFormat.format(transaction.date),
+        transaction.type,
+        transaction.category.name,
+        transaction.description,
+        transaction.amount.toStringAsFixed(2),
+      ]);
+    }
+
+    final csvData = const ListToCsvConverter().convert(rows);
+    final directory = await getApplicationDocumentsDirectory();
+    final timestamp = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
+    final filePath = '${directory.path}/${filePrefix}_$timestamp.csv';
+    final file = File(filePath);
+    await file.writeAsString(csvData);
+
+    return filePath;
+  }
+
+  Future<String> exportTransactionsToPDF({
+    required List<TransactionDataModel> transactions,
+    required String filePrefix,
+  }) async {
+    if (transactions.isEmpty) {
+      throw ExportException('No transactions to export');
+    }
+
+    final pdf = pw.Document();
+    final dateFormat = DateFormat('dd.MM.yyyy HH:mm');
+
+    final summary = calculateFinancialSummary(transactions);
+
+    pdf.addPage(
+      pw.MultiPage(
+        pageFormat: PdfPageFormat.a4,
+        build: (pw.Context context) {
+          return [
+            pw.Header(
+              level: 0,
+              child: pw.Text(
+                'Transactions Report',
+                style: pw.TextStyle(
+                  fontSize: 24,
+                  fontWeight: pw.FontWeight.bold,
+                ),
+              ),
+            ),
+            pw.SizedBox(height: 20),
+            pw.Text(
+              'Generated: ${dateFormat.format(DateTime.now())}',
+              style: const pw.TextStyle(fontSize: 12),
+            ),
+            pw.SizedBox(height: 20),
+            pw.Container(
+              padding: const pw.EdgeInsets.all(10),
+              decoration: pw.BoxDecoration(border: pw.Border.all()),
+              child: pw.Column(
+                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                children: [
+                  pw.Text(
+                    'Summary',
+                    style: pw.TextStyle(
+                      fontSize: 16,
+                      fontWeight: pw.FontWeight.bold,
+                    ),
+                  ),
+                  pw.SizedBox(height: 10),
+                  pw.Text(
+                    'Total Income: \$${summary.totalIncome.toStringAsFixed(2)}',
+                  ),
+                  pw.Text(
+                    'Total Expenses: \$${summary.totalExpenses.toStringAsFixed(2)}',
+                  ),
+                  pw.Text(
+                    'Balance: \$${summary.totalBalance.toStringAsFixed(2)}',
+                  ),
+                ],
+              ),
+            ),
+            pw.SizedBox(height: 20),
+            pw.TableHelper.fromTextArray(
+              headers: ['Date', 'Type', 'Category', 'Description', 'Amount'],
+              data: transactions.map((transaction) {
+                return [
+                  dateFormat.format(transaction.date),
+                  transaction.type,
+                  transaction.category.name,
+                  transaction.description,
+                  '\$${transaction.amount.toStringAsFixed(2)}',
+                ];
+              }).toList(),
+              headerStyle: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+              cellAlignment: pw.Alignment.centerLeft,
+            ),
+          ];
+        },
+      ),
+    );
+
+    final directory = await getApplicationDocumentsDirectory();
+    final timestamp = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
+    final filePath = '${directory.path}/${filePrefix}_$timestamp.pdf';
+    final file = File(filePath);
+    await file.writeAsBytes(await pdf.save());
+
+    return filePath;
   }
 
   FinancialSummaryDataModel calculateFinancialSummary(

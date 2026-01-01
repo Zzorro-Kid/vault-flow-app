@@ -13,6 +13,7 @@ class AppConstants {
   static const String keyPasswordHash = 'password_hash';
   static const String keyTransactions = 'transactions_data';
   static const String keyCategories = 'categories_data';
+  static const String keyUserSettings = 'user_settings';
 
   // Encryption
   static const String aesEncryptionKey = 'aes_encryption_key';

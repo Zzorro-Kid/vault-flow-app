@@ -61,16 +61,4 @@ class AuthCubit extends Cubit<AuthCubitState> {
       }
     });
   }
-
-  // logout: I'll move it to settings cubit
-  Future<void> logout() async {
-    emit(AuthCubitLoading());
-
-    final result = await clearAuthDataUseCase();
-
-    result.fold((failure) => emit(AuthCubitError(failure.message)), (_) {
-      emit(AuthCubitLogoutSuccess());
-      checkAuthState();
-    });
-  }
 }

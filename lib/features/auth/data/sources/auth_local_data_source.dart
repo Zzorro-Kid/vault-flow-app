@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'package:crypto/crypto.dart';
 import 'package:test_app/core/data/sources/base_local_data_source.dart';
 import 'package:test_app/core/secure_prefs.dart';
 import 'package:test_app/core/shared_prefs.dart';
@@ -17,6 +15,8 @@ abstract class AuthLocalDataSource {
 class AuthLocalDataSourceImpl extends BaseLocalDataSource
     implements AuthLocalDataSource {
   final SharedPrefs sharedPrefs;
+
+  @override
   final SecurePrefs securePrefs;
 
   AuthLocalDataSourceImpl({
@@ -38,9 +38,7 @@ class AuthLocalDataSourceImpl extends BaseLocalDataSource
   @override
   Future<void> setPassword(String password) async {
     return executeStorageWrite(() async {
-      final bytes = utf8.encode(password);
-      final hash = sha256.convert(bytes);
-      final passwordHash = hash.toString();
+      final passwordHash = hashPassword(password);
 
       await securePrefs.setPasswordHash(passwordHash);
       await sharedPrefs.setHasPassword(true);
@@ -56,11 +54,7 @@ class AuthLocalDataSourceImpl extends BaseLocalDataSource
         return false;
       }
 
-      final bytes = utf8.encode(password);
-      final hash = sha256.convert(bytes);
-      final inputHash = hash.toString();
-
-      return inputHash == storedHash;
+      return await verifyPasswordHash(password, storedHash);
     }, errorMessage: 'Failed to verify password');
   }
 

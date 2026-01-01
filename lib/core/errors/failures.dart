@@ -36,3 +36,7 @@ class ExportFailure extends Failure {
 class ImportFailure extends Failure {
   const ImportFailure(super.message);
 }
+
+class UnknownFailure extends Failure {
+  const UnknownFailure(super.message);
+}
