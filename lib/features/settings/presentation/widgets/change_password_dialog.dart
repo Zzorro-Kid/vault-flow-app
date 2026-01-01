@@ -22,42 +22,46 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
   bool _obscureConfirmPassword = true;
 
   @override
-  void dispose() {
-    _oldPasswordController.dispose();
-    _newPasswordController.dispose();
-    _confirmPasswordController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: AppColors.surfaceDark,
-      title: const Text(
-        'Change Password',
-        style: TextStyle(color: AppColors.categoryTitleText),
-      ),
-      content: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _buildOldPasswordField(),
-            const SizedBox(height: AppDimensions.paddingMedium),
-            _buildNewPasswordField(),
-            const SizedBox(height: AppDimensions.paddingMedium),
-            _buildConfirmPasswordField(),
-          ],
-        ),
-      ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: const Text('Cancel'),
-        ),
-        TextButton(onPressed: _handleConfirm, child: const Text('Change')),
-      ],
+      title: _buildTitle(),
+      content: _buildContent(),
+      actions: _buildActions(context),
     );
+  }
+
+  Widget _buildTitle() {
+    return const Text(
+      'Change Password',
+      style: TextStyle(color: AppColors.categoryTitleText),
+    );
+  }
+
+  Widget _buildContent() {
+    return Form(
+      key: _formKey,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _buildOldPasswordField(),
+          const SizedBox(height: AppDimensions.paddingMedium),
+          _buildNewPasswordField(),
+          const SizedBox(height: AppDimensions.paddingMedium),
+          _buildConfirmPasswordField(),
+        ],
+      ),
+    );
+  }
+
+  List<Widget> _buildActions(BuildContext context) {
+    return [
+      TextButton(
+        onPressed: () => Navigator.pop(context),
+        child: const Text('Cancel'),
+      ),
+      TextButton(onPressed: _handleConfirm, child: const Text('Change')),
+    ];
   }
 
   Widget _buildOldPasswordField() {
@@ -71,12 +75,9 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
         border: _buildOutlineBorder(),
         enabledBorder: _buildOutlineBorder(),
         focusedBorder: _buildFocusedBorder(),
-        suffixIcon: IconButton(
-          icon: Icon(
-            _obscureOldPassword ? Icons.visibility_off : Icons.visibility,
-            color: AppColors.sectionHeaderText,
-          ),
-          onPressed: () {
+        suffixIcon: _buildVisibilityToggle(
+          isObscured: _obscureOldPassword,
+          onToggle: () {
             setState(() {
               _obscureOldPassword = !_obscureOldPassword;
             });
@@ -92,6 +93,19 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
     );
   }
 
+  Widget _buildVisibilityToggle({
+    required bool isObscured,
+    required VoidCallback onToggle,
+  }) {
+    return IconButton(
+      icon: Icon(
+        isObscured ? Icons.visibility_off : Icons.visibility,
+        color: AppColors.sectionHeaderText,
+      ),
+      onPressed: onToggle,
+    );
+  }
+
   Widget _buildNewPasswordField() {
     return TextFormField(
       controller: _newPasswordController,
@@ -103,12 +117,9 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
         border: _buildOutlineBorder(),
         enabledBorder: _buildOutlineBorder(),
         focusedBorder: _buildFocusedBorder(),
-        suffixIcon: IconButton(
-          icon: Icon(
-            _obscureNewPassword ? Icons.visibility_off : Icons.visibility,
-            color: AppColors.sectionHeaderText,
-          ),
-          onPressed: () {
+        suffixIcon: _buildVisibilityToggle(
+          isObscured: _obscureNewPassword,
+          onToggle: () {
             setState(() {
               _obscureNewPassword = !_obscureNewPassword;
             });
@@ -138,12 +149,9 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
         border: _buildOutlineBorder(),
         enabledBorder: _buildOutlineBorder(),
         focusedBorder: _buildFocusedBorder(),
-        suffixIcon: IconButton(
-          icon: Icon(
-            _obscureConfirmPassword ? Icons.visibility_off : Icons.visibility,
-            color: AppColors.sectionHeaderText,
-          ),
-          onPressed: () {
+        suffixIcon: _buildVisibilityToggle(
+          isObscured: _obscureConfirmPassword,
+          onToggle: () {
             setState(() {
               _obscureConfirmPassword = !_obscureConfirmPassword;
             });
@@ -183,5 +191,13 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
         _newPasswordController.text,
       );
     }
+  }
+
+  @override
+  void dispose() {
+    _oldPasswordController.dispose();
+    _newPasswordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
   }
 }

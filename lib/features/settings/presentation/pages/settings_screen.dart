@@ -91,23 +91,19 @@ class SettingsScreen extends StatelessWidget {
           return const LoadingIndicator(message: 'Loading settings...');
         }
 
-        return _buildSettingsList(context);
+        return ListView(
+          padding: const EdgeInsets.all(AppDimensions.paddingMedium),
+          children: [
+            _buildSecuritySection(context),
+            const SizedBox(height: AppDimensions.paddingLarge),
+            _buildDataSection(context),
+            const SizedBox(height: AppDimensions.paddingLarge),
+            _buildAboutSection(context),
+            const SizedBox(height: AppDimensions.paddingLarge),
+            _buildAccountSection(context),
+          ],
+        );
       },
-    );
-  }
-
-  Widget _buildSettingsList(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.all(AppDimensions.paddingMedium),
-      children: [
-        _buildSecuritySection(context),
-        const SizedBox(height: AppDimensions.paddingLarge),
-        _buildDataSection(context),
-        const SizedBox(height: AppDimensions.paddingLarge),
-        _buildAboutSection(context),
-        const SizedBox(height: AppDimensions.paddingLarge),
-        _buildAccountSection(context),
-      ],
     );
   }
 
@@ -129,32 +125,48 @@ class SettingsScreen extends StatelessWidget {
     return SettingsSection(
       title: 'Data Management',
       children: [
-        SettingsTile(
-          icon: Icons.file_download_outlined,
-          title: 'Export to CSV',
-          subtitle: 'Export your transactions to CSV file',
-          onTap: () => _exportToCSV(context),
-        ),
-        SettingsTile(
-          icon: Icons.picture_as_pdf_outlined,
-          title: 'Export to PDF',
-          subtitle: 'Export your transactions to PDF file',
-          onTap: () => _exportToPDF(context),
-        ),
-        SettingsTile(
-          icon: Icons.delete_sweep_outlined,
-          title: 'Clear Old Data',
-          subtitle: 'Remove transactions older than a specific date',
-          onTap: () => _showClearOldDataDialog(context),
-        ),
-        SettingsTile(
-          icon: Icons.delete_forever_outlined,
-          title: 'Clear All Data',
-          subtitle: 'Remove all transactions permanently',
-          onTap: () => _showClearAllDataDialog(context),
-          isDestructive: true,
-        ),
+        _buildExportToCSVTile(context),
+        _buildExportToPDFTile(context),
+        _buildClearOldDataTile(context),
+        _buildClearAllDataTile(context),
       ],
+    );
+  }
+
+  Widget _buildExportToCSVTile(BuildContext context) {
+    return SettingsTile(
+      icon: Icons.file_download_outlined,
+      title: 'Export to CSV',
+      subtitle: 'Export your transactions to CSV file',
+      onTap: () => _exportToCSV(context),
+    );
+  }
+
+  Widget _buildExportToPDFTile(BuildContext context) {
+    return SettingsTile(
+      icon: Icons.picture_as_pdf_outlined,
+      title: 'Export to PDF',
+      subtitle: 'Export your transactions to PDF file',
+      onTap: () => _exportToPDF(context),
+    );
+  }
+
+  Widget _buildClearOldDataTile(BuildContext context) {
+    return SettingsTile(
+      icon: Icons.delete_sweep_outlined,
+      title: 'Clear Old Data',
+      subtitle: 'Remove transactions older than a specific date',
+      onTap: () => _showClearOldDataDialog(context),
+    );
+  }
+
+  Widget _buildClearAllDataTile(BuildContext context) {
+    return SettingsTile(
+      icon: Icons.delete_forever_outlined,
+      title: 'Clear All Data',
+      subtitle: 'Remove all transactions permanently',
+      onTap: () => _showClearAllDataDialog(context),
+      isDestructive: true,
     );
   }
 
@@ -165,24 +177,29 @@ class SettingsScreen extends StatelessWidget {
 
         return SettingsSection(
           title: 'About',
-          children: [
-            SettingsTile(
-              icon: Icons.info_outline,
-              title: 'App Version',
-              subtitle: appInfo != null
-                  ? '${appInfo.version} (${appInfo.buildNumber})'
-                  : 'Loading...',
-              trailing: const SizedBox.shrink(),
-            ),
-            SettingsTile(
-              icon: Icons.apps_outlined,
-              title: 'App Name',
-              subtitle: appInfo?.appName ?? 'Loading...',
-              trailing: const SizedBox.shrink(),
-            ),
-          ],
+          children: [_buildAppVersionTile(appInfo), _buildAppNameTile(appInfo)],
         );
       },
+    );
+  }
+
+  Widget _buildAppVersionTile(dynamic appInfo) {
+    return SettingsTile(
+      icon: Icons.info_outline,
+      title: 'App Version',
+      subtitle: appInfo != null
+          ? '${appInfo.version} (${appInfo.buildNumber})'
+          : 'Loading...',
+      trailing: const SizedBox.shrink(),
+    );
+  }
+
+  Widget _buildAppNameTile(dynamic appInfo) {
+    return SettingsTile(
+      icon: Icons.apps_outlined,
+      title: 'App Name',
+      subtitle: appInfo?.appName ?? 'Loading...',
+      trailing: const SizedBox.shrink(),
     );
   }
 
@@ -245,31 +262,54 @@ class SettingsScreen extends StatelessWidget {
       context: context,
       builder: (dialogContext) => AlertDialog(
         backgroundColor: AppColors.surfaceDark,
-        title: const Text(
-          'Clear All Data',
-          style: TextStyle(color: AppColors.categoryTitleText),
-        ),
-        content: const Text(
-          'Are you sure you want to delete ALL transactions? This action cannot be undone.',
-          style: TextStyle(color: AppColors.sectionHeaderText),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-              context.read<SettingsCubit>().clearAll();
-              Navigator.pop(dialogContext);
-            },
-            child: const Text(
-              'Delete All',
-              style: TextStyle(color: AppColors.error),
-            ),
-          ),
-        ],
+        title: _buildClearAllDataTitle(),
+        content: _buildClearAllDataContent(),
+        actions: _buildClearAllDataActions(dialogContext, context),
       ),
+    );
+  }
+
+  Widget _buildClearAllDataTitle() {
+    return const Text(
+      'Clear All Data',
+      style: TextStyle(color: AppColors.categoryTitleText),
+    );
+  }
+
+  Widget _buildClearAllDataContent() {
+    return const Text(
+      'Are you sure you want to delete ALL transactions? This action cannot be undone.',
+      style: TextStyle(color: AppColors.sectionHeaderText),
+    );
+  }
+
+  List<Widget> _buildClearAllDataActions(
+    BuildContext dialogContext,
+    BuildContext parentContext,
+  ) {
+    return [
+      _buildCancelButton(dialogContext),
+      _buildDeleteAllButton(dialogContext, parentContext),
+    ];
+  }
+
+  Widget _buildCancelButton(BuildContext dialogContext) {
+    return TextButton(
+      onPressed: () => Navigator.pop(dialogContext),
+      child: const Text('Cancel'),
+    );
+  }
+
+  Widget _buildDeleteAllButton(
+    BuildContext dialogContext,
+    BuildContext parentContext,
+  ) {
+    return TextButton(
+      onPressed: () {
+        parentContext.read<SettingsCubit>().clearAll();
+        Navigator.pop(dialogContext);
+      },
+      child: const Text('Delete All', style: TextStyle(color: AppColors.error)),
     );
   }
 
@@ -278,31 +318,47 @@ class SettingsScreen extends StatelessWidget {
       context: context,
       builder: (dialogContext) => AlertDialog(
         backgroundColor: AppColors.surfaceDark,
-        title: const Text(
-          'Logout',
-          style: TextStyle(color: AppColors.categoryTitleText),
-        ),
-        content: const Text(
-          'Are you sure you want to logout?',
-          style: TextStyle(color: AppColors.sectionHeaderText),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-              context.read<SettingsCubit>().performLogout();
-              Navigator.pop(dialogContext);
-            },
-            child: const Text(
-              'Logout',
-              style: TextStyle(color: AppColors.error),
-            ),
-          ),
-        ],
+        title: _buildLogoutTitle(),
+        content: _buildLogoutContent(),
+        actions: _buildLogoutActions(dialogContext, context),
       ),
+    );
+  }
+
+  Widget _buildLogoutTitle() {
+    return const Text(
+      'Logout',
+      style: TextStyle(color: AppColors.categoryTitleText),
+    );
+  }
+
+  Widget _buildLogoutContent() {
+    return const Text(
+      'Are you sure you want to logout?',
+      style: TextStyle(color: AppColors.sectionHeaderText),
+    );
+  }
+
+  List<Widget> _buildLogoutActions(
+    BuildContext dialogContext,
+    BuildContext parentContext,
+  ) {
+    return [
+      _buildCancelButton(dialogContext),
+      _buildLogoutButton(dialogContext, parentContext),
+    ];
+  }
+
+  Widget _buildLogoutButton(
+    BuildContext dialogContext,
+    BuildContext parentContext,
+  ) {
+    return TextButton(
+      onPressed: () {
+        parentContext.read<SettingsCubit>().performLogout();
+        Navigator.pop(dialogContext);
+      },
+      child: const Text('Logout', style: TextStyle(color: AppColors.error)),
     );
   }
 }

@@ -22,34 +22,34 @@ class SettingsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppDimensions.paddingMedium,
-          vertical: AppDimensions.paddingMedium,
-        ),
-        child: Row(
-          children: [
-            _buildIcon(),
-            const SizedBox(width: AppDimensions.paddingMedium),
-            _buildContent(),
-            _buildTrailing(),
-          ],
-        ),
+    return InkWell(onTap: onTap, child: _buildPaddedContent());
+  }
+
+  Widget _buildPaddedContent() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppDimensions.paddingMedium,
+        vertical: AppDimensions.paddingMedium,
       ),
+      child: _buildTileContent(),
+    );
+  }
+
+  Widget _buildTileContent() {
+    return Row(
+      children: [
+        _buildIcon(),
+        const SizedBox(width: AppDimensions.paddingMedium),
+        _buildContent(),
+        _buildTrailing(),
+      ],
     );
   }
 
   Widget _buildIcon() {
     return Container(
       padding: const EdgeInsets.all(AppDimensions.paddingSmall),
-      decoration: BoxDecoration(
-        color: isDestructive
-            ? AppColors.error.withValues(alpha: 0.1)
-            : AppColors.primary.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(AppDimensions.radiusMedium),
-      ),
+      decoration: _buildIconDecoration(),
       child: Icon(
         icon,
         color: isDestructive ? AppColors.error : AppColors.primary,
@@ -58,30 +58,45 @@ class SettingsTile extends StatelessWidget {
     );
   }
 
+  BoxDecoration _buildIconDecoration() {
+    return BoxDecoration(
+      color: _getIconBackgroundColor(),
+      borderRadius: BorderRadius.circular(AppDimensions.radiusMedium),
+    );
+  }
+
+  Color _getIconBackgroundColor() {
+    return isDestructive
+        ? AppColors.error.withValues(alpha: 0.1)
+        : AppColors.primary.withValues(alpha: 0.1);
+  }
+
   Widget _buildContent() {
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: AppDimensions.fontSizeMedium,
-              fontWeight: FontWeight.w600,
-              color: isDestructive
-                  ? AppColors.error
-                  : AppColors.categoryTitleText,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            subtitle,
-            style: const TextStyle(
-              fontSize: AppDimensions.fontSizeSmall,
-              color: AppColors.sectionHeaderText,
-            ),
-          ),
-        ],
+        children: [_buildTitle(), const SizedBox(height: 4), _buildSubtitle()],
+      ),
+    );
+  }
+
+  Widget _buildTitle() {
+    return Text(
+      title,
+      style: TextStyle(
+        fontSize: AppDimensions.fontSizeMedium,
+        fontWeight: FontWeight.w600,
+        color: isDestructive ? AppColors.error : AppColors.categoryTitleText,
+      ),
+    );
+  }
+
+  Widget _buildSubtitle() {
+    return Text(
+      subtitle,
+      style: const TextStyle(
+        fontSize: AppDimensions.fontSizeSmall,
+        color: AppColors.sectionHeaderText,
       ),
     );
   }
