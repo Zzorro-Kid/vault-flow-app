@@ -73,6 +73,10 @@ class CategoryScreen extends StatelessWidget {
 
   Widget _buildBody() {
     return BlocBuilder<CategoryCubit, CategoryState>(
+      buildWhen: (previous, current) =>
+          current is CategoryLoading ||
+          current is CategoryLoaded ||
+          current is CategoryError,
       builder: (context, state) {
         return switch (state) {
           CategoryLoading() => const LoadingIndicator(),

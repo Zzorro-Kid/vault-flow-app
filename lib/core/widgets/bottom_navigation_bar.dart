@@ -12,10 +12,21 @@ class AppBottomNavigationBar extends StatelessWidget {
     this.onTap,
   });
 
+  static final _containerDecoration = BoxDecoration(
+    color: AppColors.surfaceDark,
+    boxShadow: [
+      BoxShadow(
+        color: Colors.black.withValues(alpha: 0.2),
+        blurRadius: AppDimensions.shadowBlurRadius,
+        offset: const Offset(0, -2),
+      ),
+    ],
+  );
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: _buildContainerDecoration(),
+      decoration: _containerDecoration,
       child: SafeArea(
         top: false,
         child: Padding(
@@ -29,19 +40,6 @@ class AppBottomNavigationBar extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  BoxDecoration _buildContainerDecoration() {
-    return BoxDecoration(
-      color: AppColors.surfaceDark,
-      boxShadow: [
-        BoxShadow(
-          color: Colors.black.withValues(alpha: 0.2),
-          blurRadius: AppDimensions.shadowBlurRadius,
-          offset: const Offset(0, -2),
-        ),
-      ],
     );
   }
 
@@ -121,6 +119,8 @@ class AppBottomNavigationBar extends StatelessWidget {
     );
   }
 
+  static const _iconTextSpacing = SizedBox(height: AppDimensions.bottomNavIconTextSpacing);
+
   Widget _buildNavItemContent({
     required IconData icon,
     required IconData selectedIcon,
@@ -131,7 +131,7 @@ class AppBottomNavigationBar extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         _buildNavItemIcon(icon, selectedIcon, isSelected),
-        const SizedBox(height: AppDimensions.bottomNavIconTextSpacing),
+        _iconTextSpacing,
         _buildNavItemLabel(label, isSelected),
       ],
     );

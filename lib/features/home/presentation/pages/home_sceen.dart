@@ -90,6 +90,10 @@ class HomeScreen extends StatelessWidget {
 
   Widget _buildBody() {
     return BlocBuilder<HomeCubit, HomeState>(
+      buildWhen: (previous, current) =>
+          current is HomeLoading ||
+          current is HomeLoaded ||
+          current is HomeInitial,
       builder: (context, state) {
         return switch (state) {
           HomeLoading() ||

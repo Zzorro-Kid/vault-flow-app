@@ -90,7 +90,21 @@ class StatisticsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _buildPeriodSelector(context),
+            BlocBuilder<StatisticsCubit, StatisticsState>(
+              buildWhen: (previous, current) =>
+                  current is StatisticsLoaded &&
+                  (previous is! StatisticsLoaded ||
+                      previous.statistics.period != current.statistics.period),
+              builder: (context, state) {
+                if (state is! StatisticsLoaded) return const SizedBox.shrink();
+                return PeriodSelector(
+                  currentPeriod: state.statistics.period,
+                  onPeriodChanged: (period) {
+                    context.read<StatisticsCubit>().changePeriod(period);
+                  },
+                );
+              },
+            ),
             const SizedBox(height: AppDimensions.spacingMedium),
             StatisticsSummaryCard(statistics: statistics),
             const SizedBox(height: AppDimensions.spacingMedium),
@@ -100,15 +114,6 @@ class StatisticsScreen extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildPeriodSelector(BuildContext context) {
-    return PeriodSelector(
-      currentPeriod: context.read<StatisticsCubit>().currentPeriod,
-      onPeriodChanged: (period) {
-        context.read<StatisticsCubit>().changePeriod(period);
-      },
     );
   }
 
