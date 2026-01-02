@@ -84,36 +84,54 @@ class StatisticsScreen extends StatelessWidget {
   Widget _buildLoadedView(BuildContext context, StatisticsData statistics) {
     return RefreshIndicator(
       onRefresh: () => context.read<StatisticsCubit>().refreshStatistics(),
-      child: SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        padding: const EdgeInsets.all(AppDimensions.paddingMedium),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            BlocBuilder<StatisticsCubit, StatisticsState>(
-              buildWhen: (previous, current) =>
-                  current is StatisticsLoaded &&
-                  (previous is! StatisticsLoaded ||
-                      previous.statistics.period != current.statistics.period),
-              builder: (context, state) {
-                if (state is! StatisticsLoaded) return const SizedBox.shrink();
-                return PeriodSelector(
-                  currentPeriod: state.statistics.period,
-                  onPeriodChanged: (period) {
-                    context.read<StatisticsCubit>().changePeriod(period);
-                  },
-                );
-              },
-            ),
-            const SizedBox(height: AppDimensions.spacingMedium),
-            StatisticsSummaryCard(statistics: statistics),
-            const SizedBox(height: AppDimensions.spacingMedium),
-            _buildCategoryBreakdown(statistics),
-            const SizedBox(height: AppDimensions.spacingMedium),
-            DailyTrendChart(dailyTrends: statistics.dailyTrends),
-          ],
-        ),
-      ),
+      child: _buildScrollableContent(context, statistics),
+    );
+  }
+
+  Widget _buildScrollableContent(
+    BuildContext context,
+    StatisticsData statistics,
+  ) {
+    return SingleChildScrollView(
+      physics: const AlwaysScrollableScrollPhysics(),
+      padding: const EdgeInsets.all(AppDimensions.paddingMedium),
+      child: _buildStatisticsContent(context, statistics),
+    );
+  }
+
+  Widget _buildStatisticsContent(
+    BuildContext context,
+    StatisticsData statistics,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        _buildPeriodSelector(),
+        const SizedBox(height: AppDimensions.spacingMedium),
+        StatisticsSummaryCard(statistics: statistics),
+        const SizedBox(height: AppDimensions.spacingMedium),
+        _buildCategoryBreakdown(statistics),
+        const SizedBox(height: AppDimensions.spacingMedium),
+        DailyTrendChart(dailyTrends: statistics.dailyTrends),
+      ],
+    );
+  }
+
+  Widget _buildPeriodSelector() {
+    return BlocBuilder<StatisticsCubit, StatisticsState>(
+      buildWhen: (previous, current) =>
+          current is StatisticsLoaded &&
+          (previous is! StatisticsLoaded ||
+              previous.statistics.period != current.statistics.period),
+      builder: (context, state) {
+        if (state is! StatisticsLoaded) return const SizedBox.shrink();
+        return PeriodSelector(
+          currentPeriod: state.statistics.period,
+          onPeriodChanged: (period) {
+            context.read<StatisticsCubit>().changePeriod(period);
+          },
+        );
+      },
     );
   }
 
