@@ -3,7 +3,6 @@ import 'package:test_app/features/transaction/data/models/financial_summary_data
 import 'package:test_app/core/enums/period_type.dart';
 import 'package:test_app/core/enums/transaction_type.dart';
 
-/// Service responsible for financial calculations and transaction filtering
 class FinancialService {
   final DateTime Function()? getCurrentTime;
 
@@ -11,7 +10,6 @@ class FinancialService {
 
   DateTime get _now => getCurrentTime?.call() ?? DateTime.now();
 
-  /// Calculates financial summary from a list of transactions
   FinancialSummaryDataModel calculateFinancialSummary(
     List<TransactionDataModel> transactions,
   ) {
@@ -36,7 +34,6 @@ class FinancialService {
     );
   }
 
-  /// Filters transactions by a specified period
   List<TransactionDataModel> filterTransactionsByPeriod(
     List<TransactionDataModel> transactions,
     PeriodType period,

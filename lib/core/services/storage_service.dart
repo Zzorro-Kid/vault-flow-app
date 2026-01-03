@@ -3,13 +3,11 @@ import 'package:test_app/features/transaction/data/models/transaction_data_model
 import 'package:test_app/features/category/data/models/category_data_model.dart';
 import 'package:test_app/core/secure_prefs.dart';
 
-/// Service responsible for all storage operations with SecurePrefs
 class StorageService {
   final SecurePrefs securePrefs;
 
   const StorageService({required this.securePrefs});
 
-  /// Loads all transactions from secure storage
   Future<List<TransactionDataModel>> loadTransactions() async {
     final transactionsJson = await securePrefs.transactions;
 
@@ -27,14 +25,12 @@ class StorageService {
         .toList();
   }
 
-  /// Saves all transactions to secure storage
   Future<void> saveTransactions(List<TransactionDataModel> transactions) async {
     final jsonList = transactions.map((t) => t.toJson()).toList();
     final transactionsJson = json.encode(jsonList);
     await securePrefs.setTransactions(transactionsJson);
   }
 
-  /// Loads all categories from secure storage
   Future<List<CategoryDataModel>> loadCategories() async {
     final categoriesJson = await securePrefs.categories;
 
@@ -49,14 +45,12 @@ class StorageService {
         .toList();
   }
 
-  /// Saves all categories to secure storage
   Future<void> saveCategories(List<CategoryDataModel> categories) async {
     final jsonList = categories.map((c) => c.toJson()).toList();
     final categoriesJson = json.encode(jsonList);
     await securePrefs.setCategories(categoriesJson);
   }
 
-  /// Generic method to load a model from storage
   Future<T?> loadModel<T>({
     required String userId,
     required Future<String?> Function(String userId) getter,
@@ -72,7 +66,6 @@ class StorageService {
     return fromJson(jsonMap);
   }
 
-  /// Generic method to save a model to storage
   Future<void> saveModel<T>({
     required String userId,
     required T model,
@@ -84,7 +77,6 @@ class StorageService {
     await setter(userId, jsonString);
   }
 
-  /// Updates a specific field in a model
   Future<void> updateModelField<T>({
     required String userId,
     required Future<T> Function(String userId) getter,
@@ -96,7 +88,6 @@ class StorageService {
     await saver(updatedModel);
   }
 
-  /// Clears all data from secure storage
   Future<void> clearAll() async {
     await securePrefs.clearAll();
   }
