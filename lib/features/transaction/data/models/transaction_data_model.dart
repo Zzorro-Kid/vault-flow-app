@@ -1,9 +1,6 @@
-import 'package:hive/hive.dart';
-import 'package:test_app/core/hive/hive_constants.dart';
 import 'package:test_app/features/category/data/models/category_data_model.dart';
 import 'package:test_app/features/transaction/domain/entities/transaction_data.dart';
 
-@HiveType(typeId: HiveTypeIds.transaction)
 class TransactionDataModel extends TransactionData {
   const TransactionDataModel({
     required super.id,
