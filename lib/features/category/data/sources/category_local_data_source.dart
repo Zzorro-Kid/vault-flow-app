@@ -1,4 +1,5 @@
 import 'package:test_app/core/data/sources/base_local_data_source.dart';
+import 'package:test_app/core/services/storage_service.dart';
 import 'package:test_app/features/category/data/models/category_data_model.dart';
 
 abstract class CategoryLocalDataSource {
@@ -10,38 +11,36 @@ abstract class CategoryLocalDataSource {
 
 class CategoryLocalDataSourceImpl extends BaseLocalDataSource
     implements CategoryLocalDataSource {
-  CategoryLocalDataSourceImpl({
-    required super.storageService,
-    required super.authService,
-    required super.exportService,
-    required super.financialService,
-  });
+  final StorageService storageService;
+
+  CategoryLocalDataSourceImpl({required this.storageService});
 
   @override
   Future<List<CategoryDataModel>> getAllCategories() async {
-    return executeStorageRead(() async {
-      return await super.loadCategoriesFromStorage();
-    }, errorMessage: 'Failed to get categories');
+    return executeStorageRead(
+      () => storageService.loadCategories(),
+      errorMessage: 'Failed to get categories',
+    );
   }
 
   @override
   Future<void> addCategory(CategoryDataModel category) async {
     return executeStorageWrite(() async {
-      final categories = await super.loadCategoriesFromStorage();
+      final categories = await storageService.loadCategories();
       categories.add(category);
-      await saveCategories(categories);
+      await storageService.saveCategories(categories);
     }, errorMessage: 'Failed to add category');
   }
 
   @override
   Future<void> updateCategory(CategoryDataModel category) async {
     return executeStorageWrite(() async {
-      final categories = await super.loadCategoriesFromStorage();
+      final categories = await storageService.loadCategories();
       final index = categories.indexWhere((c) => c.id == category.id);
 
       if (index != -1) {
         categories[index] = category;
-        await saveCategories(categories);
+        await storageService.saveCategories(categories);
       }
     }, errorMessage: 'Failed to update category');
   }
@@ -49,9 +48,9 @@ class CategoryLocalDataSourceImpl extends BaseLocalDataSource
   @override
   Future<void> deleteCategory(String categoryId) async {
     return executeStorageWrite(() async {
-      final categories = await super.loadCategoriesFromStorage();
+      final categories = await storageService.loadCategories();
       categories.removeWhere((c) => c.id == categoryId);
-      await saveCategories(categories);
+      await storageService.saveCategories(categories);
     }, errorMessage: 'Failed to delete category');
   }
 }

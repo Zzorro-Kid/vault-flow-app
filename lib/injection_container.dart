@@ -81,13 +81,13 @@ Future<void> _initCore() async {
   sl.registerLazySingleton(() => SharedPrefs(sl()));
   sl.registerLazySingleton(() => SecurePrefs(sl()));
 
-  // Register core services
   sl.registerLazySingleton(() => StorageService(securePrefs: sl()));
   sl.registerLazySingleton(() => const AuthService());
   sl.registerLazySingleton(() => FinancialService());
   sl.registerLazySingleton(
     () => ExportService(
-      calculateFinancialSummary: sl<FinancialService>().calculateFinancialSummary,
+      calculateFinancialSummary:
+          sl<FinancialService>().calculateFinancialSummary,
     ),
   );
 }
@@ -117,10 +117,7 @@ void _initAuth() {
     () => AuthLocalDataSourceImpl(
       sharedPrefs: sl(),
       securePrefs: sl(),
-      storageService: sl(),
       authService: sl(),
-      exportService: sl(),
-      financialService: sl(),
     ),
   );
 }
@@ -141,12 +138,7 @@ void _initHome() {
   );
 
   sl.registerLazySingleton<HomeLocalDataSource>(
-    () => HomeLocalDataSourceImpl(
-      storageService: sl(),
-      authService: sl(),
-      exportService: sl(),
-      financialService: sl(),
-    ),
+    () => HomeLocalDataSourceImpl(storageService: sl(), financialService: sl()),
   );
 }
 
@@ -170,12 +162,7 @@ void _initCategory() {
   );
 
   sl.registerLazySingleton<CategoryLocalDataSource>(
-    () => CategoryLocalDataSourceImpl(
-      storageService: sl(),
-      authService: sl(),
-      exportService: sl(),
-      financialService: sl(),
-    ),
+    () => CategoryLocalDataSourceImpl(storageService: sl()),
   );
 }
 
@@ -199,12 +186,7 @@ void _initTransaction() {
   );
 
   sl.registerLazySingleton<TransactionLocalDataSource>(
-    () => TransactionLocalDataSourceImpl(
-      storageService: sl(),
-      authService: sl(),
-      exportService: sl(),
-      financialService: sl(),
-    ),
+    () => TransactionLocalDataSourceImpl(storageService: sl()),
   );
 }
 
@@ -220,8 +202,6 @@ void _initStatistics() {
   sl.registerLazySingleton<StatisticsLocalDataSource>(
     () => StatisticsLocalDataSourceImpl(
       storageService: sl(),
-      authService: sl(),
-      exportService: sl(),
       financialService: sl(),
     ),
   );
@@ -269,7 +249,6 @@ void _initSettings() {
       storageService: sl(),
       authService: sl(),
       exportService: sl(),
-      financialService: sl(),
     ),
   );
 }

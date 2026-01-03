@@ -1,5 +1,8 @@
 import 'package:test_app/core/data/sources/base_local_data_source.dart';
 import 'package:test_app/core/secure_prefs.dart';
+import 'package:test_app/core/services/storage_service.dart';
+import 'package:test_app/core/services/auth_service.dart';
+import 'package:test_app/core/services/export_service.dart';
 import 'package:test_app/features/settings/data/models/user_settings_data_model.dart';
 
 abstract class SettingsLocalDataSource {
@@ -17,22 +20,24 @@ abstract class SettingsLocalDataSource {
 class SettingsLocalDataSourceImpl extends BaseLocalDataSource
     implements SettingsLocalDataSource {
   final SecurePrefs securePrefs;
+  final StorageService storageService;
+  final AuthService authService;
+  final ExportService exportService;
 
   static const String _defaultCurrency = 'USD';
   static const String _defaultReportFrequency = 'monthly';
 
   SettingsLocalDataSourceImpl({
     required this.securePrefs,
-    required super.storageService,
-    required super.authService,
-    required super.exportService,
-    required super.financialService,
+    required this.storageService,
+    required this.authService,
+    required this.exportService,
   });
 
   @override
   Future<UserSettingsDataModel> getUserSettings(String userId) async {
     return executeStorageRead(() async {
-      final settings = await loadModelFromStorage<UserSettingsDataModel>(
+      final settings = await storageService.loadModel<UserSettingsDataModel>(
         userId: userId,
         getter: securePrefs.getUserSettings,
         fromJson: UserSettingsDataModel.fromJson,
@@ -50,7 +55,7 @@ class SettingsLocalDataSourceImpl extends BaseLocalDataSource
   @override
   Future<void> saveUserSettings(UserSettingsDataModel settings) async {
     return executeStorageWrite(() async {
-      await saveModelToStorage<UserSettingsDataModel>(
+      await storageService.saveModel<UserSettingsDataModel>(
         userId: settings.userId,
         model: settings,
         setter: securePrefs.setUserSettings,
@@ -62,7 +67,7 @@ class SettingsLocalDataSourceImpl extends BaseLocalDataSource
   @override
   Future<void> updateCurrency(String userId, String currency) async {
     return executeStorageWrite(() async {
-      await updateModelField<UserSettingsDataModel>(
+      await storageService.updateModelField<UserSettingsDataModel>(
         userId: userId,
         getter: getUserSettings,
         saver: saveUserSettings,
@@ -74,7 +79,7 @@ class SettingsLocalDataSourceImpl extends BaseLocalDataSource
   @override
   Future<void> updateReportFrequency(String userId, String frequency) async {
     return executeStorageWrite(() async {
-      await updateModelField<UserSettingsDataModel>(
+      await storageService.updateModelField<UserSettingsDataModel>(
         userId: userId,
         getter: getUserSettings,
         saver: saveUserSettings,
@@ -86,7 +91,7 @@ class SettingsLocalDataSourceImpl extends BaseLocalDataSource
   @override
   Future<void> changePassword(String oldPassword, String newPassword) async {
     return executeStorageWrite(
-      () => changePasswordWithVerification(
+      () => authService.changePasswordWithVerification(
         oldPassword: oldPassword,
         newPassword: newPassword,
         getStoredHash: () => securePrefs.passwordHash,
@@ -99,8 +104,8 @@ class SettingsLocalDataSourceImpl extends BaseLocalDataSource
   @override
   Future<String> exportDataToCSV(String userId) async {
     return executeStorageRead(() async {
-      final transactions = await loadTransactionsFromStorage();
-      return await exportTransactionsToCSV(
+      final transactions = await storageService.loadTransactions();
+      return await exportService.exportTransactionsToCSV(
         transactions: transactions,
         filePrefix: 'transactions',
       );
@@ -110,8 +115,8 @@ class SettingsLocalDataSourceImpl extends BaseLocalDataSource
   @override
   Future<String> exportDataToPDF(String userId) async {
     return executeStorageRead(() async {
-      final transactions = await loadTransactionsFromStorage();
-      return await exportTransactionsToPDF(
+      final transactions = await storageService.loadTransactions();
+      return await exportService.exportTransactionsToPDF(
         transactions: transactions,
         filePrefix: 'transactions',
       );
@@ -121,18 +126,18 @@ class SettingsLocalDataSourceImpl extends BaseLocalDataSource
   @override
   Future<void> clearOldData(String userId, DateTime beforeDate) async {
     return executeStorageWrite(() async {
-      final transactions = await loadTransactionsFromStorage();
+      final transactions = await storageService.loadTransactions();
       final filteredTransactions = transactions
           .where((t) => t.date.isAfter(beforeDate))
           .toList();
-      await saveTransactions(filteredTransactions);
+      await storageService.saveTransactions(filteredTransactions);
     }, errorMessage: 'Failed to clear old data');
   }
 
   @override
   Future<void> clearAllData() async {
     return executeStorageWrite(
-      () => clearAllStorage(),
+      () => storageService.clearAll(),
       errorMessage: 'Failed to clear all data',
     );
   }

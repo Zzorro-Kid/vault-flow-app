@@ -1,5 +1,7 @@
 import 'package:test_app/features/transaction/data/models/transaction_data_model.dart';
 import 'package:test_app/core/data/sources/base_local_data_source.dart';
+import 'package:test_app/core/services/storage_service.dart';
+import 'package:test_app/core/services/financial_service.dart';
 import 'package:test_app/features/home/data/models/dashboard_summary_data_model.dart';
 
 abstract class HomeLocalDataSource {
@@ -9,18 +11,19 @@ abstract class HomeLocalDataSource {
 
 class HomeLocalDataSourceImpl extends BaseLocalDataSource
     implements HomeLocalDataSource {
+  final StorageService storageService;
+  final FinancialService financialService;
+
   HomeLocalDataSourceImpl({
-    required super.storageService,
-    required super.authService,
-    required super.exportService,
-    required super.financialService,
+    required this.storageService,
+    required this.financialService,
   });
 
   @override
   Future<DashboardSummaryDataModel> getDashboardSummary() async {
     return executeStorageRead(() async {
-      final transactions = await loadTransactionsFromStorage();
-      final summary = calculateFinancialSummary(transactions);
+      final transactions = await storageService.loadTransactions();
+      final summary = financialService.calculateFinancialSummary(transactions);
 
       return DashboardSummaryDataModel(
         totalBalance: summary.totalBalance,
@@ -35,7 +38,7 @@ class HomeLocalDataSourceImpl extends BaseLocalDataSource
     int limit = 10,
   }) async {
     return executeStorageRead(() async {
-      final transactions = await loadTransactionsFromStorage();
+      final transactions = await storageService.loadTransactions();
 
       transactions.sort((a, b) => b.date.compareTo(a.date));
 

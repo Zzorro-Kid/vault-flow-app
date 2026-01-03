@@ -1,6 +1,7 @@
 import 'package:test_app/core/data/sources/base_local_data_source.dart';
 import 'package:test_app/core/secure_prefs.dart';
 import 'package:test_app/core/shared_prefs.dart';
+import 'package:test_app/core/services/auth_service.dart';
 import 'package:test_app/features/auth/data/models/auth_state_data_model.dart';
 
 abstract class AuthLocalDataSource {
@@ -16,14 +17,12 @@ class AuthLocalDataSourceImpl extends BaseLocalDataSource
     implements AuthLocalDataSource {
   final SharedPrefs sharedPrefs;
   final SecurePrefs securePrefs;
+  final AuthService authService;
 
   AuthLocalDataSourceImpl({
     required this.sharedPrefs,
     required this.securePrefs,
-    required super.storageService,
-    required super.authService,
-    required super.exportService,
-    required super.financialService,
+    required this.authService,
   });
 
   @override
@@ -40,7 +39,7 @@ class AuthLocalDataSourceImpl extends BaseLocalDataSource
   @override
   Future<void> setPassword(String password) async {
     return executeStorageWrite(() async {
-      final passwordHash = hashPassword(password);
+      final passwordHash = authService.hashPassword(password);
 
       await securePrefs.setPasswordHash(passwordHash);
       await sharedPrefs.setHasPassword(true);
@@ -56,7 +55,10 @@ class AuthLocalDataSourceImpl extends BaseLocalDataSource
         return false;
       }
 
-      final isValid = await verifyPasswordHash(password, storedHash);
+      final isValid = await authService.verifyPasswordHash(
+        password,
+        storedHash,
+      );
 
       if (isValid && authService.isLegacyHash(storedHash)) {
         final newHash = await authService.migrateLegacyHash(

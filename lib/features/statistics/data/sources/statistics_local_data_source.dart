@@ -1,5 +1,7 @@
 import 'package:test_app/core/data/sources/base_local_data_source.dart';
 import 'package:test_app/core/enums/period_type.dart';
+import 'package:test_app/core/services/storage_service.dart';
+import 'package:test_app/core/services/financial_service.dart';
 import 'package:test_app/features/transaction/data/models/transaction_data_model.dart';
 
 abstract class StatisticsLocalDataSource {
@@ -8,11 +10,12 @@ abstract class StatisticsLocalDataSource {
 
 class StatisticsLocalDataSourceImpl extends BaseLocalDataSource
     implements StatisticsLocalDataSource {
+  final StorageService storageService;
+  final FinancialService financialService;
+
   StatisticsLocalDataSourceImpl({
-    required super.storageService,
-    required super.authService,
-    required super.exportService,
-    required super.financialService,
+    required this.storageService,
+    required this.financialService,
   });
 
   @override
@@ -20,9 +23,12 @@ class StatisticsLocalDataSourceImpl extends BaseLocalDataSource
     String period,
   ) async {
     return executeStorageRead(() async {
-      final transactions = await loadTransactionsFromStorage();
+      final transactions = await storageService.loadTransactions();
       final periodType = PeriodType.fromString(period);
-      return filterTransactionsByPeriod(transactions, periodType);
+      return financialService.filterTransactionsByPeriod(
+        transactions,
+        periodType,
+      );
     }, errorMessage: 'Failed to get transactions for period');
   }
 }
