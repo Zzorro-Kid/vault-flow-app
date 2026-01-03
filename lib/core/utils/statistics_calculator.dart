@@ -3,6 +3,7 @@ import 'package:test_app/features/statistics/data/models/category_breakdown_data
 import 'package:test_app/features/statistics/data/models/daily_trend_data_model.dart';
 import 'package:test_app/features/statistics/data/models/statistics_data_model.dart';
 import 'package:test_app/features/transaction/data/models/transaction_data_model.dart';
+import 'package:test_app/core/utils/min_heap.dart';
 
 class StatisticsCalculator {
   static final Map<String, StatisticsDataModel> _cache = {};
@@ -92,27 +93,45 @@ class StatisticsCalculator {
       (sum, item) => sum + item.amount,
     );
 
-    final categoryBreakdown = categoryMap.values.map((data) {
+    final categoryBreakdownHeap = MinHeap<CategoryBreakdownDataModel>(
+      maxSize: categoryMap.length,
+      compare: (a, b) => a.amount.compareTo(b.amount),
+    );
+
+    for (final data in categoryMap.values) {
       final percentage = totalAmount > 0
           ? (data.amount / totalAmount) * 100
           : 0.0;
-      return CategoryBreakdownDataModel(
-        category: data.category,
-        amount: data.amount,
-        percentage: percentage,
-        transactionCount: data.transactionCount,
+      categoryBreakdownHeap.add(
+        CategoryBreakdownDataModel(
+          category: data.category,
+          amount: data.amount,
+          percentage: percentage,
+          transactionCount: data.transactionCount,
+        ),
       );
-    }).toList()..sort((a, b) => b.amount.compareTo(a.amount));
+    }
 
-    final dailyTrends = dailyMap.values.map((data) {
+    final categoryBreakdown = categoryBreakdownHeap.toList();
+
+    final dailyTrendsHeap = MinHeap<DailyTrendDataModel>(
+      maxSize: dailyMap.length,
+      compare: (a, b) => b.date.compareTo(a.date),
+    );
+
+    for (final data in dailyMap.values) {
       final dailyBalance = data.income - data.expense;
-      return DailyTrendDataModel(
-        date: data.date,
-        income: data.income,
-        expense: data.expense,
-        balance: dailyBalance,
+      dailyTrendsHeap.add(
+        DailyTrendDataModel(
+          date: data.date,
+          income: data.income,
+          expense: data.expense,
+          balance: dailyBalance,
+        ),
       );
-    }).toList()..sort((a, b) => a.date.compareTo(b.date));
+    }
+
+    final dailyTrends = dailyTrendsHeap.toList();
 
     return StatisticsDataModel(
       totalIncome: totalIncome,
