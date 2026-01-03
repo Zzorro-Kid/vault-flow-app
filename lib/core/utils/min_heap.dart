@@ -17,7 +17,7 @@ class MinHeap<T> {
 
   List<T> toList() {
     final sorted = List<T>.from(_heap)..sort(compare);
-    return sorted;
+    return sorted.reversed.toList();
   }
 
   int get length => _heap.length;
