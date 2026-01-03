@@ -5,10 +5,33 @@ import 'package:test_app/features/statistics/data/models/statistics_data_model.d
 import 'package:test_app/features/transaction/data/models/transaction_data_model.dart';
 
 class StatisticsCalculator {
+  static final Map<String, StatisticsDataModel> _cache = {};
+
   static StatisticsDataModel calculateStatistics(
     List<TransactionDataModel> transactions,
     String period,
   ) {
+    final cacheKey = '${period}_${transactions.length}';
+
+    if (_cache.containsKey(cacheKey)) {
+      return _cache[cacheKey]!;
+    }
+
+    final result = _calculateStatisticsInternal(transactions, period);
+    _cache[cacheKey] = result;
+    return result;
+  }
+
+  static void clearCache() {
+    _cache.clear();
+  }
+
+  static StatisticsDataModel _calculateStatisticsInternal(
+    List<TransactionDataModel> transactions,
+    String period,
+  ) {
+    final Map<String, _CategoryAccumulator> categoryMap = {};
+    final Map<String, _DailyAccumulator> dailyMap = {};
     double totalIncome = 0.0;
     double totalExpense = 0.0;
 
@@ -18,28 +41,7 @@ class StatisticsCalculator {
       } else if (transaction.type == 'expense') {
         totalExpense += transaction.amount;
       }
-    }
 
-    final balance = totalIncome - totalExpense;
-    final categoryBreakdown = _calculateCategoryBreakdown(transactions);
-    final dailyTrends = _calculateDailyTrends(transactions);
-
-    return StatisticsDataModel(
-      totalIncome: totalIncome,
-      totalExpense: totalExpense,
-      balance: balance,
-      period: period,
-      categoryBreakdown: categoryBreakdown,
-      dailyTrends: dailyTrends,
-    );
-  }
-
-  static List<CategoryBreakdownDataModel> _calculateCategoryBreakdown(
-    List<TransactionDataModel> transactions,
-  ) {
-    final Map<String, _CategoryAccumulator> categoryMap = {};
-
-    for (final transaction in transactions) {
       final category = transaction.category as CategoryDataModel;
       final categoryId = category.id;
 
@@ -57,32 +59,7 @@ class StatisticsCalculator {
           transactionCount: 1,
         );
       }
-    }
 
-    final totalAmount = categoryMap.values.fold<double>(
-      0.0,
-      (sum, item) => sum + item.amount,
-    );
-
-    return categoryMap.values.map((data) {
-      final percentage = totalAmount > 0
-          ? (data.amount / totalAmount) * 100
-          : 0.0;
-      return CategoryBreakdownDataModel(
-        category: data.category,
-        amount: data.amount,
-        percentage: percentage,
-        transactionCount: data.transactionCount,
-      );
-    }).toList()..sort((a, b) => b.amount.compareTo(a.amount));
-  }
-
-  static List<DailyTrendDataModel> _calculateDailyTrends(
-    List<TransactionDataModel> transactions,
-  ) {
-    final Map<String, _DailyAccumulator> dailyMap = {};
-
-    for (final transaction in transactions) {
       final dateKey = _formatDateKey(transaction.date);
 
       if (dailyMap.containsKey(dateKey)) {
@@ -109,15 +86,42 @@ class StatisticsCalculator {
       }
     }
 
-    return dailyMap.values.map((data) {
-      final balance = data.income - data.expense;
+    final balance = totalIncome - totalExpense;
+    final totalAmount = categoryMap.values.fold<double>(
+      0.0,
+      (sum, item) => sum + item.amount,
+    );
+
+    final categoryBreakdown = categoryMap.values.map((data) {
+      final percentage = totalAmount > 0
+          ? (data.amount / totalAmount) * 100
+          : 0.0;
+      return CategoryBreakdownDataModel(
+        category: data.category,
+        amount: data.amount,
+        percentage: percentage,
+        transactionCount: data.transactionCount,
+      );
+    }).toList()..sort((a, b) => b.amount.compareTo(a.amount));
+
+    final dailyTrends = dailyMap.values.map((data) {
+      final dailyBalance = data.income - data.expense;
       return DailyTrendDataModel(
         date: data.date,
         income: data.income,
         expense: data.expense,
-        balance: balance,
+        balance: dailyBalance,
       );
     }).toList()..sort((a, b) => a.date.compareTo(b.date));
+
+    return StatisticsDataModel(
+      totalIncome: totalIncome,
+      totalExpense: totalExpense,
+      balance: balance,
+      period: period,
+      categoryBreakdown: categoryBreakdown,
+      dailyTrends: dailyTrends,
+    );
   }
 
   static String _formatDateKey(DateTime date) {
