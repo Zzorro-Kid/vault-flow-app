@@ -61,4 +61,14 @@ class AuthCubit extends Cubit<AuthCubitState> {
       }
     });
   }
+
+  Future<void> resetPassword() async {
+    emit(AuthCubitLoading());
+
+    final result = await clearAuthDataUseCase();
+
+    result.fold((failure) => emit(AuthCubitError(failure.message)), (_) async {
+      await checkAuthState();
+    });
+  }
 }

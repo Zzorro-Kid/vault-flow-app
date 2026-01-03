@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:test_app/core/constants/app_colors.dart';
 import 'package:test_app/core/constants/app_dimensions.dart';
 import 'package:test_app/core/utils/validators.dart';
 import 'package:test_app/core/widgets/custom_button.dart';
@@ -38,6 +39,8 @@ class _LoginFormState extends State<LoginForm> {
               _buildPasswordField(),
               const SizedBox(height: AppDimensions.spacingXLarge),
               _buildUnlockButton(),
+              const SizedBox(height: AppDimensions.spacingMedium),
+              _buildForgotPasswordButton(),
             ],
           ),
         ),
@@ -93,6 +96,51 @@ class _LoginFormState extends State<LoginForm> {
           isLoading: state is AuthCubitLoading,
         );
       },
+    );
+  }
+
+  Widget _buildForgotPasswordButton() {
+    return BlocBuilder<AuthCubit, AuthCubitState>(
+      builder: (context, state) {
+        return TextButton(
+          onPressed: _showForgotPasswordConfirmation,
+          child: const Text(
+            'Reset Password',
+            style: TextStyle(
+              color: AppColors.primaryDark,
+              fontSize: AppDimensions.fontSizeMedium,
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _showForgotPasswordConfirmation() {
+    final authCubit = context.read<AuthCubit>();
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Reset Password'),
+        content: const Text(
+          'This will delete ALL your data including transactions and categories. You will need to create a new password.\n\nAre you sure you want to continue?',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              authCubit.resetPassword();
+            },
+            style: TextButton.styleFrom(foregroundColor: AppColors.error),
+            child: const Text('Yes, Reset'),
+          ),
+        ],
+      ),
     );
   }
 
