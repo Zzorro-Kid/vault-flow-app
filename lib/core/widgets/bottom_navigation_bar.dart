@@ -119,7 +119,9 @@ class AppBottomNavigationBar extends StatelessWidget {
     );
   }
 
-  static const _iconTextSpacing = SizedBox(height: AppDimensions.bottomNavIconTextSpacing);
+  static const _iconTextSpacing = SizedBox(
+    height: AppDimensions.bottomNavIconTextSpacing,
+  );
 
   Widget _buildNavItemContent({
     required IconData icon,
@@ -171,8 +173,6 @@ class AppBottomNavigationBar extends StatelessWidget {
     String route,
   ) {
     if (!isSelected) {
-      // If onTap callback is provided, use it (for IndexedStack navigation)
-      // Otherwise, fall back to route navigation
       if (onTap != null) {
         onTap!(index);
       } else {

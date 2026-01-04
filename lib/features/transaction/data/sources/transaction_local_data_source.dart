@@ -3,7 +3,14 @@ import 'package:test_app/core/data/sources/base_local_data_source.dart';
 import 'package:test_app/core/services/storage_service.dart';
 
 abstract class TransactionLocalDataSource {
-  Future<List<TransactionDataModel>> getAllTransactions();
+  Future<List<TransactionDataModel>> getTransactions({
+    int offset = 0,
+    int limit = 50,
+    DateTime? startDate,
+    DateTime? endDate,
+    String? categoryId,
+    String? type,
+  });
   Future<void> addTransaction(TransactionDataModel transaction);
   Future<void> updateTransaction(TransactionDataModel transaction);
   Future<void> deleteTransaction(String transactionId);
@@ -16,9 +23,23 @@ class TransactionLocalDataSourceImpl extends BaseLocalDataSource
   TransactionLocalDataSourceImpl({required this.storageService});
 
   @override
-  Future<List<TransactionDataModel>> getAllTransactions() async {
+  Future<List<TransactionDataModel>> getTransactions({
+    int offset = 0,
+    int limit = 50,
+    DateTime? startDate,
+    DateTime? endDate,
+    String? categoryId,
+    String? type,
+  }) async {
     return executeStorageRead(
-      () => storageService.loadTransactions(),
+      () => storageService.loadTransactions(
+        offset: offset,
+        limit: limit,
+        startDate: startDate,
+        endDate: endDate,
+        categoryId: categoryId,
+        type: type,
+      ),
       errorMessage: 'Failed to get transactions',
     );
   }

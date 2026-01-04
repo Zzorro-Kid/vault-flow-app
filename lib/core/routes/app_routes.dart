@@ -46,8 +46,8 @@ class AppRouter {
   PageRouteBuilder<dynamic> _createFadeRoute(Widget page) {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => page,
-      transitionDuration: const Duration(milliseconds: 90),
-      reverseTransitionDuration: const Duration(milliseconds: 90),
+      transitionDuration: const Duration(milliseconds: 450),
+      reverseTransitionDuration: const Duration(milliseconds: 450),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         return FadeTransition(opacity: animation, child: child);
       },

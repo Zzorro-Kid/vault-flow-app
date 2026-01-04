@@ -3,7 +3,6 @@ import 'package:test_app/core/data/sources/base_local_data_source.dart';
 import 'package:test_app/core/services/storage_service.dart';
 import 'package:test_app/core/services/financial_service.dart';
 import 'package:test_app/features/home/data/models/dashboard_summary_data_model.dart';
-import 'package:test_app/core/utils/min_heap.dart';
 
 abstract class HomeLocalDataSource {
   Future<DashboardSummaryDataModel> getDashboardSummary();
@@ -23,7 +22,7 @@ class HomeLocalDataSourceImpl extends BaseLocalDataSource
   @override
   Future<DashboardSummaryDataModel> getDashboardSummary() async {
     return executeStorageRead(() async {
-      final transactions = await storageService.loadTransactions();
+      final transactions = await storageService.loadTransactions(limit: 1000);
       final summary = financialService.calculateFinancialSummary(transactions);
 
       return DashboardSummaryDataModel(
@@ -39,18 +38,7 @@ class HomeLocalDataSourceImpl extends BaseLocalDataSource
     int limit = 10,
   }) async {
     return executeStorageRead(() async {
-      final transactions = await storageService.loadTransactions();
-
-      final heap = MinHeap<TransactionDataModel>(
-        maxSize: limit,
-        compare: (a, b) => a.date.compareTo(b.date),
-      );
-
-      for (final transaction in transactions) {
-        heap.add(transaction);
-      }
-
-      return heap.toList();
+      return await storageService.loadTransactions(limit: limit);
     }, errorMessage: 'Failed to get recent transactions');
   }
 }

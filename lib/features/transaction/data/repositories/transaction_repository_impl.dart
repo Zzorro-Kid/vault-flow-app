@@ -14,7 +14,7 @@ class TransactionRepositoryImpl extends BaseRepository
 
   @override
   Future<Either<Failure, List<TransactionData>>> getAllTransactions() async {
-    return executeRepositoryCall(() => localDataSource.getAllTransactions());
+    return executeRepositoryCall(() => localDataSource.getTransactions());
   }
 
   @override

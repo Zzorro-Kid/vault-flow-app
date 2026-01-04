@@ -48,7 +48,7 @@ class FinancialService {
         .toList();
   }
 
-  DateTime _calculateStartDate(PeriodType period) {
+  DateTime calculateStartDate(PeriodType period) {
     switch (period) {
       case PeriodType.day:
         return DateTime(_now.year, _now.month, _now.day);
@@ -61,5 +61,9 @@ class FinancialService {
       case PeriodType.year:
         return DateTime(_now.year, 1, 1);
     }
+  }
+
+  DateTime _calculateStartDate(PeriodType period) {
+    return calculateStartDate(period);
   }
 }

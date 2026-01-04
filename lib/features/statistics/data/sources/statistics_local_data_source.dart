@@ -23,11 +23,14 @@ class StatisticsLocalDataSourceImpl extends BaseLocalDataSource
     String period,
   ) async {
     return executeStorageRead(() async {
-      final transactions = await storageService.loadTransactions();
       final periodType = PeriodType.fromString(period);
-      return financialService.filterTransactionsByPeriod(
-        transactions,
-        periodType,
+      final startDate = financialService.calculateStartDate(periodType);
+      final now = DateTime.now();
+
+      return await storageService.loadTransactions(
+        startDate: startDate,
+        endDate: now,
+        limit: 1000,
       );
     }, errorMessage: 'Failed to get transactions for period');
   }

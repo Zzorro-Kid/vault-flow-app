@@ -11,7 +11,56 @@ class StorageService {
 
   StorageService({required this.securePrefs});
 
-  Future<List<TransactionDataModel>> loadTransactions() async {
+  Future<List<TransactionDataModel>> loadTransactions({
+    int offset = 0,
+    int limit = 50,
+    DateTime? startDate,
+    DateTime? endDate,
+    String? categoryId,
+    String? type,
+  }) async {
+    final allTransactions = await _loadAllTransactions();
+
+    var filteredTransactions = allTransactions;
+
+    if (startDate != null) {
+      filteredTransactions = filteredTransactions
+          .where(
+            (t) =>
+                t.date.isAfter(startDate) || t.date.isAtSameMomentAs(startDate),
+          )
+          .toList();
+    }
+
+    if (endDate != null) {
+      filteredTransactions = filteredTransactions
+          .where(
+            (t) => t.date.isBefore(endDate) || t.date.isAtSameMomentAs(endDate),
+          )
+          .toList();
+    }
+
+    if (categoryId != null) {
+      filteredTransactions = filteredTransactions
+          .where((t) => (t.category as dynamic).id == categoryId)
+          .toList();
+    }
+
+    if (type != null) {
+      filteredTransactions = filteredTransactions
+          .where((t) => t.type == type)
+          .toList();
+    }
+
+    filteredTransactions.sort((a, b) => b.date.compareTo(a.date));
+
+    final end = (offset + limit).clamp(0, filteredTransactions.length);
+    final start = offset.clamp(0, end);
+
+    return filteredTransactions.sublist(start, end);
+  }
+
+  Future<List<TransactionDataModel>> _loadAllTransactions() async {
     if (_cachedTransactions != null) {
       return _cachedTransactions!;
     }
@@ -41,7 +90,28 @@ class StorageService {
     await securePrefs.setTransactions(transactionsJson);
   }
 
-  Future<List<CategoryDataModel>> loadCategories() async {
+  Future<List<CategoryDataModel>> loadCategories({
+    int offset = 0,
+    int limit = 50,
+    String? type,
+  }) async {
+    final allCategories = await _loadAllCategories();
+
+    var filteredCategories = allCategories;
+
+    if (type != null) {
+      filteredCategories = filteredCategories
+          .where((c) => c.type == type)
+          .toList();
+    }
+
+    final end = (offset + limit).clamp(0, filteredCategories.length);
+    final start = offset.clamp(0, end);
+
+    return filteredCategories.sublist(start, end);
+  }
+
+  Future<List<CategoryDataModel>> _loadAllCategories() async {
     if (_cachedCategories != null) {
       return _cachedCategories!;
     }
