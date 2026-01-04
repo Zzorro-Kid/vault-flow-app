@@ -26,11 +26,4 @@ class AuthCubitLoginSuccess extends AuthCubitState {}
 
 class AuthCubitLogoutSuccess extends AuthCubitState {}
 
-class AuthCubitError extends AuthCubitState {
-  final String message;
-
-  const AuthCubitError(this.message);
-
-  @override
-  List<Object?> get props => [message];
-}
+class AuthCubitInvalidPassword extends AuthCubitState {}

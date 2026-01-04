@@ -31,7 +31,7 @@ class AuthCubit extends Cubit<AuthCubitState> {
     final result = await getAuthStateUseCase(NoParams());
 
     result.fold(
-      (failure) => emit(AuthCubitError(failure.message)),
+      (failure) => emit(AuthCubitInitial()),
       (authState) => emit(AuthCubitLoaded(authState)),
     );
   }
@@ -41,7 +41,7 @@ class AuthCubit extends Cubit<AuthCubitState> {
 
     final result = await setPasswordUseCase(password);
 
-    result.fold((failure) => emit(AuthCubitError(failure.message)), (_) async {
+    result.fold((failure) => emit(AuthCubitInitial()), (_) async {
       await completeFirstLaunchUseCase();
       await checkAuthState();
       emit(AuthCubitPasswordSetSuccess());
@@ -53,11 +53,11 @@ class AuthCubit extends Cubit<AuthCubitState> {
 
     final result = await verifyPasswordUseCase(password);
 
-    result.fold((failure) => emit(AuthCubitError(failure.message)), (isValid) {
+    result.fold((failure) => emit(AuthCubitInitial()), (isValid) {
       if (isValid) {
         emit(AuthCubitLoginSuccess());
       } else {
-        emit(const AuthCubitError('Invalid password'));
+        emit(AuthCubitInvalidPassword());
       }
     });
   }
@@ -67,7 +67,7 @@ class AuthCubit extends Cubit<AuthCubitState> {
 
     final result = await clearAuthDataUseCase();
 
-    result.fold((failure) => emit(AuthCubitError(failure.message)), (_) async {
+    result.fold((failure) => emit(AuthCubitInitial()), (_) async {
       await checkAuthState();
     });
   }
