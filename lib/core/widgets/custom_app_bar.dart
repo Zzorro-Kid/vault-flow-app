@@ -1,55 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/core/constants/app_colors.dart';
+import 'package:test_app/core/constants/app_dimensions.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget title;
   final double height;
-  final bool centerTitle;
-  final double topPadding;
 
   const CustomAppBar({
     super.key,
     required this.title,
-    this.height = kToolbarHeight,
-    this.centerTitle = true,
-    this.topPadding = 0.0,
+    this.height = AppDimensions.appBarCardHeight,
   });
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Padding(
-        padding: EdgeInsets.only(top: topPadding),
-        child: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          surfaceTintColor: Colors.transparent,
-          automaticallyImplyLeading: false,
-          centerTitle: centerTitle,
-          flexibleSpace: _buildAppBarBackground(),
-          title: title,
+      child: Container(
+        margin: const EdgeInsets.symmetric(
+          horizontal: AppDimensions.appBarCardMarginHorizontal,
+          vertical: AppDimensions.paddingMedium,
         ),
-      ),
-    );
-  }
-
-  Widget _buildAppBarBackground() {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-          colors: [
-            AppColors.appBarGradientEdge,
-            AppColors.appBarGradientCenter,
-            AppColors.appBarGradientEdge,
+        decoration: BoxDecoration(
+          color: AppColors.surfaceDark,
+          borderRadius: BorderRadius.circular(AppDimensions.appBarCardRadius),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.appBarShadow,
+              blurRadius: AppDimensions.shadowBlurRadius,
+              offset: const Offset(0, AppDimensions.shadowOffsetY),
+            ),
           ],
-          stops: [0.0, 0.5, 1.0],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppDimensions.paddingMedium,
+          ),
+          child: AppBar(
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            surfaceTintColor: Colors.transparent,
+            automaticallyImplyLeading: false,
+            centerTitle: true,
+            title: title,
+          ),
         ),
       ),
     );
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(height);
+  Size get preferredSize =>
+      Size.fromHeight(height + AppDimensions.paddingSmall * 2);
 }

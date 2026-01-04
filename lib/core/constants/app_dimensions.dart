@@ -51,6 +51,13 @@ class AppDimensions {
   static const double appBarTitleOffsetY = 0.5;
   static const double appBarTopPadding = 5.0;
 
+  // AppBar Card
+  static const double appBarCardRadius = 16.0;
+  static const double appBarCardElevation = 4.0;
+  static const double appBarCardMarginHorizontal = 16.0;
+  static const double appBarCardHeight = 64.0;
+  static const double appBarCardPaddingVertical = 12.0;
+
   // Bottom Navigation
   static const double bottomNavHeight = 60.0;
   static const double bottomNavIconSize = 22.0;

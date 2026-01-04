@@ -39,13 +39,7 @@ class HomeScreen extends StatelessWidget {
   }
 
   PreferredSizeWidget _buildAppBar() {
-    return CustomAppBar(
-      height: AppDimensions.appBarHeightHome,
-      title: Transform.translate(
-        offset: const Offset(0, AppDimensions.appBarTitleOffsetY),
-        child: _buildAppBarContent(),
-      ),
-    );
+    return CustomAppBar(title: _buildAppBarContent());
   }
 
   Widget _buildAppBarContent() {

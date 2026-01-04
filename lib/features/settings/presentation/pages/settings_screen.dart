@@ -32,22 +32,16 @@ class SettingsScreen extends StatelessWidget {
   }
 
   PreferredSizeWidget _buildAppBar() {
-    return CustomAppBar(
-      height: AppDimensions.appBarHeightOther,
-      title: _buildAppBarTitle(),
-    );
+    return CustomAppBar(title: _buildAppBarTitle());
   }
 
   Widget _buildAppBarTitle() {
-    return Transform.translate(
-      offset: const Offset(0, AppDimensions.appBarTitleOffsetY),
-      child: const Text(
-        'Settings',
-        style: TextStyle(
-          fontSize: AppDimensions.fontSizeXXLarge,
-          fontWeight: FontWeight.bold,
-          color: AppColors.categoryTitleText,
-        ),
+    return const Text(
+      'Settings',
+      style: TextStyle(
+        fontSize: AppDimensions.fontSizeXXLarge,
+        fontWeight: FontWeight.bold,
+        color: AppColors.categoryTitleText,
       ),
     );
   }
