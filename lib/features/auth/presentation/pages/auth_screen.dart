@@ -5,7 +5,6 @@ import 'package:test_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:test_app/features/auth/presentation/widgets/login_form.dart';
 import 'package:test_app/features/auth/presentation/widgets/first_setup_password_form.dart';
 import 'package:test_app/injection_container.dart';
-import 'package:test_app/core/utils/ui_helpers.dart';
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({super.key});
@@ -14,25 +13,19 @@ class AuthScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => sl<AuthCubit>()..checkAuthState(),
-      child: BlocListener<AuthCubit, AuthCubitState>(
-        listener: (context, state) {
-          switch (state) {
-            case AuthCubitLoginSuccess() || AuthCubitPasswordSetSuccess():
-              Navigator.pushReplacementNamed(context, '/home');
-            case AuthCubitError():
-              UiHelpers.showErrorSnackBar(context, state.message);
-            default:
-              break;
-          }
-        },
-        child: Scaffold(body: _buildBody()),
-      ),
+      child: Scaffold(body: _buildBody()),
     );
   }
 
   Widget _buildBody() {
     return SafeArea(
-      child: BlocBuilder<AuthCubit, AuthCubitState>(
+      child: BlocConsumer<AuthCubit, AuthCubitState>(
+        listener: (context, state) {
+          if (state is AuthCubitLoginSuccess ||
+              state is AuthCubitPasswordSetSuccess) {
+            Navigator.pushReplacementNamed(context, '/home');
+          }
+        },
         builder: (context, state) {
           return switch (state) {
             AuthCubitLoading() ||

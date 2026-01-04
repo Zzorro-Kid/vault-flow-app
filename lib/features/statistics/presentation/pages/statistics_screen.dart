@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_app/core/constants/app_dimensions.dart';
 import 'package:test_app/core/constants/app_colors.dart';
-import 'package:test_app/core/utils/ui_helpers.dart';
 import 'package:test_app/core/widgets/bottom_navigation_bar.dart';
 import 'package:test_app/core/widgets/custom_app_bar.dart';
 import 'package:test_app/core/widgets/loading_indicator.dart';
@@ -22,20 +21,10 @@ class StatisticsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => sl<StatisticsCubit>()..loadStatistics(),
-      child: BlocListener<StatisticsCubit, StatisticsState>(
-        listener: (context, state) {
-          switch (state) {
-            case StatisticsError():
-              UiHelpers.showErrorSnackBar(context, state.message);
-            default:
-              break;
-          }
-        },
-        child: Scaffold(
-          appBar: _buildAppBar(),
-          body: _buildBody(),
-          bottomNavigationBar: const AppBottomNavigationBar(currentIndex: 3),
-        ),
+      child: Scaffold(
+        appBar: _buildAppBar(),
+        body: _buildBody(),
+        bottomNavigationBar: const AppBottomNavigationBar(currentIndex: 3),
       ),
     );
   }

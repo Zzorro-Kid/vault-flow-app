@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_app/core/constants/app_dimensions.dart';
 import 'package:test_app/core/constants/app_colors.dart';
 import 'package:test_app/core/utils/list_helpers.dart';
-import 'package:test_app/core/utils/ui_helpers.dart';
 import 'package:test_app/core/widgets/bottom_navigation_bar.dart';
 import 'package:test_app/core/widgets/custom_app_bar.dart';
 import 'package:test_app/core/widgets/loading_indicator.dart';
@@ -24,24 +23,12 @@ class CategoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => sl<CategoryCubit>()..loadCategories(),
-      child: BlocListener<CategoryCubit, CategoryState>(
-        listener: (context, state) {
-          switch (state) {
-            case CategoryError():
-              UiHelpers.showErrorSnackBar(context, state.message);
-            case CategoryOperationSuccess():
-              _showOperationSnackBar(context, state.message);
-            default:
-              break;
-          }
-        },
-        child: Scaffold(
-          appBar: _buildAppBar(),
-          body: Stack(
-            children: [_buildBody(), _buildFloatingActionButton(context)],
-          ),
-          bottomNavigationBar: const AppBottomNavigationBar(currentIndex: 2),
+      child: Scaffold(
+        appBar: _buildAppBar(),
+        body: Stack(
+          children: [_buildBody(), _buildFloatingActionButton(context)],
         ),
+        bottomNavigationBar: const AppBottomNavigationBar(currentIndex: 2),
       ),
     );
   }
@@ -318,15 +305,6 @@ class CategoryScreen extends StatelessWidget {
       child: const Text(
         'Delete',
         style: TextStyle(color: AppColors.expensesStart),
-      ),
-    );
-  }
-
-  void _showOperationSnackBar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: UiHelpers.getOperationSnackBarColor(message),
       ),
     );
   }

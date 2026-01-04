@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_app/core/constants/app_dimensions.dart';
 import 'package:test_app/core/constants/app_colors.dart';
 import 'package:test_app/core/utils/list_helpers.dart';
-import 'package:test_app/core/utils/ui_helpers.dart';
 import 'package:test_app/core/widgets/bottom_navigation_bar.dart';
 import 'package:test_app/core/widgets/custom_app_bar.dart';
 import 'package:test_app/core/widgets/loading_indicator.dart';
@@ -12,6 +11,7 @@ import 'package:test_app/features/transaction/domain/entities/transaction_data.d
 import 'package:test_app/features/transaction/presentation/cubit/transaction_cubit.dart';
 import 'package:test_app/features/transaction/presentation/cubit/transaction_state.dart';
 import 'package:test_app/features/transaction/presentation/widgets/add_transaction_dialog.dart';
+import 'package:test_app/features/transaction/presentation/widgets/edit_transaction_dialog.dart';
 import 'package:test_app/features/transaction/presentation/widgets/empty_transactions_view.dart';
 import 'package:test_app/features/transaction/presentation/widgets/transaction_error_view.dart';
 import 'package:test_app/features/transaction/presentation/widgets/transaction_item.dart';
@@ -24,24 +24,12 @@ class TransactionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => sl<TransactionCubit>()..loadTransactions(),
-      child: BlocListener<TransactionCubit, TransactionState>(
-        listener: (context, state) {
-          switch (state) {
-            case TransactionError():
-              UiHelpers.showErrorSnackBar(context, state.message);
-            case TransactionOperationSuccess():
-              _showOperationSnackBar(context, state.message);
-            default:
-              break;
-          }
-        },
-        child: Scaffold(
-          appBar: _buildAppBar(),
-          body: Stack(
-            children: [_buildBody(), _buildFloatingActionButton(context)],
-          ),
-          bottomNavigationBar: const AppBottomNavigationBar(currentIndex: 1),
+      child: Scaffold(
+        appBar: _buildAppBar(),
+        body: Stack(
+          children: [_buildBody(), _buildFloatingActionButton(context)],
         ),
+        bottomNavigationBar: const AppBottomNavigationBar(currentIndex: 1),
       ),
     );
   }
@@ -211,7 +199,10 @@ class TransactionScreen extends StatelessWidget {
       direction: DismissDirection.endToStart,
       background: _buildDismissBackground(),
       confirmDismiss: (direction) => _confirmDelete(context, transaction),
-      child: TransactionItem(transaction: transaction),
+      child: TransactionItem(
+        transaction: transaction,
+        onTap: () => _showEditTransactionDialog(context, transaction),
+      ),
     );
   }
 
@@ -308,15 +299,6 @@ class TransactionScreen extends StatelessWidget {
     );
   }
 
-  void _showOperationSnackBar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: UiHelpers.getOperationSnackBarColor(message),
-      ),
-    );
-  }
-
   Widget _buildFloatingActionButton(BuildContext context) {
     return Positioned(
       right: AppDimensions.paddingMedium,
@@ -339,6 +321,27 @@ class TransactionScreen extends StatelessWidget {
         child: AddTransactionDialog(
           onAdd: (transaction) {
             context.read<TransactionCubit>().addTransaction(transaction);
+            Navigator.pop(dialogContext);
+          },
+        ),
+      ),
+    );
+  }
+
+  void _showEditTransactionDialog(
+    BuildContext context,
+    TransactionData transaction,
+  ) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) => BlocProvider(
+        create: (_) => sl<CategoryCubit>()..loadCategories(),
+        child: EditTransactionDialog(
+          transaction: transaction,
+          onSave: (updatedTransaction) {
+            context.read<TransactionCubit>().updateTransaction(
+              updatedTransaction,
+            );
             Navigator.pop(dialogContext);
           },
         ),

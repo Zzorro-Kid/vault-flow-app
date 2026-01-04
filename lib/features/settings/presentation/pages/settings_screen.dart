@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_app/core/constants/app_dimensions.dart';
 import 'package:test_app/core/constants/app_colors.dart';
-import 'package:test_app/core/utils/ui_helpers.dart';
 import 'package:test_app/core/widgets/bottom_navigation_bar.dart';
 import 'package:test_app/core/widgets/custom_app_bar.dart';
 import 'package:test_app/core/widgets/loading_indicator.dart';
@@ -20,42 +19,11 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => sl<SettingsCubit>()..loadAppInfo(),
-      child: BlocListener<SettingsCubit, SettingsState>(
-        listener: (context, state) {
-          _handleStateChanges(context, state);
-        },
-        child: Scaffold(
-          appBar: _buildAppBar(),
-          body: _buildBody(),
-          bottomNavigationBar: const AppBottomNavigationBar(currentIndex: 4),
-        ),
+      child: Scaffold(
+        appBar: _buildAppBar(),
+        body: _buildBody(),
+        bottomNavigationBar: const AppBottomNavigationBar(currentIndex: 4),
       ),
-    );
-  }
-
-  void _handleStateChanges(BuildContext context, SettingsState state) {
-    switch (state) {
-      case SettingsError():
-        UiHelpers.showErrorSnackBar(context, state.message);
-      case SettingsPasswordChangeSuccess():
-        _showSuccessSnackBar(context, 'Password changed successfully');
-      case SettingsExportSuccess():
-        _showSuccessSnackBar(
-          context,
-          'Data exported successfully to: ${state.filePath}',
-        );
-      case SettingsClearDataSuccess():
-        _showSuccessSnackBar(context, 'Data cleared successfully');
-      case SettingsLogoutSuccess():
-        _navigateToAuth(context);
-      default:
-        break;
-    }
-  }
-
-  void _showSuccessSnackBar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message), backgroundColor: AppColors.success),
     );
   }
 
@@ -357,6 +325,7 @@ class SettingsScreen extends StatelessWidget {
       onPressed: () {
         parentContext.read<SettingsCubit>().performLogout();
         Navigator.pop(dialogContext);
+        _navigateToAuth(parentContext);
       },
       child: const Text('Logout', style: TextStyle(color: AppColors.error)),
     );
