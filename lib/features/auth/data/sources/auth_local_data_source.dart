@@ -11,6 +11,7 @@ abstract class AuthLocalDataSource {
   Future<bool> hasPassword();
   Future<void> completeFirstLaunch();
   Future<void> clearAuthData();
+  Future<void> clearPasswordHashesForMigration();
 }
 
 class AuthLocalDataSourceImpl extends BaseLocalDataSource
@@ -60,16 +61,6 @@ class AuthLocalDataSourceImpl extends BaseLocalDataSource
         storedHash,
       );
 
-      if (isValid && authService.isLegacyHash(storedHash)) {
-        final newHash = await authService.migrateLegacyHash(
-          password: password,
-          currentHash: storedHash,
-        );
-        if (newHash != null) {
-          await securePrefs.setPasswordHash(newHash);
-        }
-      }
-
       return isValid;
     }, errorMessage: 'Failed to verify password');
   }
@@ -100,5 +91,14 @@ class AuthLocalDataSourceImpl extends BaseLocalDataSource
       await sharedPrefs.setHasPassword(false);
       await sharedPrefs.setIsFirstLaunch(true);
     }, errorMessage: 'Failed to clear auth data');
+  }
+
+  @override
+  Future<void> clearPasswordHashesForMigration() async {
+    return executeStorageWrite(() async {
+      await securePrefs.clearPasswordHashesForMigration();
+      await sharedPrefs.setHasPassword(false);
+      await sharedPrefs.setIsFirstLaunch(true);
+    }, errorMessage: 'Failed to clear password hashes for migration');
   }
 }

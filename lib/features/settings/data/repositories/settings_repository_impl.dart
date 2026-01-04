@@ -106,4 +106,11 @@ class SettingsRepositoryImpl extends BaseRepository
   Future<Either<Failure, void>> logout() async {
     return executeRepositoryCall(() => authLocalDataSource.clearAuthData());
   }
+
+  @override
+  Future<Either<Failure, void>> migrateToSHA256() async {
+    return executeRepositoryCall(
+      () => authLocalDataSource.clearPasswordHashesForMigration(),
+    );
+  }
 }

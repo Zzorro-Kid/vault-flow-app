@@ -80,4 +80,8 @@ class SecurePrefs {
   Future<void> clearAll() async {
     await _secureStorage.deleteAll();
   }
+
+  Future<void> clearPasswordHashesForMigration() async {
+    await _secureStorage.delete(key: AppConstants.keyPasswordHash);
+  }
 }

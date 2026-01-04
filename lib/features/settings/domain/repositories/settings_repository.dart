@@ -25,4 +25,5 @@ abstract class SettingsRepository {
   Future<Either<Failure, void>> clearAllData();
   Future<Either<Failure, AppInfoData>> getAppInfo();
   Future<Either<Failure, void>> logout();
+  Future<Either<Failure, void>> migrateToSHA256();
 }
