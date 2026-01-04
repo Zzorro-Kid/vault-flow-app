@@ -104,7 +104,7 @@ class SettingsRepositoryImpl extends BaseRepository
 
   @override
   Future<Either<Failure, void>> logout() async {
-    return executeRepositoryCall(() => authLocalDataSource.clearAuthData());
+    return executeRepositoryCall(() => authLocalDataSource.logout());
   }
 
   @override

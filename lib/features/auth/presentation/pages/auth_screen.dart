@@ -37,8 +37,7 @@ class AuthScreen extends StatelessWidget {
           return switch (state) {
             AuthCubitLoading() ||
             AuthCubitInitial() => const LoadingIndicator(message: 'Loading...'),
-            AuthCubitLoaded(:final authState)
-                when authState.isFirstLaunch || !authState.hasPassword =>
+            AuthCubitLoaded(:final authState) when authState.isFirstLaunch =>
               const SetupPasswordForm(),
             AuthCubitLoaded() => const LoginForm(),
             _ => const LoginForm(),

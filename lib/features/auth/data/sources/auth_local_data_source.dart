@@ -11,6 +11,7 @@ abstract class AuthLocalDataSource {
   Future<bool> hasPassword();
   Future<void> completeFirstLaunch();
   Future<void> clearAuthData();
+  Future<void> logout();
   Future<void> clearPasswordHashesForMigration();
 }
 
@@ -91,6 +92,11 @@ class AuthLocalDataSourceImpl extends BaseLocalDataSource
       await sharedPrefs.setHasPassword(false);
       await sharedPrefs.setIsFirstLaunch(true);
     }, errorMessage: 'Failed to clear auth data');
+  }
+
+  @override
+  Future<void> logout() async {
+    return executeStorageWrite(() async {}, errorMessage: 'Failed to logout');
   }
 
   @override
