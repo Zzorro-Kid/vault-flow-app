@@ -1,0 +1,643 @@
+{
+  "@@locale": "en",
+
+  "appName": "VaultFlow",
+  "@appName": {
+    "description": "Application name"
+  },
+
+  "navHome": "Home",
+  "@navHome": {
+    "description": "Home navigation label"
+  },
+
+  "navAdd": "Add",
+  "@navAdd": {
+    "description": "Add navigation label"
+  },
+
+  "navCategories": "Categories",
+  "@navCategories": {
+    "description": "Categories navigation label"
+  },
+
+  "navStats": "Stats",
+  "@navStats": {
+    "description": "Statistics navigation label"
+  },
+
+  "navSettings": "Settings",
+  "@navSettings": {
+    "description": "Settings navigation label"
+  },
+
+  "dashboard": "Dashboard",
+  "@dashboard": {
+    "description": "Dashboard screen title"
+  },
+
+  "transactions": "Transactions",
+  "@transactions": {
+    "description": "Transactions screen title"
+  },
+
+  "categoriesTitle": "Categories",
+  "@categoriesTitle": {
+    "description": "Categories screen title"
+  },
+
+  "statistics": "Statistics",
+  "@statistics": {
+    "description": "Statistics screen title"
+  },
+
+  "settings": "Settings",
+  "@settings": {
+    "description": "Settings screen title"
+  },
+
+  "noRouteDefined": "No route defined for this path",
+  "@noRouteDefined": {
+    "description": "Error message for undefined routes"
+  },
+
+  "loading": "Loading...",
+  "@loading": {
+    "description": "Loading indicator message"
+  },
+
+  "loadingSettings": "Loading settings...",
+  "@loadingSettings": {
+    "description": "Loading settings message"
+  },
+
+  "somethingWentWrong": "Something went wrong",
+  "@somethingWentWrong": {
+    "description": "Generic error message"
+  },
+
+  "retry": "Retry",
+  "@retry": {
+    "description": "Retry button label"
+  },
+
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button label"
+  },
+
+  "delete": "Delete",
+  "@delete": {
+    "description": "Delete button label"
+  },
+
+  "deleteAll": "Delete All",
+  "@deleteAll": {
+    "description": "Delete all button label"
+  },
+
+  "add": "Add",
+  "@add": {
+    "description": "Add button label"
+  },
+
+  "save": "Save",
+  "@save": {
+    "description": "Save button label"
+  },
+
+  "change": "Change",
+  "@change": {
+    "description": "Change button label"
+  },
+
+  "clear": "Clear",
+  "@clear": {
+    "description": "Clear button label"
+  },
+
+  "logout": "Logout",
+  "@logout": {
+    "description": "Logout button label"
+  },
+
+  "unlock": "Unlock",
+  "@unlock": {
+    "description": "Unlock button label"
+  },
+
+  "createPassword": "Create Password",
+  "@createPassword": {
+    "description": "Create password button label"
+  },
+
+  "yesReset": "Yes, Reset",
+  "@yesReset": {
+    "description": "Confirm reset button label"
+  },
+
+  "expense": "Expense",
+  "@expense": {
+    "description": "Expense label"
+  },
+
+  "expense_plural": "Expenses",
+  "@expense": {
+    "description": "Expenses plural label"
+  },
+
+  "income": "Income",
+  "@income": {
+    "description": "Income label"
+  },
+
+  "income_plural": "Incomes",
+  "@income": {
+    "description": "Incomes plural label"
+  },
+
+  "netBalance": "Net Balance",
+  "@netBalance": {
+    "description": "Net balance label"
+  },
+
+  "balance": "Balance",
+  "@balance": {
+    "description": "Balance label"
+  },
+
+  "totalIncome": "Total Income",
+  "@totalIncome": {
+    "description": "Total income label"
+  },
+
+  "totalExpenses": "Total Expenses",
+  "@totalExpenses": {
+    "description": "Total expenses label"
+  },
+
+  "summaryFor": "Summary for {period}",
+  "@summaryFor": {
+    "description": "Summary period label",
+    "placeholders": {
+      "period": {
+        "type": "String",
+        "description": "The period (day, week, month, year)"
+      }
+    }
+  },
+
+  "periodDay": "Day",
+  "@periodDay": {
+    "description": "Day period label"
+  },
+
+  "periodWeek": "Week",
+  "@periodWeek": {
+    "description": "Week period label"
+  },
+
+  "periodMonth": "Month",
+  "@periodMonth": {
+    "description": "Month period label"
+  },
+
+  "periodYear": "Year",
+  "@periodYear": {
+    "description": "Year period label"
+  },
+
+  "expenseCategories": "Expense Categories",
+  "@expenseCategories": {
+    "description": "Expense categories section header"
+  },
+
+  "incomeCategories": "Income Categories",
+  "@incomeCategories": {
+    "description": "Income categories section header"
+  },
+
+  "recentTransactions": "Recent Transactions",
+  "@recentTransactions": {
+    "description": "Recent transactions section header"
+  },
+
+  "transactionsCount": "{count, plural, =0{No transactions} =1{1 transaction} other{{count} transactions}}",
+  "@transactionsCount": {
+    "description": "Transaction count with pluralization",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "description": "The number of transactions"
+      }
+    }
+  },
+
+  "categoryBreakdown": "Category Breakdown",
+  "@categoryBreakdown": {
+    "description": "Category breakdown chart title"
+  },
+
+  "dailyTrends": "Daily Trends",
+  "@dailyTrends": {
+    "description": "Daily trends chart title"
+  },
+
+  "noCategoryDataAvailable": "No category data available",
+  "@noCategoryDataAvailable": {
+    "description": "Empty state message for category breakdown"
+  },
+
+  "noTrendDataAvailable": "No trend data available",
+  "@noTrendDataAvailable": {
+    "description": "Empty state message for daily trends"
+  },
+
+  "noCategoriesYet": "No categories yet",
+  "@noCategoriesYet": {
+    "description": "Empty state message for categories"
+  },
+
+  "noTransactionsYet": "No transactions yet",
+  "@noTransactionsYet": {
+    "description": "Empty state message for transactions"
+  },
+
+  "noCategoriesAvailable": "No categories available",
+  "@noCategoriesAvailable": {
+    "description": "Empty state message for category selector"
+  },
+
+  "selectADate": "Select a date",
+  "@selectADate": {
+    "description": "Select date placeholder"
+  },
+
+  "welcomeToVaultFlow": "Welcome to VaultFlow",
+  "@welcomeToVaultFlow": {
+    "description": "Welcome title on login screen"
+  },
+
+  "enterYourMasterPassword": "Enter your master password",
+  "@enterYourMasterPassword": {
+    "description": "Subtitle on login screen"
+  },
+
+  "createMasterPassword": "Create Master Password",
+  "@createMasterPassword": {
+    "description": "Title on password setup screen"
+  },
+
+  "passwordWillEncryptData": "This password will encrypt all your data",
+  "@passwordWillEncryptData": {
+    "description": "Subtitle on password setup screen"
+  },
+
+  "password": "Password",
+  "@password": {
+    "description": "Password field label"
+  },
+
+  "confirmPassword": "Confirm Password",
+  "@confirmPassword": {
+    "description": "Confirm password field label"
+  },
+
+  "currentPassword": "Current Password",
+  "@currentPassword": {
+    "description": "Current password field label"
+  },
+
+  "newPassword": "New Password",
+  "@newPassword": {
+    "description": "New password field label"
+  },
+
+  "confirmNewPassword": "Confirm New Password",
+  "@confirmNewPassword": {
+    "description": "Confirm new password field label"
+  },
+
+  "passwordsDoNotMatch": "Passwords do not match",
+  "@passwordsDoNotMatch": {
+    "description": "Validation error for mismatched passwords"
+  },
+
+  "passwordMustBeAtLeast6Characters": "Password must be at least 6 characters",
+  "@passwordMustBeAtLeast6Characters": {
+    "description": "Validation error for short password"
+  },
+
+  "pleaseEnterYourCurrentPassword": "Please enter your current password",
+  "@pleaseEnterYourCurrentPassword": {
+    "description": "Validation error for empty current password"
+  },
+
+  "pleaseEnterANewPassword": "Please enter a new password",
+  "@pleaseEnterANewPassword": {
+    "description": "Validation error for empty new password"
+  },
+
+  "pleaseConfirmYourNewPassword": "Please confirm your new password",
+  "@pleaseConfirmYourNewPassword": {
+    "description": "Validation error for empty confirm password"
+  },
+
+  "resetPassword": "Reset Password",
+  "@resetPassword": {
+    "description": "Reset password button label"
+  },
+
+  "resetPasswordWarning": "This will delete ALL your data including transactions and categories. You will need to create a new password.\n\nAre you sure you want to continue?",
+  "@resetPasswordWarning": {
+    "description": "Warning message for password reset"
+  },
+
+  "addTransaction": "Add Transaction",
+  "@addTransaction": {
+    "description": "Add transaction dialog title"
+  },
+
+  "editTransaction": "Edit Transaction",
+  "@editTransaction": {
+    "description": "Edit transaction dialog title"
+  },
+
+  "deleteTransaction": "Delete Transaction",
+  "@deleteTransaction": {
+    "description": "Delete transaction dialog title"
+  },
+
+  "confirmDeleteTransaction": "Are you sure you want to delete \"{transactionTitle}\"?",
+  "@confirmDeleteTransaction": {
+    "description": "Confirm delete transaction message",
+    "placeholders": {
+      "transactionTitle": {
+        "type": "String",
+        "description": "The transaction description"
+      }
+    }
+  },
+
+  "description": "Description",
+  "@description": {
+    "description": "Description field label"
+  },
+
+  "amount": "Amount",
+  "@amount": {
+    "description": "Amount field label"
+  },
+
+  "category": "Category",
+  "@category": {
+    "description": "Category field label"
+  },
+
+  "date": "Date",
+  "@date": {
+    "description": "Date field label"
+  },
+
+  "type": "Type",
+  "@type": {
+    "description": "Type field label"
+  },
+
+  "icon": "Icon",
+  "@icon": {
+    "description": "Icon field label"
+  },
+
+  "color": "Color",
+  "@color": {
+    "description": "Color field label"
+  },
+
+  "categoryName": "Category Name",
+  "@categoryName": {
+    "description": "Category name field label"
+  },
+
+  "pleaseEnterADescription": "Please enter a description",
+  "@pleaseEnterADescription": {
+    "description": "Validation error for empty description"
+  },
+
+  "pleaseEnterAnAmount": "Please enter an amount",
+  "@pleaseEnterAnAmount": {
+    "description": "Validation error for empty amount"
+  },
+
+  "pleaseEnterAValidNumber": "Please enter a valid number",
+  "@pleaseEnterAValidNumber": {
+    "description": "Validation error for invalid number"
+  },
+
+  "pleaseSelectACategory": "Please select a category",
+  "@pleaseSelectACategory": {
+    "description": "Validation error for empty category"
+  },
+
+  "pleaseEnterACategoryName": "Please enter a category name",
+  "@pleaseEnterACategoryName": {
+    "description": "Validation error for empty category name"
+  },
+
+  "addCategory": "Add Category",
+  "@addCategory": {
+    "description": "Add category dialog title"
+  },
+
+  "editCategory": "Edit Category",
+  "@editCategory": {
+    "description": "Edit category dialog title"
+  },
+
+  "deleteCategory": "Delete Category",
+  "@deleteCategory": {
+    "description": "Delete category dialog title"
+  },
+
+  "confirmDeleteCategory": "Are you sure you want to delete \"{categoryName}\"?",
+  "@confirmDeleteCategory": {
+    "description": "Confirm delete category message",
+    "placeholders": {
+      "categoryName": {
+        "type": "String",
+        "description": "The category name"
+      }
+    }
+  },
+
+  "security": "Security",
+  "@security": {
+    "description": "Security settings section title"
+  },
+
+  "changePassword": "Change Password",
+  "@changePassword": {
+    "description": "Change password setting title"
+  },
+
+  "updateYourSecurityPassword": "Update your security password",
+  "@updateYourSecurityPassword": {
+    "description": "Change password setting subtitle"
+  },
+
+  "dataManagement": "Data Management",
+  "@dataManagement": {
+    "description": "Data management settings section title"
+  },
+
+  "exportToCSV": "Export to CSV",
+  "@exportToCSV": {
+    "description": "Export to CSV setting title"
+  },
+
+  "exportYourTransactionsToCSVFile": "Export your transactions to CSV file",
+  "@exportYourTransactionsToCSVFile": {
+    "description": "Export to CSV setting subtitle"
+  },
+
+  "exportToPDF": "Export to PDF",
+  "@exportToPDF": {
+    "description": "Export to PDF setting title"
+  },
+
+  "exportYourTransactionsToPDFFile": "Export your transactions to PDF file",
+  "@exportYourTransactionsToPDFFile": {
+    "description": "Export to PDF setting subtitle"
+  },
+
+  "clearOldData": "Clear Old Data",
+  "@clearOldData": {
+    "description": "Clear old data setting title"
+  },
+
+  "removeTransactionsOlderThanASpecificDate": "Remove transactions older than a specific date",
+  "@removeTransactionsOlderThanASpecificDate": {
+    "description": "Clear old data setting subtitle"
+  },
+
+  "clearAllData": "Clear All Data",
+  "@clearAllData": {
+    "description": "Clear all data setting title"
+  },
+
+  "removeAllTransactionsPermanently": "Remove all transactions permanently",
+  "@removeAllTransactionsPermanently": {
+    "description": "Clear all data setting subtitle"
+  },
+
+  "about": "About",
+  "@about": {
+    "description": "About settings section title"
+  },
+
+  "appVersion": "App Version",
+  "@appVersion": {
+    "description": "App version setting title"
+  },
+
+  "appNameSetting": "App Name",
+  "@appNameSetting": {
+    "description": "App name setting title"
+  },
+
+  "account": "Account",
+  "@account": {
+    "description": "Account settings section title"
+  },
+
+  "signOutOfYourAccount": "Sign out of your account",
+  "@signOutOfYourAccount": {
+    "description": "Logout setting subtitle"
+  },
+
+  "clearOldDataTitle": "Clear Old Data",
+  "@clearOldDataTitle": {
+    "description": "Clear old data dialog title"
+  },
+
+  "clearOldDataMessage": "Select a date. All transactions before this date will be deleted.",
+  "@clearOldDataMessage": {
+    "description": "Clear old data dialog message"
+  },
+
+  "clearAllDataTitle": "Clear All Data",
+  "@clearAllDataTitle": {
+    "description": "Clear all data dialog title"
+  },
+
+  "confirmClearAllData": "Are you sure you want to delete ALL transactions? This action cannot be undone.",
+  "@confirmClearAllData": {
+    "description": "Clear all data dialog content"
+  },
+
+  "logoutTitle": "Logout",
+  "@logoutTitle": {
+    "description": "Logout dialog title"
+  },
+
+  "confirmLogout": "Are you sure you want to logout?",
+  "@confirmLogout": {
+    "description": "Logout dialog content"
+  },
+
+  "transactionsReport": "Transactions Report",
+  "@transactionsReport": {
+    "description": "PDF report header"
+  },
+
+  "generated": "Generated: {date}",
+  "@generated": {
+    "description": "PDF generation date",
+    "placeholders": {
+      "date": {
+        "type": "String",
+        "description": "The generation date"
+      }
+    }
+  },
+
+  "summary": "Summary",
+  "@summary": {
+    "description": "Summary section header"
+  },
+
+  "transactionsExportDate": "Date",
+  "@transactionsExportDate": {
+    "description": "CSV/PDF export date column header"
+  },
+
+  "transactionsExportType": "Type",
+  "@transactionsExportType": {
+    "description": "CSV/PDF export type column header"
+  },
+
+  "transactionsExportCategory": "Category",
+  "@transactionsExportCategory": {
+    "description": "CSV/PDF export category column header"
+  },
+
+  "transactionsExportDescription": "Description",
+  "@transactionsExportDescription": {
+    "description": "CSV/PDF export description column header"
+  },
+
+  "transactionsExportAmount": "Amount",
+  "@transactionsExportAmount": {
+    "description": "CSV/PDF export amount column header"
+  },
+
+  "noTransactionsToExport": "No transactions to export",
+  "@noTransactionsToExport": {
+    "description": "Error message when no transactions to export"
+  },
+
+  "loadingAppInfo": "Loading...",
+  "@loadingAppInfo": {
+    "description": "Loading app info message"
+  }
+}

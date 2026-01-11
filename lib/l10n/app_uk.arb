@@ -1,0 +1,643 @@
+{
+  "@@locale": "uk",
+
+  "appName": "VaultFlow",
+  "@appName": {
+    "description": "Назва додатку"
+  },
+
+  "navHome": "Головна",
+  "@navHome": {
+    "description": "Мітка навігації Головна"
+  },
+
+  "navAdd": "Додати",
+  "@navAdd": {
+    "description": "Мітка навігації Додати"
+  },
+
+  "navCategories": "Категорії",
+  "@navCategories": {
+    "description": "Мітка навігації Категорії"
+  },
+
+  "navStats": "Статистика",
+  "@navStats": {
+    "description": "Мітка навігації Статистика"
+  },
+
+  "navSettings": "Налаштування",
+  "@navSettings": {
+    "description": "Мітка навігації Налаштування"
+  },
+
+  "dashboard": "Панель керування",
+  "@dashboard": {
+    "description": "Заголовок екрана панелі керування"
+  },
+
+  "transactions": "Транзакції",
+  "@transactions": {
+    "description": "Заголовок екрана транзакцій"
+  },
+
+  "categoriesTitle": "Категорії",
+  "@categoriesTitle": {
+    "description": "Заголовок екрана категорій"
+  },
+
+  "statistics": "Статистика",
+  "@statistics": {
+    "description": "Заголовок екрана статистики"
+  },
+
+  "settings": "Налаштування",
+  "@settings": {
+    "description": "Заголовок екрана налаштувань"
+  },
+
+  "noRouteDefined": "Маршрут не визначено",
+  "@noRouteDefined": {
+    "description": "Повідомлення про помилку для невизначених маршрутів"
+  },
+
+  "loading": "Завантаження...",
+  "@loading": {
+    "description": "Повідомлення індикатора завантаження"
+  },
+
+  "loadingSettings": "Завантаження налаштувань...",
+  "@loadingSettings": {
+    "description": "Повідомлення завантаження налаштувань"
+  },
+
+  "somethingWentWrong": "Щось пішло не так",
+  "@somethingWentWrong": {
+    "description": "Загальне повідомлення про помилку"
+  },
+
+  "retry": "Повторити",
+  "@retry": {
+    "description": "Мітка кнопки повтору"
+  },
+
+  "cancel": "Скасувати",
+  "@cancel": {
+    "description": "Мітка кнопки скасування"
+  },
+
+  "delete": "Видалити",
+  "@delete": {
+    "description": "Мітка кнопки видалення"
+  },
+
+  "deleteAll": "Видалити все",
+  "@deleteAll": {
+    "description": "Мітка кнопки видалення всього"
+  },
+
+  "add": "Додати",
+  "@add": {
+    "description": "Мітка кнопки додавання"
+  },
+
+  "save": "Зберегти",
+  "@save": {
+    "description": "Мітка кнопки збереження"
+  },
+
+  "change": "Змінити",
+  "@change": {
+    "description": "Мітка кнопки зміни"
+  },
+
+  "clear": "Очистити",
+  "@clear": {
+    "description": "Мітка кнопки очищення"
+  },
+
+  "logout": "Вийти",
+  "@logout": {
+    "description": "Мітка кнопки виходу"
+  },
+
+  "unlock": "Розблокувати",
+  "@unlock": {
+    "description": "Мітка кнопки розблокування"
+  },
+
+  "createPassword": "Створити пароль",
+  "@createPassword": {
+    "description": "Мітка кнопки створення пароля"
+  },
+
+  "yesReset": "Так, скинути",
+  "@yesReset": {
+    "description": "Мітка кнопки підтвердження скидання"
+  },
+
+  "expense": "Витрата",
+  "@expense": {
+    "description": "Мітка витрати"
+  },
+
+  "expense_plural": "Витрати",
+  "@expense": {
+    "description": "Мітка витрат (множина)"
+  },
+
+  "income": "Дохід",
+  "@income": {
+    "description": "Мітка доходу"
+  },
+
+  "income_plural": "Доходи",
+  "@income": {
+    "description": "Мітка доходів (множина)"
+  },
+
+  "netBalance": "Чистий баланс",
+  "@netBalance": {
+    "description": "Мітка чистого балансу"
+  },
+
+  "balance": "Баланс",
+  "@balance": {
+    "description": "Мітка балансу"
+  },
+
+  "totalIncome": "Загальний дохід",
+  "@totalIncome": {
+    "description": "Мітка загального доходу"
+  },
+
+  "totalExpenses": "Загальні витрати",
+  "@totalExpenses": {
+    "description": "Мітка загальних витрат"
+  },
+
+  "summaryFor": "Підсумок за {period}",
+  "@summaryFor": {
+    "description": "Мітка періоду підсумку",
+    "placeholders": {
+      "period": {
+        "type": "String",
+        "description": "Період (день, тиждень, місяць, рік)"
+      }
+    }
+  },
+
+  "periodDay": "День",
+  "@periodDay": {
+    "description": "Мітка періоду день"
+  },
+
+  "periodWeek": "Тиждень",
+  "@periodWeek": {
+    "description": "Мітка періоду тиждень"
+  },
+
+  "periodMonth": "Місяць",
+  "@periodMonth": {
+    "description": "Мітка періоду місяць"
+  },
+
+  "periodYear": "Рік",
+  "@periodYear": {
+    "description": "Мітка періоду рік"
+  },
+
+  "expenseCategories": "Категорії витрат",
+  "@expenseCategories": {
+    "description": "Заголовок секції категорій витрат"
+  },
+
+  "incomeCategories": "Категорії доходів",
+  "@incomeCategories": {
+    "description": "Заголовок секції категорій доходів"
+  },
+
+  "recentTransactions": "Останні транзакції",
+  "@recentTransactions": {
+    "description": "Заголовок секції останніх транзакцій"
+  },
+
+  "transactionsCount": "{count, plural, =0{Немає транзакцій} one{# транзакція} few{# транзакції} many{# транзакцій} other{# транзакцій}}",
+  "@transactionsCount": {
+    "description": "Кількість транзакцій з плюралізацією",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "description": "Кількість транзакцій"
+      }
+    }
+  },
+
+  "categoryBreakdown": "Розподіл за категоріями",
+  "@categoryBreakdown": {
+    "description": "Заголовок діаграми розподілу за категоріями"
+  },
+
+  "dailyTrends": "Щоденні тренди",
+  "@dailyTrends": {
+    "description": "Заголовок діаграми щоденних трендів"
+  },
+
+  "noCategoryDataAvailable": "Немає даних за категоріями",
+  "@noCategoryDataAvailable": {
+    "description": "Повідомлення порожнього стану для розподілу за категоріями"
+  },
+
+  "noTrendDataAvailable": "Немає даних про тренди",
+  "@noTrendDataAvailable": {
+    "description": "Повідомлення порожнього стану для щоденних трендів"
+  },
+
+  "noCategoriesYet": "Ще немає категорій",
+  "@noCategoriesYet": {
+    "description": "Повідомлення порожнього стану для категорій"
+  },
+
+  "noTransactionsYet": "Ще немає транзакцій",
+  "@noTransactionsYet": {
+    "description": "Повідомлення порожнього стану для транзакцій"
+  },
+
+  "noCategoriesAvailable": "Немає доступних категорій",
+  "@noCategoriesAvailable": {
+    "description": "Повідомлення порожнього стану для вибору категорії"
+  },
+
+  "selectADate": "Виберіть дату",
+  "@selectADate": {
+    "description": "Заповнювач вибору дати"
+  },
+
+  "welcomeToVaultFlow": "Ласкаво просимо до VaultFlow",
+  "@welcomeToVaultFlow": {
+    "description": "Заголовок вітання на екрані входу"
+  },
+
+  "enterYourMasterPassword": "Введіть ваш майстер-пароль",
+  "@enterYourMasterPassword": {
+    "description": "Підзаголовок на екрані входу"
+  },
+
+  "createMasterPassword": "Створіть майстер-пароль",
+  "@createMasterPassword": {
+    "description": "Заголовок на екрані налаштування пароля"
+  },
+
+  "passwordWillEncryptData": "Цей пароль зашифрує всі ваші дані",
+  "@passwordWillEncryptData": {
+    "description": "Підзаголовок на екрані налаштування пароля"
+  },
+
+  "password": "Пароль",
+  "@password": {
+    "description": "Мітка поля пароля"
+  },
+
+  "confirmPassword": "Підтвердіть пароль",
+  "@confirmPassword": {
+    "description": "Мітка поля підтвердження пароля"
+  },
+
+  "currentPassword": "Поточний пароль",
+  "@currentPassword": {
+    "description": "Мітка поля поточного пароля"
+  },
+
+  "newPassword": "Новий пароль",
+  "@newPassword": {
+    "description": "Мітка поля нового пароля"
+  },
+
+  "confirmNewPassword": "Підтвердіть новий пароль",
+  "@confirmNewPassword": {
+    "description": "Мітка поля підтвердження нового пароля"
+  },
+
+  "passwordsDoNotMatch": "Паролі не співпадають",
+  "@passwordsDoNotMatch": {
+    "description": "Помилка валідації для неспівпадаючих паролів"
+  },
+
+  "passwordMustBeAtLeast6Characters": "Пароль має містити принаймні 6 символів",
+  "@passwordMustBeAtLeast6Characters": {
+    "description": "Помилка валідації для короткого пароля"
+  },
+
+  "pleaseEnterYourCurrentPassword": "Введіть поточний пароль",
+  "@pleaseEnterYourCurrentPassword": {
+    "description": "Помилка валідації для порожнього поточного пароля"
+  },
+
+  "pleaseEnterANewPassword": "Введіть новий пароль",
+  "@pleaseEnterANewPassword": {
+    "description": "Помилка валідації для порожнього нового пароля"
+  },
+
+  "pleaseConfirmYourNewPassword": "Підтвердіть новий пароль",
+  "@pleaseConfirmYourNewPassword": {
+    "description": "Помилка валідації для порожнього підтвердження пароля"
+  },
+
+  "resetPassword": "Скинути пароль",
+  "@resetPassword": {
+    "description": "Мітка кнопки скидання пароля"
+  },
+
+  "resetPasswordWarning": "Це видалить ВСІ ваші дані, включаючи транзакції та категорії. Вам потрібно буде створити новий пароль.\n\nВи впевнені, що хочете продовжити?",
+  "@resetPasswordWarning": {
+    "description": "Попереджувальне повідомлення для скидання пароля"
+  },
+
+  "addTransaction": "Додати транзакцію",
+  "@addTransaction": {
+    "description": "Заголовок діалогу додавання транзакції"
+  },
+
+  "editTransaction": "Редагувати транзакцію",
+  "@editTransaction": {
+    "description": "Заголовок діалогу редагування транзакції"
+  },
+
+  "deleteTransaction": "Видалити транзакцію",
+  "@deleteTransaction": {
+    "description": "Заголовок діалогу видалення транзакції"
+  },
+
+  "confirmDeleteTransaction": "Ви впевнені, що хочете видалити \"{transactionTitle}\"?",
+  "@confirmDeleteTransaction": {
+    "description": "Повідомлення підтвердження видалення транзакції",
+    "placeholders": {
+      "transactionTitle": {
+        "type": "String",
+        "description": "Опис транзакції"
+      }
+    }
+  },
+
+  "description": "Опис",
+  "@description": {
+    "description": "Мітка поля опису"
+  },
+
+  "amount": "Сума",
+  "@amount": {
+    "description": "Мітка поля суми"
+  },
+
+  "category": "Категория",
+  "@category": {
+    "description": "Мітка поля категорії"
+  },
+
+  "date": "Дата",
+  "@date": {
+    "description": "Мітка поля дати"
+  },
+
+  "type": "Тип",
+  "@type": {
+    "description": "Мітка поля типу"
+  },
+
+  "icon": "Іконка",
+  "@icon": {
+    "description": "Мітка поля іконки"
+  },
+
+  "color": "Колір",
+  "@color": {
+    "description": "Мітка поля кольору"
+  },
+
+  "categoryName": "Назва категорії",
+  "@categoryName": {
+    "description": "Мітка поля назви категорії"
+  },
+
+  "pleaseEnterADescription": "Введіть опис",
+  "@pleaseEnterADescription": {
+    "description": "Помилка валідації для порожнього опису"
+  },
+
+  "pleaseEnterAnAmount": "Введіть суму",
+  "@pleaseEnterAnAmount": {
+    "description": "Помилка валідації для порожньої суми"
+  },
+
+  "pleaseEnterAValidNumber": "Введіть коректне число",
+  "@pleaseEnterAValidNumber": {
+    "description": "Помилка валідації для некоректного числа"
+  },
+
+  "pleaseSelectACategory": "Виберіть категорію",
+  "@pleaseSelectACategory": {
+    "description": "Помилка валідації для порожньої категорії"
+  },
+
+  "pleaseEnterACategoryName": "Введіть назву категорії",
+  "@pleaseEnterACategoryName": {
+    "description": "Помилка валідації для порожньої назви категорії"
+  },
+
+  "addCategory": "Додати категорію",
+  "@addCategory": {
+    "description": "Заголовок діалогу додавання категорії"
+  },
+
+  "editCategory": "Редагувати категорію",
+  "@editCategory": {
+    "description": "Заголовок діалогу редагування категорії"
+  },
+
+  "deleteCategory": "Видалити категорію",
+  "@deleteCategory": {
+    "description": "Заголовок діалогу видалення категорії"
+  },
+
+  "confirmDeleteCategory": "Ви впевнені, що хочете видалити \"{categoryName}\"?",
+  "@confirmDeleteCategory": {
+    "description": "Повідомлення підтвердження видалення категорії",
+    "placeholders": {
+      "categoryName": {
+        "type": "String",
+        "description": "Назва категорії"
+      }
+    }
+  },
+
+  "security": "Безпека",
+  "@security": {
+    "description": "Заголовок секції налаштувань безпеки"
+  },
+
+  "changePassword": "Змінити пароль",
+  "@changePassword": {
+    "description": "Заголовок налаштування зміни пароля"
+  },
+
+  "updateYourSecurityPassword": "Оновіть ваш пароль безпеки",
+  "@updateYourSecurityPassword": {
+    "description": "Підзаголовок налаштування зміни пароля"
+  },
+
+  "dataManagement": "Керування даними",
+  "@dataManagement": {
+    "description": "Заголовок секції налаштувань керування даними"
+  },
+
+  "exportToCSV": "Експорт у CSV",
+  "@exportToCSV": {
+    "description": "Заголовок налаштування експорту у CSV"
+  },
+
+  "exportYourTransactionsToCSVFile": "Експортуйте ваші транзакції у файл CSV",
+  "@exportYourTransactionsToCSVFile": {
+    "description": "Підзаголовок налаштування експорту у CSV"
+  },
+
+  "exportToPDF": "Експорт у PDF",
+  "@exportToPDF": {
+    "description": "Заголовок налаштування експорту у PDF"
+  },
+
+  "exportYourTransactionsToPDFFile": "Експортуйте ваші транзакції у файл PDF",
+  "@exportYourTransactionsToPDFFile": {
+    "description": "Підзаголовок налаштування експорту у PDF"
+  },
+
+  "clearOldData": "Очистити старі дані",
+  "@clearOldData": {
+    "description": "Заголовок налаштування очищення старих даних"
+  },
+
+  "removeTransactionsOlderThanASpecificDate": "Видалити транзакції старші за вказану дату",
+  "@removeTransactionsOlderThanASpecificDate": {
+    "description": "Підзаголовок налаштування очищення старих даних"
+  },
+
+  "clearAllData": "Очистити всі дані",
+  "@clearAllData": {
+    "description": "Заголовок налаштування очищення всіх даних"
+  },
+
+  "removeAllTransactionsPermanently": "Видалити всі транзакції назавжди",
+  "@removeAllTransactionsPermanently": {
+    "description": "Підзаголовок налаштування очищення всіх даних"
+  },
+
+  "about": "Про додаток",
+  "@about": {
+    "description": "Заголовок секції налаштувань про додаток"
+  },
+
+  "appVersion": "Версія додатку",
+  "@appVersion": {
+    "description": "Заголовок налаштування версії додатку"
+  },
+
+  "appNameSetting": "Назва додатку",
+  "@appNameSetting": {
+    "description": "Заголовок налаштування назви додатку"
+  },
+
+  "account": "Акаунт",
+  "@account": {
+    "description": "Заголовок секції налаштувань акаунту"
+  },
+
+  "signOutOfYourAccount": "Вийти з акаунту",
+  "@signOutOfYourAccount": {
+    "description": "Підзаголовок налаштування виходу"
+  },
+
+  "clearOldDataTitle": "Очистити старі дані",
+  "@clearOldDataTitle": {
+    "description": "Заголовок діалогу очищення старих даних"
+  },
+
+  "clearOldDataMessage": "Виберіть дату. Всі транзакції до цієї дати будуть видалені.",
+  "@clearOldDataMessage": {
+    "description": "Повідомлення діалогу очищення старих даних"
+  },
+
+  "clearAllDataTitle": "Очистити всі дані",
+  "@clearAllDataTitle": {
+    "description": "Заголовок діалогу очищення всіх даних"
+  },
+
+  "confirmClearAllData": "Ви впевнені, що хочете видалити ВСІ транзакції? Цю дію не можна скасувати.",
+  "@confirmClearAllData": {
+    "description": "Вміст діалогу очищення всіх даних"
+  },
+
+  "logoutTitle": "Вихід",
+  "@logoutTitle": {
+    "description": "Заголовок діалогу виходу"
+  },
+
+  "confirmLogout": "Ви впевнені, що хочете вийти?",
+  "@confirmLogout": {
+    "description": "Вміст діалогу виходу"
+  },
+
+  "transactionsReport": "Звіт про транзакції",
+  "@transactionsReport": {
+    "description": "Заголовок PDF звіту"
+  },
+
+  "generated": "Створено: {date}",
+  "@generated": {
+    "description": "Дата створення PDF",
+    "placeholders": {
+      "date": {
+        "type": "String",
+        "description": "Дата створення"
+      }
+    }
+  },
+
+  "summary": "Підсумок",
+  "@summary": {
+    "description": "Заголовок секції підсумку"
+  },
+
+  "transactionsExportDate": "Дата",
+  "@transactionsExportDate": {
+    "description": "Заголовок стовпця дати експорту CSV/PDF"
+  },
+
+  "transactionsExportType": "Тип",
+  "@transactionsExportType": {
+    "description": "Заголовок стовпця типу експорту CSV/PDF"
+  },
+
+  "transactionsExportCategory": "Категория",
+  "@transactionsExportCategory": {
+    "description": "Заголовок стовпця категорії експорту CSV/PDF"
+  },
+
+  "transactionsExportDescription": "Опис",
+  "@transactionsExportDescription": {
+    "description": "Заголовок стовпця опису експорту CSV/PDF"
+  },
+
+  "transactionsExportAmount": "Сума",
+  "@transactionsExportAmount": {
+    "description": "Заголовок стовпця суми експорту CSV/PDF"
+  },
+
+  "noTransactionsToExport": "Немає транзакцій для експорту",
+  "@noTransactionsToExport": {
+    "description": "Повідомлення про помилку за відсутності транзакцій для експорту"
+  },
+
+  "loadingAppInfo": "Завантаження...",
+  "@loadingAppInfo": {
+    "description": "Повідомлення завантаження інформації про додаток"
+  }
+}

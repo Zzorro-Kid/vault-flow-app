@@ -1,0 +1,643 @@
+{
+  "@@locale": "ru",
+
+  "appName": "VaultFlow",
+  "@appName": {
+    "description": "Название приложения"
+  },
+
+  "navHome": "Главная",
+  "@navHome": {
+    "description": "Метка навигации Главная"
+  },
+
+  "navAdd": "Добавить",
+  "@navAdd": {
+    "description": "Метка навигации Добавить"
+  },
+
+  "navCategories": "Категории",
+  "@navCategories": {
+    "description": "Метка навигации Категории"
+  },
+
+  "navStats": "Статистика",
+  "@navStats": {
+    "description": "Метка навигации Статистика"
+  },
+
+  "navSettings": "Настройки",
+  "@navSettings": {
+    "description": "Метка навигации Настройки"
+  },
+
+  "dashboard": "Панель управления",
+  "@dashboard": {
+    "description": "Заголовок экрана панели управления"
+  },
+
+  "transactions": "Транзакции",
+  "@transactions": {
+    "description": "Заголовок экрана транзакций"
+  },
+
+  "categoriesTitle": "Категории",
+  "@categoriesTitle": {
+    "description": "Заголовок экрана категорий"
+  },
+
+  "statistics": "Статистика",
+  "@statistics": {
+    "description": "Заголовок экрана статистики"
+  },
+
+  "settings": "Настройки",
+  "@settings": {
+    "description": "Заголовок экрана настроек"
+  },
+
+  "noRouteDefined": "Маршрут не определён",
+  "@noRouteDefined": {
+    "description": "Сообщение об ошибке для неопределённых маршрутов"
+  },
+
+  "loading": "Загрузка...",
+  "@loading": {
+    "description": "Сообщение индикатора загрузки"
+  },
+
+  "loadingSettings": "Загрузка настроек...",
+  "@loadingSettings": {
+    "description": "Сообщение загрузки настроек"
+  },
+
+  "somethingWentWrong": "Что-то пошло не так",
+  "@somethingWentWrong": {
+    "description": "Общее сообщение об ошибке"
+  },
+
+  "retry": "Повторить",
+  "@retry": {
+    "description": "Метка кнопки повтора"
+  },
+
+  "cancel": "Отмена",
+  "@cancel": {
+    "description": "Метка кнопки отмены"
+  },
+
+  "delete": "Удалить",
+  "@delete": {
+    "description": "Метка кнопки удаления"
+  },
+
+  "deleteAll": "Удалить всё",
+  "@deleteAll": {
+    "description": "Метка кнопки удаления всего"
+  },
+
+  "add": "Добавить",
+  "@add": {
+    "description": "Метка кнопки добавления"
+  },
+
+  "save": "Сохранить",
+  "@save": {
+    "description": "Метка кнопки сохранения"
+  },
+
+  "change": "Изменить",
+  "@change": {
+    "description": "Метка кнопки изменения"
+  },
+
+  "clear": "Очистить",
+  "@clear": {
+    "description": "Метка кнопки очистки"
+  },
+
+  "logout": "Выйти",
+  "@logout": {
+    "description": "Метка кнопки выхода"
+  },
+
+  "unlock": "Разблокировать",
+  "@unlock": {
+    "description": "Метка кнопки разблокировки"
+  },
+
+  "createPassword": "Создать пароль",
+  "@createPassword": {
+    "description": "Метка кнопки создания пароля"
+  },
+
+  "yesReset": "Да, сбросить",
+  "@yesReset": {
+    "description": "Метка кнопки подтверждения сброса"
+  },
+
+  "expense": "Расход",
+  "@expense": {
+    "description": "Метка расхода"
+  },
+
+  "expense_plural": "Расходы",
+  "@expense": {
+    "description": "Метка расходов (множественное число)"
+  },
+
+  "income": "Доход",
+  "@income": {
+    "description": "Метка дохода"
+  },
+
+  "income_plural": "Доходы",
+  "@income": {
+    "description": "Метка доходов (множественное число)"
+  },
+
+  "netBalance": "Чистый баланс",
+  "@netBalance": {
+    "description": "Метка чистого баланса"
+  },
+
+  "balance": "Баланс",
+  "@balance": {
+    "description": "Метка баланса"
+  },
+
+  "totalIncome": "Общий доход",
+  "@totalIncome": {
+    "description": "Метка общего дохода"
+  },
+
+  "totalExpenses": "Общие расходы",
+  "@totalExpenses": {
+    "description": "Метка общих расходов"
+  },
+
+  "summaryFor": "Сводка за {period}",
+  "@summaryFor": {
+    "description": "Метка периода сводки",
+    "placeholders": {
+      "period": {
+        "type": "String",
+        "description": "Период (день, неделя, месяц, год)"
+      }
+    }
+  },
+
+  "periodDay": "День",
+  "@periodDay": {
+    "description": "Метка периода день"
+  },
+
+  "periodWeek": "Неделя",
+  "@periodWeek": {
+    "description": "Метка периода неделя"
+  },
+
+  "periodMonth": "Месяц",
+  "@periodMonth": {
+    "description": "Метка периода месяц"
+  },
+
+  "periodYear": "Год",
+  "@periodYear": {
+    "description": "Метка периода год"
+  },
+
+  "expenseCategories": "Категории расходов",
+  "@expenseCategories": {
+    "description": "Заголовок секции категорий расходов"
+  },
+
+  "incomeCategories": "Категории доходов",
+  "@incomeCategories": {
+    "description": "Заголовок секции категорий доходов"
+  },
+
+  "recentTransactions": "Последние транзакции",
+  "@recentTransactions": {
+    "description": "Заголовок секции последних транзакций"
+  },
+
+  "transactionsCount": "{count, plural, =0{Нет транзакций} =1{1 транзакция} few{# транзакции} many{# транзакций} other{# транзакций}}",
+  "@transactionsCount": {
+    "description": "Количество транзакций с плюрализацией",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "description": "Количество транзакций"
+      }
+    }
+  },
+
+  "categoryBreakdown": "Разбивка по категориям",
+  "@categoryBreakdown": {
+    "description": "Заголовок диаграммы разбивки по категориям"
+  },
+
+  "dailyTrends": "Ежедневные тенденции",
+  "@dailyTrends": {
+    "description": "Заголовок диаграммы ежедневных тенденций"
+  },
+
+  "noCategoryDataAvailable": "Нет данных по категориям",
+  "@noCategoryDataAvailable": {
+    "description": "Сообщение пустого состояния для разбивки по категориям"
+  },
+
+  "noTrendDataAvailable": "Нет данных о тенденциях",
+  "@noTrendDataAvailable": {
+    "description": "Сообщение пустого состояния для ежедневных тенденций"
+  },
+
+  "noCategoriesYet": "Пока нет категорий",
+  "@noCategoriesYet": {
+    "description": "Сообщение пустого состояния для категорий"
+  },
+
+  "noTransactionsYet": "Пока нет транзакций",
+  "@noTransactionsYet": {
+    "description": "Сообщение пустого состояния для транзакций"
+  },
+
+  "noCategoriesAvailable": "Нет доступных категорий",
+  "@noCategoriesAvailable": {
+    "description": "Сообщение пустого состояния для выбора категории"
+  },
+
+  "selectADate": "Выберите дату",
+  "@selectADate": {
+    "description": "Заполнитель выбора даты"
+  },
+
+  "welcomeToVaultFlow": "Добро пожаловать в VaultFlow",
+  "@welcomeToVaultFlow": {
+    "description": "Заголовок приветствия на экране входа"
+  },
+
+  "enterYourMasterPassword": "Введите ваш мастер-пароль",
+  "@enterYourMasterPassword": {
+    "description": "Подзаголовок на экране входа"
+  },
+
+  "createMasterPassword": "Создайте мастер-пароль",
+  "@createMasterPassword": {
+    "description": "Заголовок на экране настройки пароля"
+  },
+
+  "passwordWillEncryptData": "Этот пароль зашифрует все ваши данные",
+  "@passwordWillEncryptData": {
+    "description": "Подзаголовок на экране настройки пароля"
+  },
+
+  "password": "Пароль",
+  "@password": {
+    "description": "Метка поля пароля"
+  },
+
+  "confirmPassword": "Подтвердите пароль",
+  "@confirmPassword": {
+    "description": "Метка поля подтверждения пароля"
+  },
+
+  "currentPassword": "Текущий пароль",
+  "@currentPassword": {
+    "description": "Метка поля текущего пароля"
+  },
+
+  "newPassword": "Новый пароль",
+  "@newPassword": {
+    "description": "Метка поля нового пароля"
+  },
+
+  "confirmNewPassword": "Подтвердите новый пароль",
+  "@confirmNewPassword": {
+    "description": "Метка поля подтверждения нового пароля"
+  },
+
+  "passwordsDoNotMatch": "Пароли не совпадают",
+  "@passwordsDoNotMatch": {
+    "description": "Ошибка валидации для несовпадающих паролей"
+  },
+
+  "passwordMustBeAtLeast6Characters": "Пароль должен содержать не менее 6 символов",
+  "@passwordMustBeAtLeast6Characters": {
+    "description": "Ошибка валидации для короткого пароля"
+  },
+
+  "pleaseEnterYourCurrentPassword": "Введите текущий пароль",
+  "@pleaseEnterYourCurrentPassword": {
+    "description": "Ошибка валидации для пустого текущего пароля"
+  },
+
+  "pleaseEnterANewPassword": "Введите новый пароль",
+  "@pleaseEnterANewPassword": {
+    "description": "Ошибка валидации для пустого нового пароля"
+  },
+
+  "pleaseConfirmYourNewPassword": "Подтвердите новый пароль",
+  "@pleaseConfirmYourNewPassword": {
+    "description": "Ошибка валидации для пустого подтверждения пароля"
+  },
+
+  "resetPassword": "Сбросить пароль",
+  "@resetPassword": {
+    "description": "Метка кнопки сброса пароля"
+  },
+
+  "resetPasswordWarning": "Это удалит ВСЕ ваши данные, включая транзакции и категории. Вам нужно будет создать новый пароль.\n\nВы уверены, что хотите продолжить?",
+  "@resetPasswordWarning": {
+    "description": "Предупреждающее сообщение для сброса пароля"
+  },
+
+  "addTransaction": "Добавить транзакцию",
+  "@addTransaction": {
+    "description": "Заголовок диалога добавления транзакции"
+  },
+
+  "editTransaction": "Редактировать транзакцию",
+  "@editTransaction": {
+    "description": "Заголовок диалога редактирования транзакции"
+  },
+
+  "deleteTransaction": "Удалить транзакцию",
+  "@deleteTransaction": {
+    "description": "Заголовок диалога удаления транзакции"
+  },
+
+  "confirmDeleteTransaction": "Вы уверены, что хотите удалить \"{transactionTitle}\"?",
+  "@confirmDeleteTransaction": {
+    "description": "Сообщение подтверждения удаления транзакции",
+    "placeholders": {
+      "transactionTitle": {
+        "type": "String",
+        "description": "Описание транзакции"
+      }
+    }
+  },
+
+  "description": "Описание",
+  "@description": {
+    "description": "Метка поля описания"
+  },
+
+  "amount": "Сумма",
+  "@amount": {
+    "description": "Метка поля суммы"
+  },
+
+  "category": "Категория",
+  "@category": {
+    "description": "Метка поля категории"
+  },
+
+  "date": "Дата",
+  "@date": {
+    "description": "Метка поля даты"
+  },
+
+  "type": "Тип",
+  "@type": {
+    "description": "Метка поля типа"
+  },
+
+  "icon": "Иконка",
+  "@icon": {
+    "description": "Метка поля иконки"
+  },
+
+  "color": "Цвет",
+  "@color": {
+    "description": "Метка поля цвета"
+  },
+
+  "categoryName": "Название категории",
+  "@categoryName": {
+    "description": "Метка поля названия категории"
+  },
+
+  "pleaseEnterADescription": "Введите описание",
+  "@pleaseEnterADescription": {
+    "description": "Ошибка валидации для пустого описания"
+  },
+
+  "pleaseEnterAnAmount": "Введите сумму",
+  "@pleaseEnterAnAmount": {
+    "description": "Ошибка валидации для пустой суммы"
+  },
+
+  "pleaseEnterAValidNumber": "Введите корректное число",
+  "@pleaseEnterAValidNumber": {
+    "description": "Ошибка валидации для некорректного числа"
+  },
+
+  "pleaseSelectACategory": "Выберите категорию",
+  "@pleaseSelectACategory": {
+    "description": "Ошибка валидации для пустой категории"
+  },
+
+  "pleaseEnterACategoryName": "Введите название категории",
+  "@pleaseEnterACategoryName": {
+    "description": "Ошибка валидации для пустого названия категории"
+  },
+
+  "addCategory": "Добавить категорию",
+  "@addCategory": {
+    "description": "Заголовок диалога добавления категории"
+  },
+
+  "editCategory": "Редактировать категорию",
+  "@editCategory": {
+    "description": "Заголовок диалога редактирования категории"
+  },
+
+  "deleteCategory": "Удалить категорию",
+  "@deleteCategory": {
+    "description": "Заголовок диалога удаления категории"
+  },
+
+  "confirmDeleteCategory": "Вы уверены, что хотите удалить \"{categoryName}\"?",
+  "@confirmDeleteCategory": {
+    "description": "Сообщение подтверждения удаления категории",
+    "placeholders": {
+      "categoryName": {
+        "type": "String",
+        "description": "Название категории"
+      }
+    }
+  },
+
+  "security": "Безопасность",
+  "@security": {
+    "description": "Заголовок секции настроек безопасности"
+  },
+
+  "changePassword": "Изменить пароль",
+  "@changePassword": {
+    "description": "Заголовок настройки изменения пароля"
+  },
+
+  "updateYourSecurityPassword": "Обновите ваш пароль безопасности",
+  "@updateYourSecurityPassword": {
+    "description": "Подзаголовок настройки изменения пароля"
+  },
+
+  "dataManagement": "Управление данными",
+  "@dataManagement": {
+    "description": "Заголовок секции настроек управления данными"
+  },
+
+  "exportToCSV": "Экспорт в CSV",
+  "@exportToCSV": {
+    "description": "Заголовок настройки экспорта в CSV"
+  },
+
+  "exportYourTransactionsToCSVFile": "Экспортируйте ваши транзакции в файл CSV",
+  "@exportYourTransactionsToCSVFile": {
+    "description": "Подзаголовок настройки экспорта в CSV"
+  },
+
+  "exportToPDF": "Экспорт в PDF",
+  "@exportToPDF": {
+    "description": "Заголовок настройки экспорта в PDF"
+  },
+
+  "exportYourTransactionsToPDFFile": "Экспортируйте ваши транзакции в файл PDF",
+  "@exportYourTransactionsToPDFFile": {
+    "description": "Подзаголовок настройки экспорта в PDF"
+  },
+
+  "clearOldData": "Очистить старые данные",
+  "@clearOldData": {
+    "description": "Заголовок настройки очистки старых данных"
+  },
+
+  "removeTransactionsOlderThanASpecificDate": "Удалить транзакции старше указанной даты",
+  "@removeTransactionsOlderThanASpecificDate": {
+    "description": "Подзаголовок настройки очистки старых данных"
+  },
+
+  "clearAllData": "Очистить все данные",
+  "@clearAllData": {
+    "description": "Заголовок настройки очистки всех данных"
+  },
+
+  "removeAllTransactionsPermanently": "Удалить все транзакции навсегда",
+  "@removeAllTransactionsPermanently": {
+    "description": "Подзаголовок настройки очистки всех данных"
+  },
+
+  "about": "О приложении",
+  "@about": {
+    "description": "Заголовок секции настроек о приложении"
+  },
+
+  "appVersion": "Версия приложения",
+  "@appVersion": {
+    "description": "Заголовок настройки версии приложения"
+  },
+
+  "appNameSetting": "Название приложения",
+  "@appNameSetting": {
+    "description": "Заголовок настройки названия приложения"
+  },
+
+  "account": "Аккаунт",
+  "@account": {
+    "description": "Заголовок секции настроек аккаунта"
+  },
+
+  "signOutOfYourAccount": "Выйти из аккаунта",
+  "@signOutOfYourAccount": {
+    "description": "Подзаголовок настройки выхода"
+  },
+
+  "clearOldDataTitle": "Очистить старые данные",
+  "@clearOldDataTitle": {
+    "description": "Заголовок диалога очистки старых данных"
+  },
+
+  "clearOldDataMessage": "Выберите дату. Все транзакции до этой даты будут удалены.",
+  "@clearOldDataMessage": {
+    "description": "Сообщение диалога очистки старых данных"
+  },
+
+  "clearAllDataTitle": "Очистить все данные",
+  "@clearAllDataTitle": {
+    "description": "Заголовок диалога очистки всех данных"
+  },
+
+  "confirmClearAllData": "Вы уверены, что хотите удалить ВСЕ транзакции? Это действие нельзя отменить.",
+  "@confirmClearAllData": {
+    "description": "Содержимое диалога очистки всех данных"
+  },
+
+  "logoutTitle": "Выход",
+  "@logoutTitle": {
+    "description": "Заголовок диалога выхода"
+  },
+
+  "confirmLogout": "Вы уверены, что хотите выйти?",
+  "@confirmLogout": {
+    "description": "Содержимое диалога выхода"
+  },
+
+  "transactionsReport": "Отчёт о транзакциях",
+  "@transactionsReport": {
+    "description": "Заголовок PDF отчёта"
+  },
+
+  "generated": "Создано: {date}",
+  "@generated": {
+    "description": "Дата создания PDF",
+    "placeholders": {
+      "date": {
+        "type": "String",
+        "description": "Дата создания"
+      }
+    }
+  },
+
+  "summary": "Сводка",
+  "@summary": {
+    "description": "Заголовок секции сводки"
+  },
+
+  "transactionsExportDate": "Дата",
+  "@transactionsExportDate": {
+    "description": "Заголовок столбца даты экспорта CSV/PDF"
+  },
+
+  "transactionsExportType": "Тип",
+  "@transactionsExportType": {
+    "description": "Заголовок столбца типа экспорта CSV/PDF"
+  },
+
+  "transactionsExportCategory": "Категория",
+  "@transactionsExportCategory": {
+    "description": "Заголовок столбца категории экспорта CSV/PDF"
+  },
+
+  "transactionsExportDescription": "Описание",
+  "@transactionsExportDescription": {
+    "description": "Заголовок столбца описания экспорта CSV/PDF"
+  },
+
+  "transactionsExportAmount": "Сумма",
+  "@transactionsExportAmount": {
+    "description": "Заголовок столбца суммы экспорта CSV/PDF"
+  },
+
+  "noTransactionsToExport": "Нет транзакций для экспорта",
+  "@noTransactionsToExport": {
+    "description": "Сообщение об ошибке при отсутствии транзакций для экспорта"
+  },
+
+  "loadingAppInfo": "Загрузка...",
+  "@loadingAppInfo": {
+    "description": "Сообщение загрузки информации о приложении"
+  }
+}

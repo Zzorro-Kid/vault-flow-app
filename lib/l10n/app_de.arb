@@ -1,0 +1,643 @@
+{
+  "@@locale": "de",
+
+  "appName": "VaultFlow",
+  "@appName": {
+    "description": "Anwendungsname"
+  },
+
+  "navHome": "Startseite",
+  "@navHome": {
+    "description": "Navigationslabel Startseite"
+  },
+
+  "navAdd": "Hinzufügen",
+  "@navAdd": {
+    "description": "Navigationslabel Hinzufügen"
+  },
+
+  "navCategories": "Kategorien",
+  "@navCategories": {
+    "description": "Navigationslabel Kategorien"
+  },
+
+  "navStats": "Statistik",
+  "@navStats": {
+    "description": "Navigationslabel Statistik"
+  },
+
+  "navSettings": "Einstellungen",
+  "@navSettings": {
+    "description": "Navigationslabel Einstellungen"
+  },
+
+  "dashboard": "Dashboard",
+  "@dashboard": {
+    "description": "Titel des Dashboard-Bildschirms"
+  },
+
+  "transactions": "Transaktionen",
+  "@transactions": {
+    "description": "Titel des Transaktionsbildschirms"
+  },
+
+  "categoriesTitle": "Kategorien",
+  "@categoriesTitle": {
+    "description": "Titel des Kategorienbildschirms"
+  },
+
+  "statistics": "Statistik",
+  "@statistics": {
+    "description": "Titel des Statistikbildschirms"
+  },
+
+  "settings": "Einstellungen",
+  "@settings": {
+    "description": "Titel des Einstellungsbildschirms"
+  },
+
+  "noRouteDefined": "Keine Route definiert",
+  "@noRouteDefined": {
+    "description": "Fehlermeldung für nicht definierte Routen"
+  },
+
+  "loading": "Laden...",
+  "@loading": {
+    "description": "Meldung des Ladeindikators"
+  },
+
+  "loadingSettings": "Einstellungen werden geladen...",
+  "@loadingSettings": {
+    "description": "Meldung beim Laden der Einstellungen"
+  },
+
+  "somethingWentWrong": "Etwas ist schiefgelaufen",
+  "@somethingWentWrong": {
+    "description": "Allgemeine Fehlermeldung"
+  },
+
+  "retry": "Erneut versuchen",
+  "@retry": {
+    "description": "Label der Schaltfläche Wiederholen"
+  },
+
+  "cancel": "Abbrechen",
+  "@cancel": {
+    "description": "Label der Schaltfläche Abbrechen"
+  },
+
+  "delete": "Löschen",
+  "@delete": {
+    "description": "Label der Schaltfläche Löschen"
+  },
+
+  "deleteAll": "Alle löschen",
+  "@deleteAll": {
+    "description": "Label der Schaltfläche Alle löschen"
+  },
+
+  "add": "Hinzufügen",
+  "@add": {
+    "description": "Label der Schaltfläche Hinzufügen"
+  },
+
+  "save": "Speichern",
+  "@save": {
+    "description": "Label der Schaltfläche Speichern"
+  },
+
+  "change": "Ändern",
+  "@change": {
+    "description": "Label der Schaltfläche Ändern"
+  },
+
+  "clear": "Löschen",
+  "@clear": {
+    "description": "Label der Schaltfläche Löschen"
+  },
+
+  "logout": "Abmelden",
+  "@logout": {
+    "description": "Label der Schaltfläche Abmelden"
+  },
+
+  "unlock": "Entsperren",
+  "@unlock": {
+    "description": "Label der Schaltfläche Entsperren"
+  },
+
+  "createPassword": "Passwort erstellen",
+  "@createPassword": {
+    "description": "Label der Schaltfläche Passwort erstellen"
+  },
+
+  "yesReset": "Ja, zurücksetzen",
+  "@yesReset": {
+    "description": "Label der Schaltfläche Bestätigen"
+  },
+
+  "expense": "Ausgabe",
+  "@expense": {
+    "description": "Label für Ausgabe"
+  },
+
+  "expense_plural": "Ausgaben",
+  "@expense": {
+    "description": "Label für Ausgaben (Plural)"
+  },
+
+  "income": "Einnahme",
+  "@income": {
+    "description": "Label für Einnahme"
+  },
+
+  "income_plural": "Einnahmen",
+  "@income": {
+    "description": "Label für Einnahmen (Plural)"
+  },
+
+  "netBalance": "Nettoguthaben",
+  "@netBalance": {
+    "description": "Label für Nettoguthaben"
+  },
+
+  "balance": "Guthaben",
+  "@balance": {
+    "description": "Label für Guthaben"
+  },
+
+  "totalIncome": "Gesamteinnahmen",
+  "@totalIncome": {
+    "description": "Label für Gesamteinnahmen"
+  },
+
+  "totalExpenses": "Gesamtausgaben",
+  "@totalExpenses": {
+    "description": "Label für Gesamtausgaben"
+  },
+
+  "summaryFor": "Zusammenfassung für {period}",
+  "@summaryFor": {
+    "description": "Label für Zeitraum",
+    "placeholders": {
+      "period": {
+        "type": "String",
+        "description": "Der Zeitraum (Tag, Woche, Monat, Jahr)"
+      }
+    }
+  },
+
+  "periodDay": "Tag",
+  "@periodDay": {
+    "description": "Label für Tageszeitraum"
+  },
+
+  "periodWeek": "Woche",
+  "@periodWeek": {
+    "description": "Label für Wochenzeitraum"
+  },
+
+  "periodMonth": "Monat",
+  "@periodMonth": {
+    "description": "Label für Monatszeitraum"
+  },
+
+  "periodYear": "Jahr",
+  "@periodYear": {
+    "description": "Label für Jahreszeitraum"
+  },
+
+  "expenseCategories": "Ausgabenkategorien",
+  "@expenseCategories": {
+    "description": "Überschrift für Ausgabenkategorien"
+  },
+
+  "incomeCategories": "Einnahmekategorien",
+  "@incomeCategories": {
+    "description": "Überschrift für Einnahmekategorien"
+  },
+
+  "recentTransactions": "Letzte Transaktionen",
+  "@recentTransactions": {
+    "description": "Überschrift für letzte Transaktionen"
+  },
+
+  "transactionsCount": "{count, plural, =0{Keine Transaktionen} one{# Transaktion} other{# Transaktionen}}",
+  "@transactionsCount": {
+    "description": "Transaktionsanzahl mit Pluralisierung",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "description": "Die Anzahl der Transaktionen"
+      }
+    }
+  },
+
+  "categoryBreakdown": "Kategorienaufschlüsselung",
+  "@categoryBreakdown": {
+    "description": "Titel des Kategorienaufschlüsselungsdiagramms"
+  },
+
+  "dailyTrends": "Tägliche Trends",
+  "@dailyTrends": {
+    "description": "Titel des täglichen Trenddiagramms"
+  },
+
+  "noCategoryDataAvailable": "Keine Kategoriedaten verfügbar",
+  "@noCategoryDataAvailable": {
+    "description": "Leermeldung für Kategorienaufschlüsselung"
+  },
+
+  "noTrendDataAvailable": "Keine Trenddaten verfügbar",
+  "@noTrendDataAvailable": {
+    "description": "Leermeldung für tägliche Trends"
+  },
+
+  "noCategoriesYet": "Noch keine Kategorien",
+  "@noCategoriesYet": {
+    "description": "Leermeldung für Kategorien"
+  },
+
+  "noTransactionsYet": "Noch keine Transaktionen",
+  "@noTransactionsYet": {
+    "description": "Leermeldung für Transaktionen"
+  },
+
+  "noCategoriesAvailable": "Keine Kategorien verfügbar",
+  "@noCategoriesAvailable": {
+    "description": "Leermeldung für Kategorieauswahl"
+  },
+
+  "selectADate": "Datum auswählen",
+  "@selectADate": {
+    "description": "Platzhalter für Datumsauswahl"
+  },
+
+  "welcomeToVaultFlow": "Willkommen bei VaultFlow",
+  "@welcomeToVaultFlow": {
+    "description": "Begrüßungstitel auf dem Anmeldebildschirm"
+  },
+
+  "enterYourMasterPassword": "Geben Sie Ihr Master-Passwort ein",
+  "@enterYourMasterPassword": {
+    "description": "Untertitel auf dem Anmeldebildschirm"
+  },
+
+  "createMasterPassword": "Master-Passwort erstellen",
+  "@createMasterPassword": {
+    "description": "Titel auf dem Passwort-Einrichtungsbildschirm"
+  },
+
+  "passwordWillEncryptData": "Dieses Passwort verschlüsselt alle Ihre Daten",
+  "@passwordWillEncryptData": {
+    "description": "Untertitel auf dem Passwort-Einrichtungsbildschirm"
+  },
+
+  "password": "Passwort",
+  "@password": {
+    "description": "Label des Passwortfelds"
+  },
+
+  "confirmPassword": "Passwort bestätigen",
+  "@confirmPassword": {
+    "description": "Label des Passwortbestätigungsfelds"
+  },
+
+  "currentPassword": "Aktuelles Passwort",
+  "@currentPassword": {
+    "description": "Label des aktuellen Passwortfelds"
+  },
+
+  "newPassword": "Neues Passwort",
+  "@newPassword": {
+    "description": "Label des neuen Passwortfelds"
+  },
+
+  "confirmNewPassword": "Neues Passwort bestätigen",
+  "@confirmNewPassword": {
+    "description": "Label des neuen Passwortbestätigungsfelds"
+  },
+
+  "passwordsDoNotMatch": "Passwörter stimmen nicht überein",
+  "@passwordsDoNotMatch": {
+    "description": "Validierungsfehler für nicht übereinstimmende Passwörter"
+  },
+
+  "passwordMustBeAtLeast6Characters": "Das Passwort muss mindestens 6 Zeichen lang sein",
+  "@passwordMustBeAtLeast6Characters": {
+    "description": "Validierungsfehler für kurzes Passwort"
+  },
+
+  "pleaseEnterYourCurrentPassword": "Bitte geben Sie Ihr aktuelles Passwort ein",
+  "@pleaseEnterYourCurrentPassword": {
+    "description": "Validierungsfehler für leeres aktuelles Passwort"
+  },
+
+  "pleaseEnterANewPassword": "Bitte geben Sie ein neues Passwort ein",
+  "@pleaseEnterANewPassword": {
+    "description": "Validierungsfehler für leeres neues Passwort"
+  },
+
+  "pleaseConfirmYourNewPassword": "Bitte bestätigen Sie Ihr neues Passwort",
+  "@pleaseConfirmYourNewPassword": {
+    "description": "Validierungsfehler für leere Passwortbestätigung"
+  },
+
+  "resetPassword": "Passwort zurücksetzen",
+  "@resetPassword": {
+    "description": "Label der Schaltfläche Passwort zurücksetzen"
+  },
+
+  "resetPasswordWarning": "Dies löscht ALLE Ihre Daten, einschließlich Transaktionen und Kategorien. Sie müssen ein neues Passwort erstellen.\n\nSind Sie sicher, dass Sie fortfahren möchten?",
+  "@resetPasswordWarning": {
+    "description": "Warnmeldung für Passwortzurücksetzung"
+  },
+
+  "addTransaction": "Transaktion hinzufügen",
+  "@addTransaction": {
+    "description": "Titel des Dialogs zum Hinzufügen einer Transaktion"
+  },
+
+  "editTransaction": "Transaktion bearbeiten",
+  "@editTransaction": {
+    "description": "Titel des Dialogs zum Bearbeiten einer Transaktion"
+  },
+
+  "deleteTransaction": "Transaktion löschen",
+  "@deleteTransaction": {
+    "description": "Titel des Dialogs zum Löschen einer Transaktion"
+  },
+
+  "confirmDeleteTransaction": "Sind Sie sicher, dass Sie \"{transactionTitle}\" löschen möchten?",
+  "@confirmDeleteTransaction": {
+    "description": "Bestätigungsmeldung zum Löschen einer Transaktion",
+    "placeholders": {
+      "transactionTitle": {
+        "type": "String",
+        "description": "Die Transaktionsbeschreibung"
+      }
+    }
+  },
+
+  "description": "Beschreibung",
+  "@description": {
+    "description": "Label des Beschreibungsfelds"
+  },
+
+  "amount": "Betrag",
+  "@amount": {
+    "description": "Label des Betragsfelds"
+  },
+
+  "category": "Kategorie",
+  "@category": {
+    "description": "Label des Kategoriefelds"
+  },
+
+  "date": "Datum",
+  "@date": {
+    "description": "Label des Datumsfelds"
+  },
+
+  "type": "Typ",
+  "@type": {
+    "description": "Label des Typfelds"
+  },
+
+  "icon": "Symbol",
+  "@icon": {
+    "description": "Label des Symbolfelds"
+  },
+
+  "color": "Farbe",
+  "@color": {
+    "description": "Label des Farbfelds"
+  },
+
+  "categoryName": "Kategoriename",
+  "@categoryName": {
+    "description": "Label des Kategorienamensfelds"
+  },
+
+  "pleaseEnterADescription": "Bitte geben Sie eine Beschreibung ein",
+  "@pleaseEnterADescription": {
+    "description": "Validierungsfehler für leere Beschreibung"
+  },
+
+  "pleaseEnterAnAmount": "Bitte geben Sie einen Betrag ein",
+  "@pleaseEnterAnAmount": {
+    "description": "Validierungsfehler für leeren Betrag"
+  },
+
+  "pleaseEnterAValidNumber": "Bitte geben Sie eine gültige Zahl ein",
+  "@pleaseEnterAValidNumber": {
+    "description": "Validierungsfehler für ungültige Zahl"
+  },
+
+  "pleaseSelectACategory": "Bitte wählen Sie eine Kategorie",
+  "@pleaseSelectACategory": {
+    "description": "Validierungsfehler für leere Kategorie"
+  },
+
+  "pleaseEnterACategoryName": "Bitte geben Sie einen Kategorienamen ein",
+  "@pleaseEnterACategoryName": {
+    "description": "Validierungsfehler für leeren Kategorienamen"
+  },
+
+  "addCategory": "Kategorie hinzufügen",
+  "@addCategory": {
+    "description": "Titel des Dialogs zum Hinzufügen einer Kategorie"
+  },
+
+  "editCategory": "Kategorie bearbeiten",
+  "@editCategory": {
+    "description": "Titel des Dialogs zum Bearbeiten einer Kategorie"
+  },
+
+  "deleteCategory": "Kategorie löschen",
+  "@deleteCategory": {
+    "description": "Titel des Dialogs zum Löschen einer Kategorie"
+  },
+
+  "confirmDeleteCategory": "Sind Sie sicher, dass Sie \"{categoryName}\" löschen möchten?",
+  "@confirmDeleteCategory": {
+    "description": "Bestätigungsmeldung zum Löschen einer Kategorie",
+    "placeholders": {
+      "categoryName": {
+        "type": "String",
+        "description": "Der Kategoriename"
+      }
+    }
+  },
+
+  "security": "Sicherheit",
+  "@security": {
+    "description": "Überschrift für Sicherheitseinstellungen"
+  },
+
+  "changePassword": "Passwort ändern",
+  "@changePassword": {
+    "description": "Titel der Einstellung Passwort ändern"
+  },
+
+  "updateYourSecurityPassword": "Aktualisieren Sie Ihr Sicherheitspasswort",
+  "@updateYourSecurityPassword": {
+    "description": "Untertitel der Einstellung Passwort ändern"
+  },
+
+  "dataManagement": "Datenverwaltung",
+  "@dataManagement": {
+    "description": "Überschrift für Datenverwaltungseinstellungen"
+  },
+
+  "exportToCSV": "Als CSV exportieren",
+  "@exportToCSV": {
+    "description": "Titel der Einstellung CSV-Export"
+  },
+
+  "exportYourTransactionsToCSVFile": "Exportieren Sie Ihre Transaktionen als CSV-Datei",
+  "@exportYourTransactionsToCSVFile": {
+    "description": "Untertitel der Einstellung CSV-Export"
+  },
+
+  "exportToPDF": "Als PDF exportieren",
+  "@exportToPDF": {
+    "description": "Titel der Einstellung PDF-Export"
+  },
+
+  "exportYourTransactionsToPDFFile": "Exportieren Sie Ihre Transaktionen als PDF-Datei",
+  "@exportYourTransactionsToPDFFile": {
+    "description": "Untertitel der Einstellung PDF-Export"
+  },
+
+  "clearOldData": "Alte Daten löschen",
+  "@clearOldData": {
+    "description": "Titel der Einstellung Alte Daten löschen"
+  },
+
+  "removeTransactionsOlderThanASpecificDate": "Transaktionen vor einem bestimmten Datum entfernen",
+  "@removeTransactionsOlderThanASpecificDate": {
+    "description": "Untertitel der Einstellung Alte Daten löschen"
+  },
+
+  "clearAllData": "Alle Daten löschen",
+  "@clearAllData": {
+    "description": "Titel der Einstellung Alle Daten löschen"
+  },
+
+  "removeAllTransactionsPermanently": "Alle Transaktionen dauerhaft entfernen",
+  "@removeAllTransactionsPermanently": {
+    "description": "Untertitel der Einstellung Alle Daten löschen"
+  },
+
+  "about": "Über",
+  "@about": {
+    "description": "Überschrift für Über-Einstellungen"
+  },
+
+  "appVersion": "App-Version",
+  "@appVersion": {
+    "description": "Titel der Einstellung App-Version"
+  },
+
+  "appNameSetting": "App-Name",
+  "@appNameSetting": {
+    "description": "Titel der Einstellung App-Name"
+  },
+
+  "account": "Konto",
+  "@account": {
+    "description": "Überschrift für Kontoeinstellungen"
+  },
+
+  "signOutOfYourAccount": "Von Ihrem Konto abmelden",
+  "@signOutOfYourAccount": {
+    "description": "Untertitel der Abmeldeeinstellung"
+  },
+
+  "clearOldDataTitle": "Alte Daten löschen",
+  "@clearOldDataTitle": {
+    "description": "Titel des Dialogs Alte Daten löschen"
+  },
+
+  "clearOldDataMessage": "Wählen Sie ein Datum. Alle Transaktionen vor diesem Datum werden gelöscht.",
+  "@clearOldDataMessage": {
+    "description": "Meldung des Dialogs Alte Daten löschen"
+  },
+
+  "clearAllDataTitle": "Alle Daten löschen",
+  "@clearAllDataTitle": {
+    "description": "Titel des Dialogs Alle Daten löschen"
+  },
+
+  "confirmClearAllData": "Sind Sie sicher, dass Sie ALLE Transaktionen löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
+  "@confirmClearAllData": {
+    "description": "Inhalt des Dialogs Alle Daten löschen"
+  },
+
+  "logoutTitle": "Abmelden",
+  "@logoutTitle": {
+    "description": "Titel des Abmeldedialogs"
+  },
+
+  "confirmLogout": "Sind Sie sicher, dass Sie sich abmelden möchten?",
+  "@confirmLogout": {
+    "description": "Inhalt des Abmeldedialogs"
+  },
+
+  "transactionsReport": "Transaktionsbericht",
+  "@transactionsReport": {
+    "description": "PDF-Berichtsüberschrift"
+  },
+
+  "generated": "Erstellt: {date}",
+  "@generated": {
+    "description": "PDF-Erstellungsdatum",
+    "placeholders": {
+      "date": {
+        "type": "String",
+        "description": "Das Erstellungsdatum"
+      }
+    }
+  },
+
+  "summary": "Zusammenfassung",
+  "@summary": {
+    "description": "Überschrift für Zusammenfassung"
+  },
+
+  "transactionsExportDate": "Datum",
+  "@transactionsExportDate": {
+    "description": "Spaltenüberschrift Datum für CSV/PDF-Export"
+  },
+
+  "transactionsExportType": "Typ",
+  "@transactionsExportType": {
+    "description": "Spaltenüberschrift Typ für CSV/PDF-Export"
+  },
+
+  "transactionsExportCategory": "Kategorie",
+  "@transactionsExportCategory": {
+    "description": "Spaltenüberschrift Kategorie für CSV/PDF-Export"
+  },
+
+  "transactionsExportDescription": "Beschreibung",
+  "@transactionsExportDescription": {
+    "description": "Spaltenüberschrift Beschreibung für CSV/PDF-Export"
+  },
+
+  "transactionsExportAmount": "Betrag",
+  "@transactionsExportAmount": {
+    "description": "Spaltenüberschrift Betrag für CSV/PDF-Export"
+  },
+
+  "noTransactionsToExport": "Keine Transaktionen zum Exportieren",
+  "@noTransactionsToExport": {
+    "description": "Fehlermeldung wenn keine Transaktionen zum Exportieren vorhanden sind"
+  },
+
+  "loadingAppInfo": "Laden...",
+  "@loadingAppInfo": {
+    "description": "Meldung beim Laden der App-Informationen"
+  }
+}

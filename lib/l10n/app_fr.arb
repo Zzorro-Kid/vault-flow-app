@@ -1,0 +1,643 @@
+{
+  "@@locale": "fr",
+
+  "appName": "VaultFlow",
+  "@appName": {
+    "description": "Nom de l'application"
+  },
+
+  "navHome": "Accueil",
+  "@navHome": {
+    "description": "Libellé de navigation Accueil"
+  },
+
+  "navAdd": "Ajouter",
+  "@navAdd": {
+    "description": "Libellé de navigation Ajouter"
+  },
+
+  "navCategories": "Catégories",
+  "@navCategories": {
+    "description": "Libellé de navigation Catégories"
+  },
+
+  "navStats": "Statistiques",
+  "@navStats": {
+    "description": "Libellé de navigation Statistiques"
+  },
+
+  "navSettings": "Paramètres",
+  "@navSettings": {
+    "description": "Libellé de navigation Paramètres"
+  },
+
+  "dashboard": "Tableau de bord",
+  "@dashboard": {
+    "description": "Titre de l'écran du tableau de bord"
+  },
+
+  "transactions": "Transactions",
+  "@transactions": {
+    "description": "Titre de l'écran des transactions"
+  },
+
+  "categoriesTitle": "Catégories",
+  "@categoriesTitle": {
+    "description": "Titre de l'écran des catégories"
+  },
+
+  "statistics": "Statistiques",
+  "@statistics": {
+    "description": "Titre de l'écran des statistiques"
+  },
+
+  "settings": "Paramètres",
+  "@settings": {
+    "description": "Titre de l'écran des paramètres"
+  },
+
+  "noRouteDefined": "Aucune route définie",
+  "@noRouteDefined": {
+    "description": "Message d'erreur pour les routes non définies"
+  },
+
+  "loading": "Chargement...",
+  "@loading": {
+    "description": "Message de l'indicateur de chargement"
+  },
+
+  "loadingSettings": "Chargement des paramètres...",
+  "@loadingSettings": {
+    "description": "Message de chargement des paramètres"
+  },
+
+  "somethingWentWrong": "Une erreur est survenue",
+  "@somethingWentWrong": {
+    "description": "Message d'erreur générique"
+  },
+
+  "retry": "Réessayer",
+  "@retry": {
+    "description": "Libellé du bouton Réessayer"
+  },
+
+  "cancel": "Annuler",
+  "@cancel": {
+    "description": "Libellé du bouton Annuler"
+  },
+
+  "delete": "Supprimer",
+  "@delete": {
+    "description": "Libellé du bouton Supprimer"
+  },
+
+  "deleteAll": "Tout supprimer",
+  "@deleteAll": {
+    "description": "Libellé du bouton Tout supprimer"
+  },
+
+  "add": "Ajouter",
+  "@add": {
+    "description": "Libellé du bouton Ajouter"
+  },
+
+  "save": "Enregistrer",
+  "@save": {
+    "description": "Libellé du bouton Enregistrer"
+  },
+
+  "change": "Modifier",
+  "@change": {
+    "description": "Libellé du bouton Modifier"
+  },
+
+  "clear": "Effacer",
+  "@clear": {
+    "description": "Libellé du bouton Effacer"
+  },
+
+  "logout": "Déconnexion",
+  "@logout": {
+    "description": "Libellé du bouton Déconnexion"
+  },
+
+  "unlock": "Déverrouiller",
+  "@unlock": {
+    "description": "Libellé du bouton Déverrouiller"
+  },
+
+  "createPassword": "Créer un mot de passe",
+  "@createPassword": {
+    "description": "Libellé du bouton Créer un mot de passe"
+  },
+
+  "yesReset": "Oui, réinitialiser",
+  "@yesReset": {
+    "description": "Libellé du bouton Confirmer"
+  },
+
+  "expense": "Dépense",
+  "@expense": {
+    "description": "Libellé de dépense"
+  },
+
+  "expense_plural": "Dépenses",
+  "@expense": {
+    "description": "Libellé de dépenses (pluriel)"
+  },
+
+  "income": "Revenu",
+  "@income": {
+    "description": "Libellé de revenu"
+  },
+
+  "income_plural": "Revenus",
+  "@income": {
+    "description": "Libellé de revenus (pluriel)"
+  },
+
+  "netBalance": "Solde net",
+  "@netBalance": {
+    "description": "Libellé du solde net"
+  },
+
+  "balance": "Solde",
+  "@balance": {
+    "description": "Libellé du solde"
+  },
+
+  "totalIncome": "Revenus totaux",
+  "@totalIncome": {
+    "description": "Libellé des revenus totaux"
+  },
+
+  "totalExpenses": "Dépenses totales",
+  "@totalExpenses": {
+    "description": "Libellé des dépenses totales"
+  },
+
+  "summaryFor": "Résumé pour {period}",
+  "@summaryFor": {
+    "description": "Libellé de la période",
+    "placeholders": {
+      "period": {
+        "type": "String",
+        "description": "La période (jour, semaine, mois, année)"
+      }
+    }
+  },
+
+  "periodDay": "Jour",
+  "@periodDay": {
+    "description": "Libellé de la période jour"
+  },
+
+  "periodWeek": "Semaine",
+  "@periodWeek": {
+    "description": "Libellé de la période semaine"
+  },
+
+  "periodMonth": "Mois",
+  "@periodMonth": {
+    "description": "Libellé de la période mois"
+  },
+
+  "periodYear": "Année",
+  "@periodYear": {
+    "description": "Libellé de la période année"
+  },
+
+  "expenseCategories": "Catégories de dépenses",
+  "@expenseCategories": {
+    "description": "En-tête de section des catégories de dépenses"
+  },
+
+  "incomeCategories": "Catégories de revenus",
+  "@incomeCategories": {
+    "description": "En-tête de section des catégories de revenus"
+  },
+
+  "recentTransactions": "Transactions récentes",
+  "@recentTransactions": {
+    "description": "En-tête de section des transactions récentes"
+  },
+
+  "transactionsCount": "{count, plural, =0{Aucune transaction} one{# transaction} other{# transactions}}",
+  "@transactionsCount": {
+    "description": "Nombre de transactions avec pluriel",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "description": "Le nombre de transactions"
+      }
+    }
+  },
+
+  "categoryBreakdown": "Répartition par catégorie",
+  "@categoryBreakdown": {
+    "description": "Titre du graphique de répartition par catégorie"
+  },
+
+  "dailyTrends": "Tendances quotidiennes",
+  "@dailyTrends": {
+    "description": "Titre du graphique des tendances quotidiennes"
+  },
+
+  "noCategoryDataAvailable": "Aucune donnée de catégorie disponible",
+  "@noCategoryDataAvailable": {
+    "message": "Message d'état vide pour la répartition par catégorie"
+  },
+
+  "noTrendDataAvailable": "Aucune donnée de tendance disponible",
+  "@noTrendDataAvailable": {
+    "description": "Message d'état vide pour les tendances quotidiennes"
+  },
+
+  "noCategoriesYet": "Pas encore de catégories",
+  "@noCategoriesYet": {
+    "description": "Message d'état vide pour les catégories"
+  },
+
+  "noTransactionsYet": "Pas encore de transactions",
+  "@noTransactionsYet": {
+    "description": "Message d'état vide pour les transactions"
+  },
+
+  "noCategoriesAvailable": "Aucune catégorie disponible",
+  "@noCategoriesAvailable": {
+    "description": "Message d'état vide pour la sélection de catégorie"
+  },
+
+  "selectADate": "Sélectionnez une date",
+  "@selectADate": {
+    "description": "Espace réservé pour la sélection de date"
+  },
+
+  "welcomeToVaultFlow": "Bienvenue sur VaultFlow",
+  "@welcomeToVaultFlow": {
+    "description": "Titre d'accueil sur l'écran de connexion"
+  },
+
+  "enterYourMasterPassword": "Entrez votre mot de passe principal",
+  "@enterYourMasterPassword": {
+    "description": "Sous-titre sur l'écran de connexion"
+  },
+
+  "createMasterPassword": "Créer un mot de passe principal",
+  "@createMasterPassword": {
+    "description": "Titre sur l'écran de configuration du mot de passe"
+  },
+
+  "passwordWillEncryptData": "Ce mot de passe chiffrera toutes vos données",
+  "@passwordWillEncryptData": {
+    "description": "Sous-titre sur l'écran de configuration du mot de passe"
+  },
+
+  "password": "Mot de passe",
+  "@password": {
+    "description": "Libellé du champ mot de passe"
+  },
+
+  "confirmPassword": "Confirmer le mot de passe",
+  "@confirmPassword": {
+    "description": "Libellé du champ de confirmation du mot de passe"
+  },
+
+  "currentPassword": "Mot de passe actuel",
+  "@currentPassword": {
+    "description": "Libellé du champ du mot de passe actuel"
+  },
+
+  "newPassword": "Nouveau mot de passe",
+  "@newPassword": {
+    "description": "Libellé du champ du nouveau mot de passe"
+  },
+
+  "confirmNewPassword": "Confirmer le nouveau mot de passe",
+  "@confirmNewPassword": {
+    "description": "Libellé du champ de confirmation du nouveau mot de passe"
+  },
+
+  "passwordsDoNotMatch": "Les mots de passe ne correspondent pas",
+  "@passwordsDoNotMatch": {
+    "description": "Erreur de validation pour les mots de passe non correspondants"
+  },
+
+  "passwordMustBeAtLeast6Characters": "Le mot de passe doit contenir au moins 6 caractères",
+  "@passwordMustBeAtLeast6Characters": {
+    "description": "Erreur de validation pour mot de passe trop court"
+  },
+
+  "pleaseEnterYourCurrentPassword": "Veuillez entrer votre mot de passe actuel",
+  "@pleaseEnterYourCurrentPassword": {
+    "description": "Erreur de validation pour mot de passe actuel vide"
+  },
+
+  "pleaseEnterANewPassword": "Veuillez entrer un nouveau mot de passe",
+  "@pleaseEnterANewPassword": {
+    "description": "Erreur de validation pour nouveau mot de passe vide"
+  },
+
+  "pleaseConfirmYourNewPassword": "Veuillez confirmer votre nouveau mot de passe",
+  "@pleaseConfirmYourNewPassword": {
+    "description": "Erreur de validation pour confirmation de mot de passe vide"
+  },
+
+  "resetPassword": "Réinitialiser le mot de passe",
+  "@resetPassword": {
+    "description": "Libellé du bouton Réinitialiser le mot de passe"
+  },
+
+  "resetPasswordWarning": "Cela supprimera TOUTES vos données, y compris les transactions et les catégories. Vous devrez créer un nouveau mot de passe.\n\nÊtes-vous sûr de vouloir continuer ?",
+  "@resetPasswordWarning": {
+    "description": "Message d'avertissement pour la réinitialisation du mot de passe"
+  },
+
+  "addTransaction": "Ajouter une transaction",
+  "@addTransaction": {
+    "description": "Titre de la boîte de dialogue d'ajout de transaction"
+  },
+
+  "editTransaction": "Modifier la transaction",
+  "@editTransaction": {
+    "description": "Titre de la boîte de dialogue de modification de transaction"
+  },
+
+  "deleteTransaction": "Supprimer la transaction",
+  "@deleteTransaction": {
+    "description": "Titre de la boîte de dialogue de suppression de transaction"
+  },
+
+  "confirmDeleteTransaction": "Êtes-vous sûr de vouloir supprimer \"{transactionTitle}\" ?",
+  "@confirmDeleteTransaction": {
+    "description": "Message de confirmation de suppression de transaction",
+    "placeholders": {
+      "transactionTitle": {
+        "type": "String",
+        "description": "La description de la transaction"
+      }
+    }
+  },
+
+  "description": "Description",
+  "@description": {
+    "description": "Libellé du champ description"
+  },
+
+  "amount": "Montant",
+  "@amount": {
+    "description": "Libellé du champ montant"
+  },
+
+  "category": "Catégorie",
+  "@category": {
+    "description": "Libellé du champ catégorie"
+  },
+
+  "date": "Date",
+  "@date": {
+    "description": "Libellé du champ date"
+  },
+
+  "type": "Type",
+  "@type": {
+    "description": "Libellé du champ type"
+  },
+
+  "icon": "Icône",
+  "@icon": {
+    "description": "Libellé du champ icône"
+  },
+
+  "color": "Couleur",
+  "@color": {
+    "description": "Libellé du champ couleur"
+  },
+
+  "categoryName": "Nom de la catégorie",
+  "@categoryName": {
+    "description": "Libellé du champ nom de catégorie"
+  },
+
+  "pleaseEnterADescription": "Veuillez entrer une description",
+  "@pleaseEnterADescription": {
+    "description": "Erreur de validation pour description vide"
+  },
+
+  "pleaseEnterAnAmount": "Veuillez entrer un montant",
+  "@pleaseEnterAnAmount": {
+    "description": "Erreur de validation pour montant vide"
+  },
+
+  "pleaseEnterAValidNumber": "Veuillez entrer un nombre valide",
+  "@pleaseEnterAValidNumber": {
+    "description": "Erreur de validation pour nombre invalide"
+  },
+
+  "pleaseSelectACategory": "Veuillez sélectionner une catégorie",
+  "@pleaseSelectACategory": {
+    "description": "Erreur de validation pour catégorie vide"
+  },
+
+  "pleaseEnterACategoryName": "Veuillez entrer un nom de catégorie",
+  "@pleaseEnterACategoryName": {
+    "description": "Erreur de validation pour nom de catégorie vide"
+  },
+
+  "addCategory": "Ajouter une catégorie",
+  "@addCategory": {
+    "description": "Titre de la boîte de dialogue d'ajout de catégorie"
+  },
+
+  "editCategory": "Modifier la catégorie",
+  "@editCategory": {
+    "description": "Titre de la boîte de dialogue de modification de catégorie"
+  },
+
+  "deleteCategory": "Supprimer la catégorie",
+  "@deleteCategory": {
+    "description": "Titre de la boîte de dialogue de suppression de catégorie"
+  },
+
+  "confirmDeleteCategory": "Êtes-vous sûr de vouloir supprimer \"{categoryName}\" ?",
+  "@confirmDeleteCategory": {
+    "description": "Message de confirmation de suppression de catégorie",
+    "placeholders": {
+      "categoryName": {
+        "type": "String",
+        "description": "Le nom de la catégorie"
+      }
+    }
+  },
+
+  "security": "Sécurité",
+  "@security": {
+    "description": "En-tête de section des paramètres de sécurité"
+  },
+
+  "changePassword": "Changer le mot de passe",
+  "@changePassword": {
+    "description": "Titre du paramètre Changer le mot de passe"
+  },
+
+  "updateYourSecurityPassword": "Mettez à jour votre mot de passe de sécurité",
+  "@updateYourSecurityPassword": {
+    "description": "Sous-titre du paramètre Changer le mot de passe"
+  },
+
+  "dataManagement": "Gestion des données",
+  "@dataManagement": {
+    "description": "En-tête de section des paramètres de gestion des données"
+  },
+
+  "exportToCSV": "Exporter en CSV",
+  "@exportToCSV": {
+    "description": "Titre du paramètre Exportation CSV"
+  },
+
+  "exportYourTransactionsToCSVFile": "Exportez vos transactions vers un fichier CSV",
+  "@exportYourTransactionsToCSVFile": {
+    "description": "Sous-titre du paramètre Exportation CSV"
+  },
+
+  "exportToPDF": "Exporter en PDF",
+  "@exportToPDF": {
+    "description": "Titre du paramètre Exportation PDF"
+  },
+
+  "exportYourTransactionsToPDFFile": "Exportez vos transactions vers un fichier PDF",
+  "@exportYourTransactionsToPDFFile": {
+    "description": "Sous-titre du paramètre Exportation PDF"
+  },
+
+  "clearOldData": "Effacer les anciennes données",
+  "@clearOldData": {
+    "description": "Titre du paramètre Effacer les anciennes données"
+  },
+
+  "removeTransactionsOlderThanASpecificDate": "Supprimer les transactions antérieures à une date spécifique",
+  "@removeTransactionsOlderThanASpecificDate": {
+    "description": "Sous-titre du paramètre Effacer les anciennes données"
+  },
+
+  "clearAllData": "Effacer toutes les données",
+  "@clearAllData": {
+    "description": "Titre du paramètre Effacer toutes les données"
+  },
+
+  "removeAllTransactionsPermanently": "Supprimer toutes les transactions définitivement",
+  "@removeAllTransactionsPermanently": {
+    "description": "Sous-titre du paramètre Effacer toutes les données"
+  },
+
+  "about": "À propos",
+  "@about": {
+    "description": "En-tête de section des paramètres À propos"
+  },
+
+  "appVersion": "Version de l'application",
+  "@appVersion": {
+    "description": "Titre du paramètre Version de l'application"
+  },
+
+  "appNameSetting": "Nom de l'application",
+  "@appNameSetting": {
+    "description": "Titre du paramètre Nom de l'application"
+  },
+
+  "account": "Compte",
+  "@account": {
+    "description": "En-tête de section des paramètres du compte"
+  },
+
+  "signOutOfYourAccount": "Vous déconnecter de votre compte",
+  "@signOutOfYourAccount": {
+    "description": "Sous-titre du paramètre Déconnexion"
+  },
+
+  "clearOldDataTitle": "Effacer les anciennes données",
+  "@clearOldDataTitle": {
+    "description": "Titre de la boîte de dialogue Effacer les anciennes données"
+  },
+
+  "clearOldDataMessage": "Sélectionnez une date. Toutes les transactions avant cette date seront supprimées.",
+  "@clearOldDataMessage": {
+    "description": "Message de la boîte de dialogue Effacer les anciennes données"
+  },
+
+  "clearAllDataTitle": "Effacer toutes les données",
+  "@clearAllDataTitle": {
+    "description": "Titre de la boîte de dialogue Effacer toutes les données"
+  },
+
+  "confirmClearAllData": "Êtes-vous sûr de vouloir supprimer TOUTES les transactions ? Cette action ne peut pas être annulée.",
+  "@confirmClearAllData": {
+    "description": "Contenu de la boîte de dialogue Effacer toutes les données"
+  },
+
+  "logoutTitle": "Déconnexion",
+  "@logoutTitle": {
+    "description": "Titre de la boîte de dialogue de déconnexion"
+  },
+
+  "confirmLogout": "Êtes-vous sûr de vouloir vous déconnecter ?",
+  "@confirmLogout": {
+    "description": "Contenu de la boîte de dialogue de déconnexion"
+  },
+
+  "transactionsReport": "Rapport des transactions",
+  "@transactionsReport": {
+    "description": "En-tête du rapport PDF"
+  },
+
+  "generated": "Généré : {date}",
+  "@generated": {
+    "description": "Date de génération du PDF",
+    "placeholders": {
+      "date": {
+        "type": "String",
+        "description": "La date de génération"
+      }
+    }
+  },
+
+  "summary": "Résumé",
+  "@summary": {
+    "description": "En-tête de section du résumé"
+  },
+
+  "transactionsExportDate": "Date",
+  "@transactionsExportDate": {
+    "description": "En-tête de colonne Date pour l'exportation CSV/PDF"
+  },
+
+  "transactionsExportType": "Type",
+  "@transactionsExportType": {
+    "description": "En-tête de colonne Type pour l'exportation CSV/PDF"
+  },
+
+  "transactionsExportCategory": "Catégorie",
+  "@transactionsExportCategory": {
+    "description": "En-tête de colonne Catégorie pour l'exportation CSV/PDF"
+  },
+
+  "transactionsExportDescription": "Description",
+  "@transactionsExportDescription": {
+    "description": "En-tête de colonne Description pour l'exportation CSV/PDF"
+  },
+
+  "transactionsExportAmount": "Montant",
+  "@transactionsExportAmount": {
+    "description": "En-tête de colonne Montant pour l'exportation CSV/PDF"
+  },
+
+  "noTransactionsToExport": "Aucune transaction à exporter",
+  "@noTransactionsToExport": {
+    "description": "Message d'erreur lorsqu'aucune transaction n'est à exporter"
+  },
+
+  "loadingAppInfo": "Chargement...",
+  "@loadingAppInfo": {
+    "description": "Message de chargement des informations de l'application"
+  }
+}
