@@ -6,7 +6,9 @@ enum Currency {
   jpy('JPY', '¥', 'Japanese Yen'),
   cny('CNY', '¥', 'Chinese Yuan'),
   krw('KRW', '₩', 'South Korean Won'),
-  inr('INR', '₹', 'Indian Rupee');
+  inr('INR', '₹', 'Indian Rupee'),
+  uah('UAH', '₴', 'Ukrainian Hryvnia'),
+  pln('PLN', 'zł', 'Polish Zloty');
 
   final String code;
   final String symbol;
