@@ -15,7 +15,7 @@ class LanguageSettingsSection extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     return BlocBuilder<SettingsCubit, SettingsState>(
       buildWhen: (previous, current) {
-        return current is SettingsLoaded;
+        return current is SettingsLoaded || current is SettingsLanguageChanged;
       },
       builder: (context, state) {
         final currentLanguage = _getCurrentLanguage(state);
