@@ -7,6 +7,7 @@ import 'package:test_app/core/services/storage_service.dart';
 import 'package:test_app/core/services/auth_service.dart';
 import 'package:test_app/core/services/export_service.dart';
 import 'package:test_app/core/services/financial_service.dart';
+import 'package:test_app/core/services/locale_service.dart';
 import 'package:test_app/core/usecases/get_recent_transactions_usecase.dart';
 import 'package:test_app/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:test_app/features/auth/data/sources/auth_local_data_source.dart';
@@ -48,6 +49,10 @@ import 'package:test_app/features/settings/data/sources/settings_local_data_sour
 import 'package:test_app/features/settings/domain/repositories/settings_repository.dart';
 import 'package:test_app/features/settings/domain/usecases/get_user_settings.dart';
 import 'package:test_app/features/settings/domain/usecases/save_user_settings.dart';
+import 'package:test_app/features/settings/domain/usecases/get_app_language.dart';
+import 'package:test_app/features/settings/domain/usecases/set_app_language.dart';
+import 'package:test_app/features/settings/domain/usecases/get_use_system_language.dart';
+import 'package:test_app/features/settings/domain/usecases/set_use_system_language.dart';
 import 'package:test_app/features/settings/domain/usecases/update_currency.dart';
 import 'package:test_app/features/settings/domain/usecases/update_report_frequency.dart';
 import 'package:test_app/features/settings/domain/usecases/change_password.dart';
@@ -84,6 +89,7 @@ Future<void> _initCore() async {
   sl.registerLazySingleton(() => StorageService(securePrefs: sl()));
   sl.registerLazySingleton(() => const AuthService());
   sl.registerLazySingleton(() => FinancialService());
+  sl.registerLazySingleton(() => LocaleService(prefs: sl()));
   sl.registerLazySingleton(
     () => ExportService(
       calculateFinancialSummary:
@@ -229,6 +235,10 @@ void _initSettings() {
       saveUserSettings: sl(),
       updateCurrency: sl(),
       updateReportFrequency: sl(),
+      getAppLanguage: sl(),
+      setAppLanguage: sl(),
+      getUseSystemLanguage: sl(),
+      setUseSystemLanguage: sl(),
       changePassword: sl(),
       exportDataToCSV: sl(),
       exportDataToPDF: sl(),
@@ -241,6 +251,10 @@ void _initSettings() {
 
   sl.registerLazySingleton(() => GetUserSettings(sl()));
   sl.registerLazySingleton(() => SaveUserSettings(sl()));
+  sl.registerLazySingleton(() => GetAppLanguage(sl()));
+  sl.registerLazySingleton(() => SetAppLanguage(sl()));
+  sl.registerLazySingleton(() => GetUseSystemLanguage(sl()));
+  sl.registerLazySingleton(() => SetUseSystemLanguage(sl()));
   sl.registerLazySingleton(() => UpdateCurrency(sl()));
   sl.registerLazySingleton(() => UpdateReportFrequency(sl()));
   sl.registerLazySingleton(() => ChangePassword(sl()));

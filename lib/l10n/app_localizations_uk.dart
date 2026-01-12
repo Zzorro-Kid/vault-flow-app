@@ -400,4 +400,43 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get loadingAppInfo => 'Завантаження...';
+
+  @override
+  String get languageSettings => 'Мова';
+
+  @override
+  String get appLanguage => 'Мова додатку';
+
+  @override
+  String get useSystemLanguage => 'Використовувати системну мову';
+
+  @override
+  String get selectLanguage => 'Виберіть мову';
+
+  @override
+  String get english => 'Англійська';
+
+  @override
+  String get russian => 'Російська';
+
+  @override
+  String get ukrainian => 'Українська';
+
+  @override
+  String get german => 'Німецька';
+
+  @override
+  String get french => 'Французька';
+
+  @override
+  String get languageChangeSuccess => 'Мова успішно змінена';
+
+  @override
+  String systemLanguageDetected(String language) {
+    return 'Виявлено системну мову: $language';
+  }
+
+  @override
+  String get unsupportedSystemLanguage =>
+      'Ваша системна мова не повністю підтримується. Використовується англійська.';
 }

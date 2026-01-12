@@ -400,4 +400,43 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get loadingAppInfo => 'Загрузка...';
+
+  @override
+  String get languageSettings => 'Язык';
+
+  @override
+  String get appLanguage => 'Язык приложения';
+
+  @override
+  String get useSystemLanguage => 'Использовать системный язык';
+
+  @override
+  String get selectLanguage => 'Выберите язык';
+
+  @override
+  String get english => 'Английский';
+
+  @override
+  String get russian => 'Русский';
+
+  @override
+  String get ukrainian => 'Украинский';
+
+  @override
+  String get german => 'Немецкий';
+
+  @override
+  String get french => 'Французский';
+
+  @override
+  String get languageChangeSuccess => 'Язык успешно изменён';
+
+  @override
+  String systemLanguageDetected(String language) {
+    return 'Обнаружен системный язык: $language';
+  }
+
+  @override
+  String get unsupportedSystemLanguage =>
+      'Ваш системный язык не полностью поддерживается. Используется английский.';
 }

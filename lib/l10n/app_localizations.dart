@@ -835,6 +835,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Loading...'**
   String get loadingAppInfo;
+
+  /// Language settings section title
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get languageSettings;
+
+  /// App language setting label
+  ///
+  /// In en, this message translates to:
+  /// **'App Language'**
+  String get appLanguage;
+
+  /// Toggle to use system language preference
+  ///
+  /// In en, this message translates to:
+  /// **'Use System Language'**
+  String get useSystemLanguage;
+
+  /// Dialog title for language selection
+  ///
+  /// In en, this message translates to:
+  /// **'Select Language'**
+  String get selectLanguage;
+
+  /// English language option
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get english;
+
+  /// Russian language option
+  ///
+  /// In en, this message translates to:
+  /// **'Russian'**
+  String get russian;
+
+  /// Ukrainian language option
+  ///
+  /// In en, this message translates to:
+  /// **'Ukrainian'**
+  String get ukrainian;
+
+  /// German language option
+  ///
+  /// In en, this message translates to:
+  /// **'German'**
+  String get german;
+
+  /// French language option
+  ///
+  /// In en, this message translates to:
+  /// **'French'**
+  String get french;
+
+  /// Success message after language change
+  ///
+  /// In en, this message translates to:
+  /// **'Language changed successfully'**
+  String get languageChangeSuccess;
+
+  /// Message when system language is detected
+  ///
+  /// In en, this message translates to:
+  /// **'System language detected: {language}'**
+  String systemLanguageDetected(String language);
+
+  /// Warning when system language is not supported
+  ///
+  /// In en, this message translates to:
+  /// **'Your system language is not fully supported. Using English instead.'**
+  String get unsupportedSystemLanguage;
 }
 
 class _AppLocalizationsDelegate

@@ -56,6 +56,42 @@ class SettingsRepositoryImpl extends BaseRepository
   }
 
   @override
+  Future<Either<Failure, String>> getAppLanguage(String userId) async {
+    return executeRepositoryCall(() async {
+      final settings = await localDataSource.getUserSettings(userId);
+      return settings.appLanguage;
+    });
+  }
+
+  @override
+  Future<Either<Failure, void>> setAppLanguage(
+    String userId,
+    String languageCode,
+  ) async {
+    return executeRepositoryCall(
+      () => localDataSource.updateAppLanguage(userId, languageCode),
+    );
+  }
+
+  @override
+  Future<Either<Failure, bool>> getUseSystemLanguage(String userId) async {
+    return executeRepositoryCall(() async {
+      final settings = await localDataSource.getUserSettings(userId);
+      return settings.useSystemLanguage;
+    });
+  }
+
+  @override
+  Future<Either<Failure, void>> setUseSystemLanguage(
+    String userId,
+    bool useSystem,
+  ) async {
+    return executeRepositoryCall(
+      () => localDataSource.updateUseSystemLanguage(userId, useSystem),
+    );
+  }
+
+  @override
   Future<Either<Failure, void>> changePassword(
     String userId,
     String oldPassword,

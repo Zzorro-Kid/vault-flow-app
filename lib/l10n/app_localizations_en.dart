@@ -400,4 +400,43 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get loadingAppInfo => 'Loading...';
+
+  @override
+  String get languageSettings => 'Language';
+
+  @override
+  String get appLanguage => 'App Language';
+
+  @override
+  String get useSystemLanguage => 'Use System Language';
+
+  @override
+  String get selectLanguage => 'Select Language';
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get russian => 'Russian';
+
+  @override
+  String get ukrainian => 'Ukrainian';
+
+  @override
+  String get german => 'German';
+
+  @override
+  String get french => 'French';
+
+  @override
+  String get languageChangeSuccess => 'Language changed successfully';
+
+  @override
+  String systemLanguageDetected(String language) {
+    return 'System language detected: $language';
+  }
+
+  @override
+  String get unsupportedSystemLanguage =>
+      'Your system language is not fully supported. Using English instead.';
 }

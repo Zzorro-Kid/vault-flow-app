@@ -639,5 +639,71 @@
   "loadingAppInfo": "Loading...",
   "@loadingAppInfo": {
     "description": "Loading app info message"
+  },
+
+  "languageSettings": "Language",
+  "@languageSettings": {
+    "description": "Language settings section title"
+  },
+
+  "appLanguage": "App Language",
+  "@appLanguage": {
+    "description": "App language setting label"
+  },
+
+  "useSystemLanguage": "Use System Language",
+  "@useSystemLanguage": {
+    "description": "Toggle to use system language preference"
+  },
+
+  "selectLanguage": "Select Language",
+  "@selectLanguage": {
+    "description": "Dialog title for language selection"
+  },
+
+  "english": "English",
+  "@english": {
+    "description": "English language option"
+  },
+
+  "russian": "Russian",
+  "@russian": {
+    "description": "Russian language option"
+  },
+
+  "ukrainian": "Ukrainian",
+  "@ukrainian": {
+    "description": "Ukrainian language option"
+  },
+
+  "german": "German",
+  "@german": {
+    "description": "German language option"
+  },
+
+  "french": "French",
+  "@french": {
+    "description": "French language option"
+  },
+
+  "languageChangeSuccess": "Language changed successfully",
+  "@languageChangeSuccess": {
+    "description": "Success message after language change"
+  },
+
+  "systemLanguageDetected": "System language detected: {language}",
+  "@systemLanguageDetected": {
+    "description": "Message when system language is detected",
+    "placeholders": {
+      "language": {
+        "type": "String",
+        "description": "Detected system language name"
+      }
+    }
+  },
+
+  "unsupportedSystemLanguage": "Your system language is not fully supported. Using English instead.",
+  "@unsupportedSystemLanguage": {
+    "description": "Warning when system language is not supported"
   }
 }

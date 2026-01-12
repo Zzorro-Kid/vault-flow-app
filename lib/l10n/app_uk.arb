@@ -639,5 +639,71 @@
   "loadingAppInfo": "Завантаження...",
   "@loadingAppInfo": {
     "description": "Повідомлення завантаження інформації про додаток"
+  },
+
+  "languageSettings": "Мова",
+  "@languageSettings": {
+    "description": "Заголовок секції налаштувань мови"
+  },
+
+  "appLanguage": "Мова додатку",
+  "@appLanguage": {
+    "description": "Мітка налаштування мови додатку"
+  },
+
+  "useSystemLanguage": "Використовувати системну мову",
+  "@useSystemLanguage": {
+    "description": "Перемикач використання системної мови"
+  },
+
+  "selectLanguage": "Виберіть мову",
+  "@selectLanguage": {
+    "description": "Заголовок діалогу вибору мови"
+  },
+
+  "english": "Англійська",
+  "@english": {
+    "description": "Варіант мови англійська"
+  },
+
+  "russian": "Російська",
+  "@russian": {
+    "description": "Варіант мови російська"
+  },
+
+  "ukrainian": "Українська",
+  "@ukrainian": {
+    "description": "Варіант мови українська"
+  },
+
+  "german": "Німецька",
+  "@german": {
+    "description": "Варіант мови німецька"
+  },
+
+  "french": "Французька",
+  "@french": {
+    "description": "Варіант мови французька"
+  },
+
+  "languageChangeSuccess": "Мова успішно змінена",
+  "@languageChangeSuccess": {
+    "description": "Повідомлення про успішну зміну мови"
+  },
+
+  "systemLanguageDetected": "Виявлено системну мову: {language}",
+  "@systemLanguageDetected": {
+    "description": "Повідомлення при виявленні системної мови",
+    "placeholders": {
+      "language": {
+        "type": "String",
+        "description": "Назва виявленої системної мови"
+      }
+    }
+  },
+
+  "unsupportedSystemLanguage": "Ваша системна мова не повністю підтримується. Використовується англійська.",
+  "@unsupportedSystemLanguage": {
+    "description": "Попередження про непідтримувану системну мову"
   }
 }

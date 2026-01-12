@@ -10,6 +10,8 @@ abstract class SettingsLocalDataSource {
   Future<void> saveUserSettings(UserSettingsDataModel settings);
   Future<void> updateCurrency(String userId, String currency);
   Future<void> updateReportFrequency(String userId, String frequency);
+  Future<void> updateAppLanguage(String userId, String languageCode);
+  Future<void> updateUseSystemLanguage(String userId, bool useSystem);
   Future<void> changePassword(String oldPassword, String newPassword);
   Future<String> exportDataToCSV(String userId);
   Future<String> exportDataToPDF(String userId);
@@ -26,6 +28,8 @@ class SettingsLocalDataSourceImpl extends BaseLocalDataSource
 
   static const String _defaultCurrency = 'USD';
   static const String _defaultReportFrequency = 'monthly';
+  static const String _defaultAppLanguage = 'en';
+  static const bool _defaultUseSystemLanguage = true;
 
   SettingsLocalDataSourceImpl({
     required this.securePrefs,
@@ -48,6 +52,8 @@ class SettingsLocalDataSourceImpl extends BaseLocalDataSource
             userId: userId,
             currency: _defaultCurrency,
             reportFrequency: _defaultReportFrequency,
+            appLanguage: _defaultAppLanguage,
+            useSystemLanguage: _defaultUseSystemLanguage,
           );
     }, errorMessage: 'Failed to get user settings');
   }
@@ -86,6 +92,31 @@ class SettingsLocalDataSourceImpl extends BaseLocalDataSource
         updater: (model) => model.copyWith(reportFrequency: frequency),
       );
     }, errorMessage: 'Failed to update report frequency');
+  }
+
+  @override
+  Future<void> updateAppLanguage(String userId, String languageCode) async {
+    return executeStorageWrite(() async {
+      await storageService.updateModelField<UserSettingsDataModel>(
+        userId: userId,
+        getter: getUserSettings,
+        saver: saveUserSettings,
+        updater: (model) =>
+            model.copyWith(appLanguage: languageCode, useSystemLanguage: false),
+      );
+    }, errorMessage: 'Failed to update app language');
+  }
+
+  @override
+  Future<void> updateUseSystemLanguage(String userId, bool useSystem) async {
+    return executeStorageWrite(() async {
+      await storageService.updateModelField<UserSettingsDataModel>(
+        userId: userId,
+        getter: getUserSettings,
+        saver: saveUserSettings,
+        updater: (model) => model.copyWith(useSystemLanguage: useSystem),
+      );
+    }, errorMessage: 'Failed to update system language preference');
   }
 
   @override

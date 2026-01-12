@@ -403,4 +403,43 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get loadingAppInfo => 'Chargement...';
+
+  @override
+  String get languageSettings => 'Langue';
+
+  @override
+  String get appLanguage => 'Langue de l\'application';
+
+  @override
+  String get useSystemLanguage => 'Utiliser la langue du système';
+
+  @override
+  String get selectLanguage => 'Sélectionner la langue';
+
+  @override
+  String get english => 'Anglais';
+
+  @override
+  String get russian => 'Russe';
+
+  @override
+  String get ukrainian => 'Ukrainien';
+
+  @override
+  String get german => 'Allemand';
+
+  @override
+  String get french => 'Français';
+
+  @override
+  String get languageChangeSuccess => 'Langue modifiée avec succès';
+
+  @override
+  String systemLanguageDetected(String language) {
+    return 'Langue du système détectée : $language';
+  }
+
+  @override
+  String get unsupportedSystemLanguage =>
+      'La langue de votre système n\'est pas entièrement prise en charge. L\'anglais est utilisé.';
 }

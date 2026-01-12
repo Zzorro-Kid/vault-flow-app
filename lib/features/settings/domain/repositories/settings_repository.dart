@@ -11,6 +11,16 @@ abstract class SettingsRepository {
     String userId,
     String frequency,
   );
+  Future<Either<Failure, String>> getAppLanguage(String userId);
+  Future<Either<Failure, void>> setAppLanguage(
+    String userId,
+    String languageCode,
+  );
+  Future<Either<Failure, bool>> getUseSystemLanguage(String userId);
+  Future<Either<Failure, void>> setUseSystemLanguage(
+    String userId,
+    bool useSystem,
+  );
   Future<Either<Failure, void>> changePassword(
     String userId,
     String oldPassword,

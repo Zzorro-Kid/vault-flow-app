@@ -639,5 +639,71 @@
   "loadingAppInfo": "Загрузка...",
   "@loadingAppInfo": {
     "description": "Сообщение загрузки информации о приложении"
+  },
+
+  "languageSettings": "Язык",
+  "@languageSettings": {
+    "description": "Заголовок секции настроек языка"
+  },
+
+  "appLanguage": "Язык приложения",
+  "@appLanguage": {
+    "description": "Метка настройки языка приложения"
+  },
+
+  "useSystemLanguage": "Использовать системный язык",
+  "@useSystemLanguage": {
+    "description": "Переключатель использования системного языка"
+  },
+
+  "selectLanguage": "Выберите язык",
+  "@selectLanguage": {
+    "description": "Заголовок диалога выбора языка"
+  },
+
+  "english": "Английский",
+  "@english": {
+    "description": "Вариант языка английский"
+  },
+
+  "russian": "Русский",
+  "@russian": {
+    "description": "Вариант языка русский"
+  },
+
+  "ukrainian": "Украинский",
+  "@ukrainian": {
+    "description": "Вариант языка украинский"
+  },
+
+  "german": "Немецкий",
+  "@german": {
+    "description": "Вариант языка немецкий"
+  },
+
+  "french": "Французский",
+  "@french": {
+    "description": "Вариант языка французский"
+  },
+
+  "languageChangeSuccess": "Язык успешно изменён",
+  "@languageChangeSuccess": {
+    "description": "Сообщение об успешном изменении языка"
+  },
+
+  "systemLanguageDetected": "Обнаружен системный язык: {language}",
+  "@systemLanguageDetected": {
+    "description": "Сообщение при обнаружении системного языка",
+    "placeholders": {
+      "language": {
+        "type": "String",
+        "description": "Название обнаруженного системного языка"
+      }
+    }
+  },
+
+  "unsupportedSystemLanguage": "Ваш системный язык не полностью поддерживается. Используется английский.",
+  "@unsupportedSystemLanguage": {
+    "description": "Предупреждение о неподдерживаемом системном языке"
   }
 }

@@ -639,5 +639,71 @@
   "loadingAppInfo": "Chargement...",
   "@loadingAppInfo": {
     "description": "Message de chargement des informations de l'application"
+  },
+
+  "languageSettings": "Langue",
+  "@languageSettings": {
+    "description": "En-tête de section des paramètres de langue"
+  },
+
+  "appLanguage": "Langue de l'application",
+  "@appLanguage": {
+    "description": "Libellé du paramètre de langue de l'application"
+  },
+
+  "useSystemLanguage": "Utiliser la langue du système",
+  "@useSystemLanguage": {
+    "description": "Basculer pour utiliser la langue du système"
+  },
+
+  "selectLanguage": "Sélectionner la langue",
+  "@selectLanguage": {
+    "description": "Titre de la boîte de dialogue de sélection de langue"
+  },
+
+  "english": "Anglais",
+  "@english": {
+    "description": "Option de langue Anglais"
+  },
+
+  "russian": "Russe",
+  "@russian": {
+    "description": "Option de langue Russe"
+  },
+
+  "ukrainian": "Ukrainien",
+  "@ukrainian": {
+    "description": "Option de langue Ukrainien"
+  },
+
+  "german": "Allemand",
+  "@german": {
+    "description": "Option de langue Allemand"
+  },
+
+  "french": "Français",
+  "@french": {
+    "description": "Option de langue Français"
+  },
+
+  "languageChangeSuccess": "Langue modifiée avec succès",
+  "@languageChangeSuccess": {
+    "description": "Message de succès après changement de langue"
+  },
+
+  "systemLanguageDetected": "Langue du système détectée : {language}",
+  "@systemLanguageDetected": {
+    "description": "Message lors de la détection de la langue du système",
+    "placeholders": {
+      "language": {
+        "type": "String",
+        "description": "Nom de la langue du système détectée"
+      }
+    }
+  },
+
+  "unsupportedSystemLanguage": "La langue de votre système n'est pas entièrement prise en charge. L'anglais est utilisé.",
+  "@unsupportedSystemLanguage": {
+    "description": "Avertissement lorsque la langue du système n'est pas prise en charge"
   }
 }

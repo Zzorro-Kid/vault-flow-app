@@ -6,6 +6,10 @@ import 'package:test_app/features/settings/domain/usecases/get_user_settings.dar
 import 'package:test_app/features/settings/domain/usecases/save_user_settings.dart';
 import 'package:test_app/features/settings/domain/usecases/update_currency.dart';
 import 'package:test_app/features/settings/domain/usecases/update_report_frequency.dart';
+import 'package:test_app/features/settings/domain/usecases/get_app_language.dart';
+import 'package:test_app/features/settings/domain/usecases/set_app_language.dart';
+import 'package:test_app/features/settings/domain/usecases/get_use_system_language.dart';
+import 'package:test_app/features/settings/domain/usecases/set_use_system_language.dart';
 import 'package:test_app/features/settings/domain/usecases/change_password.dart';
 import 'package:test_app/features/settings/domain/usecases/export_data_to_csv.dart';
 import 'package:test_app/features/settings/domain/usecases/export_data_to_pdf.dart';
@@ -21,6 +25,10 @@ class SettingsCubit extends Cubit<SettingsState> {
   final SaveUserSettings saveUserSettings;
   final UpdateCurrency updateCurrency;
   final UpdateReportFrequency updateReportFrequency;
+  final GetAppLanguage getAppLanguage;
+  final SetAppLanguage setAppLanguage;
+  final GetUseSystemLanguage getUseSystemLanguage;
+  final SetUseSystemLanguage setUseSystemLanguage;
   final ChangePassword changePassword;
   final ExportDataToCSV exportDataToCSV;
   final ExportDataToPDF exportDataToPDF;
@@ -34,6 +42,10 @@ class SettingsCubit extends Cubit<SettingsState> {
     required this.saveUserSettings,
     required this.updateCurrency,
     required this.updateReportFrequency,
+    required this.getAppLanguage,
+    required this.setAppLanguage,
+    required this.getUseSystemLanguage,
+    required this.setUseSystemLanguage,
     required this.changePassword,
     required this.exportDataToCSV,
     required this.exportDataToPDF,
@@ -59,13 +71,10 @@ class SettingsCubit extends Cubit<SettingsState> {
 
     final result = await saveUserSettings(settings);
 
-    result.fold(
-      (failure) => emit(SettingsError(failure.message)),
-      (_) async {
-        await loadUserSettings(settings.userId);
-        emit(SettingsSaveSuccess());
-      },
-    );
+    result.fold((failure) => emit(SettingsError(failure.message)), (_) async {
+      await loadUserSettings(settings.userId);
+      emit(SettingsSaveSuccess());
+    });
   }
 
   Future<void> updateUserCurrency(String userId, String currency) async {
@@ -73,13 +82,10 @@ class SettingsCubit extends Cubit<SettingsState> {
 
     final result = await updateCurrency(userId: userId, currency: currency);
 
-    result.fold(
-      (failure) => emit(SettingsError(failure.message)),
-      (_) async {
-        await loadUserSettings(userId);
-        emit(SettingsUpdateSuccess());
-      },
-    );
+    result.fold((failure) => emit(SettingsError(failure.message)), (_) async {
+      await loadUserSettings(userId);
+      emit(SettingsUpdateSuccess());
+    });
   }
 
   Future<void> updateUserReportFrequency(
@@ -93,13 +99,10 @@ class SettingsCubit extends Cubit<SettingsState> {
       frequency: frequency,
     );
 
-    result.fold(
-      (failure) => emit(SettingsError(failure.message)),
-      (_) async {
-        await loadUserSettings(userId);
-        emit(SettingsUpdateSuccess());
-      },
-    );
+    result.fold((failure) => emit(SettingsError(failure.message)), (_) async {
+      await loadUserSettings(userId);
+      emit(SettingsUpdateSuccess());
+    });
   }
 
   Future<void> updatePassword({
@@ -185,5 +188,38 @@ class SettingsCubit extends Cubit<SettingsState> {
       (failure) => emit(SettingsError(failure.message)),
       (_) => emit(SettingsLogoutSuccess()),
     );
+  }
+
+  Future<void> loadLanguageSettings(String userId) async {
+    emit(SettingsLoading());
+
+    final result = await getUserSettings(userId);
+
+    result.fold(
+      (failure) => emit(SettingsError(failure.message)),
+      (settings) => emit(SettingsLoaded(settings)),
+    );
+  }
+
+  Future<void> changeAppLanguage(String userId, String languageCode) async {
+    emit(SettingsLoading());
+
+    final result = await setAppLanguage(userId, languageCode);
+
+    result.fold((failure) => emit(SettingsError(failure.message)), (_) async {
+      await loadUserSettings(userId);
+      emit(SettingsLanguageChanged(languageCode));
+    });
+  }
+
+  Future<void> toggleSystemLanguage(String userId, bool useSystem) async {
+    emit(SettingsLoading());
+
+    final result = await setUseSystemLanguage(userId, useSystem);
+
+    result.fold((failure) => emit(SettingsError(failure.message)), (_) async {
+      await loadUserSettings(userId);
+      emit(SettingsUpdateSuccess());
+    });
   }
 }

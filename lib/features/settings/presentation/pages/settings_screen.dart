@@ -10,6 +10,7 @@ import 'package:test_app/features/settings/presentation/widgets/settings_section
 import 'package:test_app/features/settings/presentation/widgets/settings_tile.dart';
 import 'package:test_app/features/settings/presentation/widgets/change_password_dialog.dart';
 import 'package:test_app/features/settings/presentation/widgets/clear_data_dialog.dart';
+import 'package:test_app/features/settings/presentation/widgets/language_settings_section.dart';
 import 'package:test_app/injection_container.dart';
 import 'package:test_app/l10n/app_localizations.dart';
 
@@ -19,17 +20,15 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => sl<SettingsCubit>()..loadAppInfo(),
+      create: (_) => sl<SettingsCubit>()
+        ..loadUserSettings('user_id')
+        ..loadAppInfo(),
       child: Scaffold(
         appBar: _buildAppBar(),
         body: _buildBody(),
         bottomNavigationBar: const AppBottomNavigationBar(currentIndex: 4),
       ),
     );
-  }
-
-  void _navigateToAuth(BuildContext context) {
-    Navigator.of(context).pushNamedAndRemoveUntil('/auth', (route) => false);
   }
 
   PreferredSizeWidget _buildAppBar() {
@@ -65,6 +64,8 @@ class SettingsScreen extends StatelessWidget {
             return ListView(
               padding: const EdgeInsets.all(AppDimensions.paddingMedium),
               children: [
+                const LanguageSettingsSection(),
+                const SizedBox(height: AppDimensions.paddingLarge),
                 _buildSecuritySection(context, l10n),
                 const SizedBox(height: AppDimensions.paddingLarge),
                 _buildDataSection(context, l10n),
@@ -343,5 +344,9 @@ class SettingsScreen extends StatelessWidget {
       },
       child: Text(l10n.logout, style: const TextStyle(color: AppColors.error)),
     );
+  }
+
+  void _navigateToAuth(BuildContext context) {
+    Navigator.of(context).pushNamedAndRemoveUntil('/auth', (route) => false);
   }
 }

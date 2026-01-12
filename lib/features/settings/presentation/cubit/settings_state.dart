@@ -48,6 +48,15 @@ class SettingsAppInfoLoaded extends SettingsState {
 
 class SettingsLogoutSuccess extends SettingsState {}
 
+class SettingsLanguageChanged extends SettingsState {
+  final String languageCode;
+
+  const SettingsLanguageChanged(this.languageCode);
+
+  @override
+  List<Object?> get props => [languageCode];
+}
+
 class SettingsError extends SettingsState {
   final String message;
 
