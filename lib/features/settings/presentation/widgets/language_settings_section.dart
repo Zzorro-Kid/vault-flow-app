@@ -14,14 +14,13 @@ class LanguageSettingsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return BlocBuilder<SettingsCubit, SettingsState>(
+      buildWhen: (previous, current) {
+        return current is SettingsLoaded;
+      },
       builder: (context, state) {
-        if (state is! SettingsLoaded) {
-          return const SizedBox.shrink();
-        }
-        final settings = state.settings;
+        final currentLanguage = _getCurrentLanguage(state);
         final currentLanguageName =
-            LocaleService.languageNames[settings.appLanguage] ??
-            settings.appLanguage;
+            LocaleService.languageNames[currentLanguage] ?? currentLanguage;
         return SettingsSection(
           title: l10n.languageSettings,
           children: [
@@ -30,6 +29,15 @@ class LanguageSettingsSection extends StatelessWidget {
         );
       },
     );
+  }
+
+  String _getCurrentLanguage(SettingsState state) {
+    if (state is SettingsLoaded) {
+      return state.settings.appLanguage;
+    } else if (state is SettingsLanguageChanged) {
+      return state.languageCode;
+    }
+    return 'en';
   }
 
   Widget _buildLanguageSelector(
@@ -53,9 +61,7 @@ class LanguageSettingsSection extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     final cubit = context.read<SettingsCubit>();
     final currentState = cubit.state;
-    final currentLanguage = currentState is SettingsLoaded
-        ? currentState.settings.appLanguage
-        : 'en';
+    final currentLanguage = _getCurrentLanguage(currentState);
     showDialog(
       context: context,
       builder: (dialogContext) => AlertDialog(

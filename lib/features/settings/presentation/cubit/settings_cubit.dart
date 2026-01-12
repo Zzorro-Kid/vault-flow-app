@@ -202,7 +202,6 @@ class SettingsCubit extends Cubit<SettingsState> {
   }
 
   Future<void> changeAppLanguage(String userId, String languageCode) async {
-    await loadUserSettings(userId);
     final result = await setAppLanguage(userId, languageCode);
     result.fold(
       (failure) => emit(SettingsError(failure.message)),
