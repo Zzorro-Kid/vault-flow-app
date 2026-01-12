@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/core/constants/app_dimensions.dart';
 import 'package:test_app/core/constants/app_colors.dart';
+import 'package:test_app/l10n/app_localizations.dart';
 
 class CategoryErrorView extends StatelessWidget {
   final String message;
@@ -22,7 +23,7 @@ class CategoryErrorView extends StatelessWidget {
           const SizedBox(height: AppDimensions.paddingMedium),
           _buildErrorMessage(),
           const SizedBox(height: AppDimensions.paddingLarge),
-          _buildRetryButton(),
+          _buildRetryButton(context),
         ],
       ),
     );
@@ -47,7 +48,10 @@ class CategoryErrorView extends StatelessWidget {
     );
   }
 
-  Widget _buildRetryButton() {
-    return ElevatedButton(onPressed: onRetry, child: const Text('Retry'));
+  Widget _buildRetryButton(BuildContext context) {
+    return ElevatedButton(
+      onPressed: onRetry,
+      child: Text(AppLocalizations.of(context)!.retry),
+    );
   }
 }

@@ -4,6 +4,7 @@ import 'package:test_app/core/constants/app_colors.dart';
 import 'package:test_app/core/utils/currency_formatter.dart';
 import 'package:test_app/features/statistics/domain/entities/category_breakdown_data.dart';
 import 'package:test_app/core/utils/category_icon_mapper.dart';
+import 'package:test_app/l10n/app_localizations.dart';
 
 class CategoryBreakdownChart extends StatelessWidget {
   final List<CategoryBreakdownData> categoryBreakdown;
@@ -12,8 +13,9 @@ class CategoryBreakdownChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     if (categoryBreakdown.isEmpty) {
-      return _buildEmptyState();
+      return _buildEmptyState(l10n);
     }
 
     return Container(
@@ -22,9 +24,9 @@ class CategoryBreakdownChart extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildTitle(),
+          _buildTitle(l10n),
           const SizedBox(height: AppDimensions.spacingMedium),
-          ..._buildCategoryList(),
+          ..._buildCategoryList(l10n),
         ],
       ),
     );
@@ -44,10 +46,10 @@ class CategoryBreakdownChart extends StatelessWidget {
     );
   }
 
-  Widget _buildTitle() {
-    return const Text(
-      'Category Breakdown',
-      style: TextStyle(
+  Widget _buildTitle(AppLocalizations l10n) {
+    return Text(
+      l10n.categoryBreakdown,
+      style: const TextStyle(
         fontSize: AppDimensions.fontSizeXLarge,
         fontWeight: FontWeight.bold,
         color: AppColors.textPrimaryLight,
@@ -55,19 +57,22 @@ class CategoryBreakdownChart extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildCategoryList() {
+  List<Widget> _buildCategoryList(AppLocalizations l10n) {
     return categoryBreakdown
-        .map((breakdown) => _buildCategoryItem(breakdown))
+        .map((breakdown) => _buildCategoryItem(breakdown, l10n))
         .toList();
   }
 
-  Widget _buildCategoryItem(CategoryBreakdownData breakdown) {
+  Widget _buildCategoryItem(
+    CategoryBreakdownData breakdown,
+    AppLocalizations l10n,
+  ) {
     return Padding(
       padding: const EdgeInsets.only(bottom: AppDimensions.spacingMedium),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildCategoryHeader(breakdown),
+          _buildCategoryHeader(breakdown, l10n),
           const SizedBox(height: AppDimensions.spacingSmall),
           _buildProgressBar(breakdown),
         ],
@@ -75,22 +80,28 @@ class CategoryBreakdownChart extends StatelessWidget {
     );
   }
 
-  Widget _buildCategoryHeader(CategoryBreakdownData breakdown) {
+  Widget _buildCategoryHeader(
+    CategoryBreakdownData breakdown,
+    AppLocalizations l10n,
+  ) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        _buildCategoryInfo(breakdown),
+        _buildCategoryInfo(breakdown, l10n),
         _buildCategoryAmount(breakdown),
       ],
     );
   }
 
-  Widget _buildCategoryInfo(CategoryBreakdownData breakdown) {
+  Widget _buildCategoryInfo(
+    CategoryBreakdownData breakdown,
+    AppLocalizations l10n,
+  ) {
     return Row(
       children: [
         _buildCategoryIcon(breakdown),
         const SizedBox(width: AppDimensions.spacingLarge),
-        _buildCategoryDetails(breakdown),
+        _buildCategoryDetails(breakdown, l10n),
       ],
     );
   }
@@ -119,12 +130,15 @@ class CategoryBreakdownChart extends StatelessWidget {
     );
   }
 
-  Widget _buildCategoryDetails(CategoryBreakdownData breakdown) {
+  Widget _buildCategoryDetails(
+    CategoryBreakdownData breakdown,
+    AppLocalizations l10n,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildCategoryName(breakdown),
-        _buildTransactionCount(breakdown),
+        _buildTransactionCount(breakdown, l10n),
       ],
     );
   }
@@ -140,9 +154,12 @@ class CategoryBreakdownChart extends StatelessWidget {
     );
   }
 
-  Widget _buildTransactionCount(CategoryBreakdownData breakdown) {
+  Widget _buildTransactionCount(
+    CategoryBreakdownData breakdown,
+    AppLocalizations l10n,
+  ) {
     return Text(
-      '${breakdown.transactionCount} transaction${breakdown.transactionCount > 1 ? 's' : ''}',
+      l10n.transactionsCount(breakdown.transactionCount),
       style: const TextStyle(
         fontSize: AppDimensions.fontSizeSmall,
         color: AppColors.textSecondaryLight,
@@ -196,20 +213,20 @@ class CategoryBreakdownChart extends StatelessWidget {
     );
   }
 
-  Widget _buildEmptyState() {
+  Widget _buildEmptyState(AppLocalizations l10n) {
     return Container(
       decoration: _buildContainerDecoration(),
       padding: const EdgeInsets.all(AppDimensions.emptyStatePadding),
-      child: Center(child: _buildEmptyStateContent()),
+      child: Center(child: _buildEmptyStateContent(l10n)),
     );
   }
 
-  Widget _buildEmptyStateContent() {
+  Widget _buildEmptyStateContent(AppLocalizations l10n) {
     return Column(
       children: [
         _buildEmptyStateIcon(),
         const SizedBox(height: AppDimensions.spacingMedium),
-        _buildEmptyStateText(),
+        _buildEmptyStateText(l10n),
       ],
     );
   }
@@ -222,10 +239,10 @@ class CategoryBreakdownChart extends StatelessWidget {
     );
   }
 
-  Widget _buildEmptyStateText() {
-    return const Text(
-      'No category data available',
-      style: TextStyle(
+  Widget _buildEmptyStateText(AppLocalizations l10n) {
+    return Text(
+      l10n.noCategoryDataAvailable,
+      style: const TextStyle(
         fontSize: AppDimensions.fontSizeLarge,
         color: AppColors.emptyStateTextGrey,
       ),

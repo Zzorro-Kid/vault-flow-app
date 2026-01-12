@@ -6,6 +6,7 @@ import 'package:test_app/core/utils/validators.dart';
 import 'package:test_app/core/widgets/custom_button.dart';
 import 'package:test_app/core/widgets/custom_text_field.dart';
 import 'package:test_app/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:test_app/l10n/app_localizations.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -69,7 +70,7 @@ class _LoginFormState extends State<LoginForm> {
 
   Widget _buildTitle() {
     return Text(
-      'Welcome to VaultFlow',
+      AppLocalizations.of(context)!.welcomeToVaultFlow,
       style: Theme.of(context).textTheme.headlineMedium,
       textAlign: TextAlign.center,
     );
@@ -77,7 +78,7 @@ class _LoginFormState extends State<LoginForm> {
 
   Widget _buildSubtitle() {
     return Text(
-      'Enter your master password',
+      AppLocalizations.of(context)!.enterYourMasterPassword,
       style: Theme.of(context).textTheme.bodyMedium,
       textAlign: TextAlign.center,
     );
@@ -85,7 +86,7 @@ class _LoginFormState extends State<LoginForm> {
 
   Widget _buildPasswordField() {
     return CustomTextField(
-      label: 'Password',
+      label: AppLocalizations.of(context)!.password,
       controller: _passwordController,
       obscureText: _obscurePassword,
       validator: Validators.validatePassword,
@@ -108,7 +109,7 @@ class _LoginFormState extends State<LoginForm> {
     return BlocBuilder<AuthCubit, AuthCubitState>(
       builder: (context, state) {
         return CustomButton(
-          text: 'Unlock',
+          text: AppLocalizations.of(context)!.unlock,
           onPressed: _submit,
           isLoading: state is AuthCubitLoading,
         );
@@ -121,9 +122,9 @@ class _LoginFormState extends State<LoginForm> {
       builder: (context, state) {
         return TextButton(
           onPressed: _showForgotPasswordConfirmation,
-          child: const Text(
-            'Reset Password',
-            style: TextStyle(
+          child: Text(
+            AppLocalizations.of(context)!.resetPassword,
+            style: const TextStyle(
               color: AppColors.primaryDark,
               fontSize: AppDimensions.fontSizeMedium,
             ),
@@ -135,18 +136,17 @@ class _LoginFormState extends State<LoginForm> {
 
   void _showForgotPasswordConfirmation() {
     final authCubit = context.read<AuthCubit>();
+    final l10n = AppLocalizations.of(context)!;
 
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Reset Password'),
-        content: const Text(
-          'This will delete ALL your data including transactions and categories. You will need to create a new password.\n\nAre you sure you want to continue?',
-        ),
+        title: Text(l10n.resetPassword),
+        content: Text(l10n.resetPasswordWarning),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text(l10n.cancel),
           ),
           TextButton(
             onPressed: () {
@@ -154,7 +154,7 @@ class _LoginFormState extends State<LoginForm> {
               authCubit.resetPassword();
             },
             style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: const Text('Yes, Reset'),
+            child: Text(l10n.yesReset),
           ),
         ],
       ),

@@ -12,6 +12,7 @@ import 'package:test_app/features/home/presentation/cubit/home_cubit.dart';
 import 'package:test_app/features/home/presentation/widgets/dashboard_summary_widget.dart';
 import 'package:test_app/features/transaction/domain/entities/transaction_data.dart';
 import 'package:test_app/injection_container.dart';
+import 'package:test_app/l10n/app_localizations.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -71,14 +72,18 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildAppBarTitle() {
-    return const Text(
-      'VaultFlow',
-      style: TextStyle(
-        fontSize: AppDimensions.fontSizeXXLarge,
-        fontWeight: FontWeight.bold,
-        color: AppColors.categoryTitleText,
-        letterSpacing: 0.5,
-      ),
+    return Builder(
+      builder: (context) {
+        return Text(
+          AppLocalizations.of(context)!.appName,
+          style: const TextStyle(
+            fontSize: AppDimensions.fontSizeXXLarge,
+            fontWeight: FontWeight.bold,
+            color: AppColors.categoryTitleText,
+            letterSpacing: 0.5,
+          ),
+        );
+      },
     );
   }
 
@@ -90,11 +95,14 @@ class HomeScreen extends StatelessWidget {
           current is HomeInitial,
       builder: (context, state) {
         return switch (state) {
-          HomeLoading() ||
-          HomeInitial() => const LoadingIndicator(message: 'Loading...'),
+          HomeLoading() || HomeInitial() => LoadingIndicator(
+            message: AppLocalizations.of(context)!.loading,
+          ),
           HomeLoaded(:final summary, :final recentTransactions) =>
             _buildLoadedContent(context, summary, recentTransactions),
-          _ => const Center(child: Text('Something went wrong')),
+          _ => Center(
+            child: Text(AppLocalizations.of(context)!.somethingWentWrong),
+          ),
         };
       },
     );

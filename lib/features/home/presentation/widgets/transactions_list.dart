@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:test_app/features/transaction/domain/entities/transaction_data.dart';
 import 'package:test_app/core/constants/app_dimensions.dart';
 import 'package:test_app/core/constants/app_colors.dart';
+import 'package:test_app/l10n/app_localizations.dart';
 
 class TransactionsList extends StatelessWidget {
   final List<TransactionData> transactions;
@@ -61,7 +62,7 @@ class TransactionsList extends StatelessWidget {
 
   Widget _buildRecentTransactionsTitle(BuildContext context) {
     return Text(
-      'Recent Transactions',
+      AppLocalizations.of(context)!.recentTransactions,
       style: Theme.of(context).textTheme.titleLarge?.copyWith(
         fontWeight: FontWeight.bold,
         color: AppColors.sectionHeaderText,
@@ -83,7 +84,7 @@ class TransactionsList extends StatelessWidget {
           ),
           const SizedBox(height: AppDimensions.paddingMedium),
           Text(
-            'No transactions yet',
+            AppLocalizations.of(context)!.noTransactionsYet,
             style: Theme.of(
               context,
             ).textTheme.bodyLarge?.copyWith(color: AppColors.emptyStateText),

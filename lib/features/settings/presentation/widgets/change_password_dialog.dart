@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/core/constants/app_dimensions.dart';
 import 'package:test_app/core/constants/app_colors.dart';
+import 'package:test_app/l10n/app_localizations.dart';
 
 class ChangePasswordDialog extends StatefulWidget {
   final Function(String oldPassword, String newPassword) onConfirm;
@@ -23,54 +24,55 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return AlertDialog(
       backgroundColor: AppColors.surfaceDark,
-      title: _buildTitle(),
-      content: _buildContent(),
-      actions: _buildActions(context),
+      title: _buildTitle(l10n),
+      content: _buildContent(l10n),
+      actions: _buildActions(context, l10n),
     );
   }
 
-  Widget _buildTitle() {
-    return const Text(
-      'Change Password',
-      style: TextStyle(color: AppColors.categoryTitleText),
+  Widget _buildTitle(AppLocalizations l10n) {
+    return Text(
+      l10n.changePassword,
+      style: const TextStyle(color: AppColors.categoryTitleText),
     );
   }
 
-  Widget _buildContent() {
+  Widget _buildContent(AppLocalizations l10n) {
     return Form(
       key: _formKey,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _buildOldPasswordField(),
+          _buildOldPasswordField(l10n),
           const SizedBox(height: AppDimensions.paddingMedium),
-          _buildNewPasswordField(),
+          _buildNewPasswordField(l10n),
           const SizedBox(height: AppDimensions.paddingMedium),
-          _buildConfirmPasswordField(),
+          _buildConfirmPasswordField(l10n),
         ],
       ),
     );
   }
 
-  List<Widget> _buildActions(BuildContext context) {
+  List<Widget> _buildActions(BuildContext context, AppLocalizations l10n) {
     return [
       TextButton(
         onPressed: () => Navigator.pop(context),
-        child: const Text('Cancel'),
+        child: Text(l10n.cancel),
       ),
-      TextButton(onPressed: _handleConfirm, child: const Text('Change')),
+      TextButton(onPressed: _handleConfirm, child: Text(l10n.change)),
     ];
   }
 
-  Widget _buildOldPasswordField() {
+  Widget _buildOldPasswordField(AppLocalizations l10n) {
     return TextFormField(
       controller: _oldPasswordController,
       obscureText: _obscureOldPassword,
       style: const TextStyle(color: AppColors.categoryTitleText),
       decoration: InputDecoration(
-        labelText: 'Current Password',
+        labelText: l10n.currentPassword,
         labelStyle: const TextStyle(color: AppColors.sectionHeaderText),
         border: _buildOutlineBorder(),
         enabledBorder: _buildOutlineBorder(),
@@ -86,7 +88,7 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Please enter your current password';
+          return l10n.pleaseEnterYourCurrentPassword;
         }
         return null;
       },
@@ -106,13 +108,13 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
     );
   }
 
-  Widget _buildNewPasswordField() {
+  Widget _buildNewPasswordField(AppLocalizations l10n) {
     return TextFormField(
       controller: _newPasswordController,
       obscureText: _obscureNewPassword,
       style: const TextStyle(color: AppColors.categoryTitleText),
       decoration: InputDecoration(
-        labelText: 'New Password',
+        labelText: l10n.newPassword,
         labelStyle: const TextStyle(color: AppColors.sectionHeaderText),
         border: _buildOutlineBorder(),
         enabledBorder: _buildOutlineBorder(),
@@ -128,23 +130,23 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Please enter a new password';
+          return l10n.pleaseEnterANewPassword;
         }
         if (value.length < 6) {
-          return 'Password must be at least 6 characters';
+          return l10n.passwordMustBeAtLeast6Characters;
         }
         return null;
       },
     );
   }
 
-  Widget _buildConfirmPasswordField() {
+  Widget _buildConfirmPasswordField(AppLocalizations l10n) {
     return TextFormField(
       controller: _confirmPasswordController,
       obscureText: _obscureConfirmPassword,
       style: const TextStyle(color: AppColors.categoryTitleText),
       decoration: InputDecoration(
-        labelText: 'Confirm New Password',
+        labelText: l10n.confirmNewPassword,
         labelStyle: const TextStyle(color: AppColors.sectionHeaderText),
         border: _buildOutlineBorder(),
         enabledBorder: _buildOutlineBorder(),
@@ -160,10 +162,10 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Please confirm your new password';
+          return l10n.pleaseConfirmYourNewPassword;
         }
         if (value != _newPasswordController.text) {
-          return 'Passwords do not match';
+          return l10n.passwordsDoNotMatch;
         }
         return null;
       },

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/core/constants/app_dimensions.dart';
 import 'package:test_app/core/constants/app_colors.dart';
+import 'package:test_app/l10n/app_localizations.dart';
 
 class StatisticsErrorView extends StatelessWidget {
   final String message;
@@ -14,6 +15,7 @@ class StatisticsErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -22,7 +24,7 @@ class StatisticsErrorView extends StatelessWidget {
           const SizedBox(height: AppDimensions.spacingMedium),
           _buildErrorMessage(),
           const SizedBox(height: AppDimensions.spacingLarge),
-          _buildRetryButton(),
+          _buildRetryButton(l10n),
         ],
       ),
     );
@@ -44,11 +46,11 @@ class StatisticsErrorView extends StatelessWidget {
     );
   }
 
-  Widget _buildRetryButton() {
+  Widget _buildRetryButton(AppLocalizations l10n) {
     return ElevatedButton.icon(
       onPressed: onRetry,
       icon: const Icon(Icons.refresh),
-      label: const Text('Retry'),
+      label: Text(l10n.retry),
     );
   }
 }

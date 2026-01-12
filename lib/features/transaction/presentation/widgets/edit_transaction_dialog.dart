@@ -6,6 +6,7 @@ import 'package:test_app/features/transaction/domain/entities/transaction_data.d
 import 'package:test_app/features/category/domain/entities/category_data.dart';
 import 'package:test_app/features/category/presentation/cubit/category_cubit.dart';
 import 'package:test_app/features/category/presentation/cubit/category_state.dart';
+import 'package:test_app/l10n/app_localizations.dart';
 
 class EditTransactionDialog extends StatefulWidget {
   final TransactionData transaction;
@@ -46,55 +47,56 @@ class _EditTransactionDialogState extends State<EditTransactionDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return AlertDialog(
       backgroundColor: AppColors.surfaceDark,
-      title: _buildDialogTitle(),
-      content: _buildDialogContent(),
-      actions: _buildDialogActions(),
+      title: _buildDialogTitle(l10n),
+      content: _buildDialogContent(l10n),
+      actions: _buildDialogActions(l10n),
     );
   }
 
-  Widget _buildDialogTitle() {
-    return const Text(
-      'Edit Transaction',
-      style: TextStyle(color: AppColors.categoryTitleText),
+  Widget _buildDialogTitle(AppLocalizations l10n) {
+    return Text(
+      l10n.editTransaction,
+      style: const TextStyle(color: AppColors.categoryTitleText),
     );
   }
 
-  Widget _buildDialogContent() {
+  Widget _buildDialogContent(AppLocalizations l10n) {
     return SingleChildScrollView(
       child: Form(
         key: _formKey,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _buildDescriptionField(),
+            _buildDescriptionField(l10n),
             const SizedBox(height: AppDimensions.paddingMedium),
-            _buildAmountField(),
+            _buildAmountField(l10n),
             const SizedBox(height: AppDimensions.paddingMedium),
-            _buildTypeSelector(),
+            _buildTypeSelector(l10n),
             const SizedBox(height: AppDimensions.paddingMedium),
-            _buildCategorySelector(),
+            _buildCategorySelector(l10n),
             const SizedBox(height: AppDimensions.paddingMedium),
-            _buildDateSelector(),
+            _buildDateSelector(l10n),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildDescriptionField() {
+  Widget _buildDescriptionField(AppLocalizations l10n) {
     return TextFormField(
       controller: _descriptionController,
       style: const TextStyle(color: AppColors.categoryTitleText),
-      decoration: _buildDescriptionFieldDecoration(),
-      validator: _validateDescription,
+      decoration: _buildDescriptionFieldDecoration(l10n),
+      validator: (value) => _validateDescription(value, l10n),
     );
   }
 
-  InputDecoration _buildDescriptionFieldDecoration() {
+  InputDecoration _buildDescriptionFieldDecoration(AppLocalizations l10n) {
     return InputDecoration(
-      labelText: 'Description',
+      labelText: l10n.description,
       labelStyle: const TextStyle(color: AppColors.sectionHeaderText),
       border: _buildBorder(),
       enabledBorder: _buildEnabledBorder(),
@@ -122,26 +124,26 @@ class _EditTransactionDialogState extends State<EditTransactionDialog> {
     );
   }
 
-  String? _validateDescription(String? value) {
+  String? _validateDescription(String? value, AppLocalizations l10n) {
     if (value == null || value.isEmpty) {
-      return 'Please enter a description';
+      return l10n.pleaseEnterADescription;
     }
     return null;
   }
 
-  Widget _buildAmountField() {
+  Widget _buildAmountField(AppLocalizations l10n) {
     return TextFormField(
       controller: _amountController,
       style: const TextStyle(color: AppColors.categoryTitleText),
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
-      decoration: _buildAmountFieldDecoration(),
-      validator: _validateAmount,
+      decoration: _buildAmountFieldDecoration(l10n),
+      validator: (value) => _validateAmount(value, l10n),
     );
   }
 
-  InputDecoration _buildAmountFieldDecoration() {
+  InputDecoration _buildAmountFieldDecoration(AppLocalizations l10n) {
     return InputDecoration(
-      labelText: 'Amount',
+      labelText: l10n.amount,
       labelStyle: const TextStyle(color: AppColors.sectionHeaderText),
       border: _buildBorder(),
       enabledBorder: _buildEnabledBorder(),
@@ -149,22 +151,22 @@ class _EditTransactionDialogState extends State<EditTransactionDialog> {
     );
   }
 
-  String? _validateAmount(String? value) {
+  String? _validateAmount(String? value, AppLocalizations l10n) {
     if (value == null || value.isEmpty) {
-      return 'Please enter an amount';
+      return l10n.pleaseEnterAnAmount;
     }
     if (double.tryParse(value) == null) {
-      return 'Please enter a valid number';
+      return l10n.pleaseEnterAValidNumber;
     }
     return null;
   }
 
-  Widget _buildTypeSelector() {
+  Widget _buildTypeSelector(AppLocalizations l10n) {
     return Row(
       children: [
-        _buildTypeButton('Expense', 'expense'),
+        _buildTypeButton(l10n.expense, 'expense'),
         const SizedBox(width: AppDimensions.paddingMedium),
-        _buildTypeButton('Income', 'income'),
+        _buildTypeButton(l10n.income, 'income'),
       ],
     );
   }
@@ -197,7 +199,7 @@ class _EditTransactionDialogState extends State<EditTransactionDialog> {
     );
   }
 
-  Widget _buildCategorySelector() {
+  Widget _buildCategorySelector(AppLocalizations l10n) {
     return BlocBuilder<CategoryCubit, CategoryState>(
       builder: (context, state) {
         final categories = state is CategoryLoaded
@@ -207,32 +209,32 @@ class _EditTransactionDialogState extends State<EditTransactionDialog> {
             : <CategoryData>[];
 
         if (categories.isEmpty) {
-          return _buildEmptyCategoriesText();
+          return _buildEmptyCategoriesText(l10n);
         }
 
         return DropdownButtonFormField<CategoryData>(
           initialValue: _selectedCategory,
           dropdownColor: AppColors.surfaceDark,
           style: const TextStyle(color: AppColors.categoryTitleText),
-          decoration: _buildCategoryFieldDecoration(),
+          decoration: _buildCategoryFieldDecoration(l10n),
           items: _buildCategoryDropdownItems(categories),
           onChanged: _onCategoryChanged,
-          validator: _validateCategory,
+          validator: (value) => _validateCategory(value, l10n),
         );
       },
     );
   }
 
-  Widget _buildEmptyCategoriesText() {
-    return const Text(
-      'No categories available',
-      style: TextStyle(color: AppColors.sectionHeaderText),
+  Widget _buildEmptyCategoriesText(AppLocalizations l10n) {
+    return Text(
+      l10n.noCategoriesAvailable,
+      style: const TextStyle(color: AppColors.sectionHeaderText),
     );
   }
 
-  InputDecoration _buildCategoryFieldDecoration() {
+  InputDecoration _buildCategoryFieldDecoration(AppLocalizations l10n) {
     return InputDecoration(
-      labelText: 'Category',
+      labelText: l10n.category,
       labelStyle: const TextStyle(color: AppColors.sectionHeaderText),
       border: _buildBorder(),
       enabledBorder: _buildEnabledBorder(),
@@ -257,26 +259,26 @@ class _EditTransactionDialogState extends State<EditTransactionDialog> {
     });
   }
 
-  String? _validateCategory(CategoryData? value) {
+  String? _validateCategory(CategoryData? value, AppLocalizations l10n) {
     if (value == null) {
-      return 'Please select a category';
+      return l10n.pleaseSelectACategory;
     }
     return null;
   }
 
-  Widget _buildDateSelector() {
+  Widget _buildDateSelector(AppLocalizations l10n) {
     return InkWell(
       onTap: () => _selectDate(context),
       child: InputDecorator(
-        decoration: _buildDateFieldDecoration(),
+        decoration: _buildDateFieldDecoration(l10n),
         child: _buildFormattedDateText(),
       ),
     );
   }
 
-  InputDecoration _buildDateFieldDecoration() {
+  InputDecoration _buildDateFieldDecoration(AppLocalizations l10n) {
     return InputDecoration(
-      labelText: 'Date',
+      labelText: l10n.date,
       labelStyle: const TextStyle(color: AppColors.sectionHeaderText),
       border: _buildBorder(),
       enabledBorder: _buildEnabledBorder(),
@@ -321,16 +323,16 @@ class _EditTransactionDialogState extends State<EditTransactionDialog> {
     }
   }
 
-  List<Widget> _buildDialogActions() {
+  List<Widget> _buildDialogActions(AppLocalizations l10n) {
     return [
       TextButton(
         onPressed: () => Navigator.pop(context),
-        child: const Text('Cancel'),
+        child: Text(l10n.cancel),
       ),
       ElevatedButton(
         onPressed: _handleSubmit,
         style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
-        child: const Text('Save'),
+        child: Text(l10n.save),
       ),
     ];
   }

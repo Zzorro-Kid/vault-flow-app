@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/core/constants/app_dimensions.dart';
 import 'package:test_app/core/constants/app_colors.dart';
+import 'package:test_app/l10n/app_localizations.dart';
 
 class TransactionErrorView extends StatelessWidget {
   final String message;
@@ -14,6 +15,7 @@ class TransactionErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -22,7 +24,7 @@ class TransactionErrorView extends StatelessWidget {
           const SizedBox(height: AppDimensions.paddingMedium),
           _buildErrorMessage(),
           const SizedBox(height: AppDimensions.paddingLarge),
-          _buildRetryButton(),
+          _buildRetryButton(l10n),
         ],
       ),
     );
@@ -47,11 +49,11 @@ class TransactionErrorView extends StatelessWidget {
     );
   }
 
-  Widget _buildRetryButton() {
+  Widget _buildRetryButton(AppLocalizations l10n) {
     return ElevatedButton(
       onPressed: onRetry,
       style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
-      child: const Text('Retry'),
+      child: Text(l10n.retry),
     );
   }
 }

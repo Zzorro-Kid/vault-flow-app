@@ -16,6 +16,7 @@ import 'package:test_app/features/transaction/presentation/widgets/empty_transac
 import 'package:test_app/features/transaction/presentation/widgets/transaction_error_view.dart';
 import 'package:test_app/features/transaction/presentation/widgets/transaction_item.dart';
 import 'package:test_app/injection_container.dart';
+import 'package:test_app/l10n/app_localizations.dart';
 
 class TransactionScreen extends StatelessWidget {
   const TransactionScreen({super.key});
@@ -39,13 +40,18 @@ class TransactionScreen extends StatelessWidget {
   }
 
   Widget _buildAppBarTitle() {
-    return const Text(
-      'Transactions',
-      style: TextStyle(
-        fontSize: AppDimensions.fontSizeXXLarge,
-        fontWeight: FontWeight.bold,
-        color: AppColors.categoryTitleText,
-      ),
+    return Builder(
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        return Text(
+          l10n.transactions,
+          style: const TextStyle(
+            fontSize: AppDimensions.fontSizeXXLarge,
+            fontWeight: FontWeight.bold,
+            color: AppColors.categoryTitleText,
+          ),
+        );
+      },
     );
   }
 
@@ -109,11 +115,20 @@ class TransactionScreen extends StatelessWidget {
     List<TransactionData> expenseTransactions,
     List<TransactionData> incomeTransactions,
   ) {
+    final l10n = AppLocalizations.of(context)!;
     return [
       if (expenseTransactions.isNotEmpty)
-        ..._buildTransactionSection(context, 'Expenses', expenseTransactions),
+        ..._buildTransactionSection(
+          context,
+          l10n.expense_plural,
+          expenseTransactions,
+        ),
       if (incomeTransactions.isNotEmpty)
-        ..._buildTransactionSection(context, 'Income', incomeTransactions),
+        ..._buildTransactionSection(
+          context,
+          l10n.income_plural,
+          incomeTransactions,
+        ),
     ];
   }
 
@@ -225,12 +240,13 @@ class TransactionScreen extends StatelessWidget {
     BuildContext context,
     TransactionData transaction,
   ) {
+    final l10n = AppLocalizations.of(context)!;
     return showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
         backgroundColor: AppColors.surfaceDark,
-        title: _buildDeleteDialogTitle(),
-        content: _buildDeleteDialogContent(transaction.description),
+        title: _buildDeleteDialogTitle(l10n),
+        content: _buildDeleteDialogContent(l10n, transaction.description),
         actions: _buildDeleteDialogActions(
           dialogContext,
           context,
@@ -240,16 +256,19 @@ class TransactionScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildDeleteDialogTitle() {
-    return const Text(
-      'Delete Transaction',
-      style: TextStyle(color: AppColors.categoryTitleText),
+  Widget _buildDeleteDialogTitle(AppLocalizations l10n) {
+    return Text(
+      l10n.deleteTransaction,
+      style: const TextStyle(color: AppColors.categoryTitleText),
     );
   }
 
-  Widget _buildDeleteDialogContent(String transactionTitle) {
+  Widget _buildDeleteDialogContent(
+    AppLocalizations l10n,
+    String transactionTitle,
+  ) {
     return Text(
-      'Are you sure you want to delete "$transactionTitle"?',
+      l10n.confirmDeleteTransaction(transactionTitle),
       style: const TextStyle(color: AppColors.sectionHeaderText),
     );
   }
@@ -259,16 +278,17 @@ class TransactionScreen extends StatelessWidget {
     BuildContext parentContext,
     String transactionId,
   ) {
+    final l10n = AppLocalizations.of(parentContext)!;
     return [
-      _buildCancelButton(dialogContext),
-      _buildDeleteButton(dialogContext, parentContext, transactionId),
+      _buildCancelButton(dialogContext, l10n),
+      _buildDeleteButton(dialogContext, parentContext, transactionId, l10n),
     ];
   }
 
-  Widget _buildCancelButton(BuildContext dialogContext) {
+  Widget _buildCancelButton(BuildContext dialogContext, AppLocalizations l10n) {
     return TextButton(
       onPressed: () => Navigator.pop(dialogContext, false),
-      child: const Text('Cancel'),
+      child: Text(l10n.cancel),
     );
   }
 
@@ -276,15 +296,16 @@ class TransactionScreen extends StatelessWidget {
     BuildContext dialogContext,
     BuildContext parentContext,
     String transactionId,
+    AppLocalizations l10n,
   ) {
     return TextButton(
       onPressed: () {
         parentContext.read<TransactionCubit>().deleteTransaction(transactionId);
         Navigator.pop(dialogContext, true);
       },
-      child: const Text(
-        'Delete',
-        style: TextStyle(color: AppColors.expensesStart),
+      child: Text(
+        l10n.delete,
+        style: const TextStyle(color: AppColors.expensesStart),
       ),
     );
   }

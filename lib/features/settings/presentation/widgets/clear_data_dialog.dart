@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/core/constants/app_dimensions.dart';
 import 'package:test_app/core/constants/app_colors.dart';
+import 'package:test_app/l10n/app_localizations.dart';
 
 class ClearDataDialog extends StatefulWidget {
   final String title;
@@ -23,11 +24,12 @@ class _ClearDataDialogState extends State<ClearDataDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return AlertDialog(
       backgroundColor: AppColors.surfaceDark,
       title: _buildTitle(),
-      content: _buildContent(context),
-      actions: _buildActions(context),
+      content: _buildContent(context, l10n),
+      actions: _buildActions(context, l10n),
     );
   }
 
@@ -38,14 +40,14 @@ class _ClearDataDialogState extends State<ClearDataDialog> {
     );
   }
 
-  Widget _buildContent(BuildContext context) {
+  Widget _buildContent(BuildContext context, AppLocalizations l10n) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildMessage(),
         const SizedBox(height: AppDimensions.paddingLarge),
-        _buildDateSelector(context),
+        _buildDateSelector(context, l10n),
       ],
     );
   }
@@ -57,36 +59,36 @@ class _ClearDataDialogState extends State<ClearDataDialog> {
     );
   }
 
-  List<Widget> _buildActions(BuildContext context) {
-    return [_buildCancelButton(context), _buildClearButton()];
+  List<Widget> _buildActions(BuildContext context, AppLocalizations l10n) {
+    return [_buildCancelButton(context, l10n), _buildClearButton(l10n)];
   }
 
-  Widget _buildCancelButton(BuildContext context) {
+  Widget _buildCancelButton(BuildContext context, AppLocalizations l10n) {
     return TextButton(
       onPressed: () => Navigator.pop(context),
-      child: const Text('Cancel'),
+      child: Text(l10n.cancel),
     );
   }
 
-  Widget _buildClearButton() {
+  Widget _buildClearButton(AppLocalizations l10n) {
     return TextButton(
       onPressed: _selectedDate != null ? _handleConfirm : null,
-      child: const Text('Clear', style: TextStyle(color: AppColors.error)),
+      child: Text(l10n.clear, style: const TextStyle(color: AppColors.error)),
     );
   }
 
-  Widget _buildDateSelector(BuildContext context) {
+  Widget _buildDateSelector(BuildContext context, AppLocalizations l10n) {
     return InkWell(
       onTap: () => _selectDate(context),
-      child: _buildDateSelectorContainer(),
+      child: _buildDateSelectorContainer(l10n),
     );
   }
 
-  Widget _buildDateSelectorContainer() {
+  Widget _buildDateSelectorContainer(AppLocalizations l10n) {
     return Container(
       padding: const EdgeInsets.all(AppDimensions.paddingMedium),
       decoration: _buildDateSelectorDecoration(),
-      child: _buildDateSelectorContent(),
+      child: _buildDateSelectorContent(l10n),
     );
   }
 
@@ -97,16 +99,16 @@ class _ClearDataDialogState extends State<ClearDataDialog> {
     );
   }
 
-  Widget _buildDateSelectorContent() {
+  Widget _buildDateSelectorContent(AppLocalizations l10n) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [_buildDateText(), _buildCalendarIcon()],
+      children: [_buildDateText(l10n), _buildCalendarIcon()],
     );
   }
 
-  Widget _buildDateText() {
+  Widget _buildDateText(AppLocalizations l10n) {
     return Text(
-      _selectedDate != null ? _formatDate(_selectedDate!) : 'Select a date',
+      _selectedDate != null ? _formatDate(_selectedDate!) : l10n.selectADate,
       style: TextStyle(
         color: _selectedDate != null
             ? AppColors.categoryTitleText

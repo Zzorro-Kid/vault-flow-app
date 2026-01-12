@@ -12,11 +12,46 @@ class ExportService {
   final FinancialSummaryDataModel Function(List<TransactionDataModel>)
   calculateFinancialSummary;
   final DateTime Function()? getCurrentTime;
+  final String Function() _getNoTransactionsMessage;
+  final String Function() _getTransactionsReportTitle;
+  final String Function(String date) _getGeneratedMessage;
+  final String Function() _getSummaryTitle;
+  final String Function(double income) _getTotalIncomeMessage;
+  final String Function(double expenses) _getTotalExpensesMessage;
+  final String Function(double balance) _getBalanceMessage;
+  final String Function() _getDateHeader;
+  final String Function() _getTypeHeader;
+  final String Function() _getCategoryHeader;
+  final String Function() _getDescriptionHeader;
+  final String Function() _getAmountHeader;
 
   const ExportService({
     required this.calculateFinancialSummary,
     this.getCurrentTime,
-  });
+    required String Function() getNoTransactionsMessage,
+    required String Function() getTransactionsReportTitle,
+    required String Function(String date) getGeneratedMessage,
+    required String Function() getSummaryTitle,
+    required String Function(double income) getTotalIncomeMessage,
+    required String Function(double expenses) getTotalExpensesMessage,
+    required String Function(double balance) getBalanceMessage,
+    required String Function() getDateHeader,
+    required String Function() getTypeHeader,
+    required String Function() getCategoryHeader,
+    required String Function() getDescriptionHeader,
+    required String Function() getAmountHeader,
+  }) : _getNoTransactionsMessage = getNoTransactionsMessage,
+       _getTransactionsReportTitle = getTransactionsReportTitle,
+       _getGeneratedMessage = getGeneratedMessage,
+       _getSummaryTitle = getSummaryTitle,
+       _getTotalIncomeMessage = getTotalIncomeMessage,
+       _getTotalExpensesMessage = getTotalExpensesMessage,
+       _getBalanceMessage = getBalanceMessage,
+       _getDateHeader = getDateHeader,
+       _getTypeHeader = getTypeHeader,
+       _getCategoryHeader = getCategoryHeader,
+       _getDescriptionHeader = getDescriptionHeader,
+       _getAmountHeader = getAmountHeader;
 
   DateTime get _now => getCurrentTime?.call() ?? DateTime.now();
 
@@ -25,11 +60,17 @@ class ExportService {
     required String filePrefix,
   }) async {
     if (transactions.isEmpty) {
-      throw ExportException('No transactions to export');
+      throw ExportException(_getNoTransactionsMessage());
     }
 
     final List<List<dynamic>> rows = [
-      ['Date', 'Type', 'Category', 'Description', 'Amount'],
+      [
+        _getDateHeader(),
+        _getTypeHeader(),
+        _getCategoryHeader(),
+        _getDescriptionHeader(),
+        _getAmountHeader(),
+      ],
     ];
 
     final dateFormat = DateFormat('dd.MM.yyyy HH:mm');
@@ -58,7 +99,7 @@ class ExportService {
     required String filePrefix,
   }) async {
     if (transactions.isEmpty) {
-      throw ExportException('No transactions to export');
+      throw ExportException(_getNoTransactionsMessage());
     }
 
     final pdf = pw.Document();
@@ -96,7 +137,7 @@ class ExportService {
     return pw.Header(
       level: 0,
       child: pw.Text(
-        'Transactions Report',
+        _getTransactionsReportTitle(),
         style: pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold),
       ),
     );
@@ -104,7 +145,7 @@ class ExportService {
 
   pw.Widget _buildPdfGeneratedDate(DateFormat dateFormat) {
     return pw.Text(
-      'Generated: ${dateFormat.format(_now)}',
+      _getGeneratedMessage(dateFormat.format(_now)),
       style: const pw.TextStyle(fontSize: 12),
     );
   }
@@ -117,15 +158,13 @@ class ExportService {
         crossAxisAlignment: pw.CrossAxisAlignment.start,
         children: [
           pw.Text(
-            'Summary',
+            _getSummaryTitle(),
             style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold),
           ),
           pw.SizedBox(height: 10),
-          pw.Text('Total Income: \$${summary.totalIncome.toStringAsFixed(2)}'),
-          pw.Text(
-            'Total Expenses: \$${summary.totalExpenses.toStringAsFixed(2)}',
-          ),
-          pw.Text('Balance: \$${summary.totalBalance.toStringAsFixed(2)}'),
+          pw.Text(_getTotalIncomeMessage(summary.totalIncome)),
+          pw.Text(_getTotalExpensesMessage(summary.totalExpenses)),
+          pw.Text(_getBalanceMessage(summary.totalBalance)),
         ],
       ),
     );
@@ -136,7 +175,13 @@ class ExportService {
     DateFormat dateFormat,
   ) {
     return pw.TableHelper.fromTextArray(
-      headers: ['Date', 'Type', 'Category', 'Description', 'Amount'],
+      headers: [
+        _getDateHeader(),
+        _getTypeHeader(),
+        _getCategoryHeader(),
+        _getDescriptionHeader(),
+        _getAmountHeader(),
+      ],
       data: transactions.map((transaction) {
         return [
           dateFormat.format(transaction.date),

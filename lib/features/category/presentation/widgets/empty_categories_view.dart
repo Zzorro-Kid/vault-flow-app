@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/core/constants/app_dimensions.dart';
 import 'package:test_app/core/constants/app_colors.dart';
+import 'package:test_app/l10n/app_localizations.dart';
 
 class EmptyCategoriesView extends StatelessWidget {
   const EmptyCategoriesView({super.key});
@@ -13,7 +14,7 @@ class EmptyCategoriesView extends StatelessWidget {
         children: [
           _buildEmptyIcon(),
           const SizedBox(height: AppDimensions.paddingMedium),
-          _buildEmptyMessage(),
+          _buildEmptyMessage(context),
         ],
       ),
     );
@@ -27,10 +28,10 @@ class EmptyCategoriesView extends StatelessWidget {
     );
   }
 
-  Widget _buildEmptyMessage() {
-    return const Text(
-      'No categories yet',
-      style: TextStyle(
+  Widget _buildEmptyMessage(BuildContext context) {
+    return Text(
+      AppLocalizations.of(context)!.noCategoriesYet,
+      style: const TextStyle(
         fontSize: AppDimensions.fontSizeXLarge,
         color: AppColors.emptyStateText,
       ),

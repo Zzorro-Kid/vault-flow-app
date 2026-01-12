@@ -13,6 +13,7 @@ import 'package:test_app/features/statistics/presentation/widgets/period_selecto
 import 'package:test_app/features/statistics/presentation/widgets/statistics_error_view.dart';
 import 'package:test_app/features/statistics/presentation/widgets/statistics_summary_card.dart';
 import 'package:test_app/injection_container.dart';
+import 'package:test_app/l10n/app_localizations.dart';
 
 class StatisticsScreen extends StatelessWidget {
   const StatisticsScreen({super.key});
@@ -34,13 +35,18 @@ class StatisticsScreen extends StatelessWidget {
   }
 
   Widget _buildAppBarTitle() {
-    return const Text(
-      'Statistics',
-      style: TextStyle(
-        fontSize: AppDimensions.fontSizeXXLarge,
-        fontWeight: FontWeight.bold,
-        color: AppColors.categoryTitleText,
-      ),
+    return Builder(
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        return Text(
+          l10n.statistics,
+          style: const TextStyle(
+            fontSize: AppDimensions.fontSizeXXLarge,
+            fontWeight: FontWeight.bold,
+            color: AppColors.categoryTitleText,
+          ),
+        );
+      },
     );
   }
 

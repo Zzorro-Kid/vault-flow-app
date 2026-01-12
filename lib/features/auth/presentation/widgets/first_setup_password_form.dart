@@ -5,6 +5,7 @@ import 'package:test_app/core/utils/validators.dart';
 import 'package:test_app/core/widgets/custom_button.dart';
 import 'package:test_app/core/widgets/custom_text_field.dart';
 import 'package:test_app/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:test_app/l10n/app_localizations.dart';
 
 class SetupPasswordForm extends StatefulWidget {
   const SetupPasswordForm({super.key});
@@ -59,7 +60,7 @@ class _SetupPasswordFormState extends State<SetupPasswordForm> {
 
   Widget _buildTitle() {
     return Text(
-      'Create Master Password',
+      AppLocalizations.of(context)!.createMasterPassword,
       style: Theme.of(context).textTheme.headlineMedium,
       textAlign: TextAlign.center,
     );
@@ -67,7 +68,7 @@ class _SetupPasswordFormState extends State<SetupPasswordForm> {
 
   Widget _buildSubtitle() {
     return Text(
-      'This password will encrypt all your data',
+      AppLocalizations.of(context)!.passwordWillEncryptData,
       style: Theme.of(context).textTheme.bodyMedium,
       textAlign: TextAlign.center,
     );
@@ -75,7 +76,7 @@ class _SetupPasswordFormState extends State<SetupPasswordForm> {
 
   Widget _buildPasswordField() {
     return CustomTextField(
-      label: 'Password',
+      label: AppLocalizations.of(context)!.password,
       controller: _passwordController,
       obscureText: _obscurePassword,
       validator: Validators.validatePassword,
@@ -90,7 +91,7 @@ class _SetupPasswordFormState extends State<SetupPasswordForm> {
 
   Widget _buildConfirmPasswordField() {
     return CustomTextField(
-      label: 'Confirm Password',
+      label: AppLocalizations.of(context)!.confirmPassword,
       controller: _confirmPasswordController,
       obscureText: _obscureConfirmPassword,
       validator: _validateConfirmPassword,
@@ -107,7 +108,7 @@ class _SetupPasswordFormState extends State<SetupPasswordForm> {
 
   String? _validateConfirmPassword(String? value) {
     if (value != _passwordController.text) {
-      return 'Passwords do not match';
+      return AppLocalizations.of(context)!.passwordsDoNotMatch;
     }
     return null;
   }
@@ -116,7 +117,7 @@ class _SetupPasswordFormState extends State<SetupPasswordForm> {
     return BlocBuilder<AuthCubit, AuthCubitState>(
       builder: (context, state) {
         return CustomButton(
-          text: 'Create Password',
+          text: AppLocalizations.of(context)!.createPassword,
           onPressed: _submit,
           isLoading: state is AuthCubitLoading,
         );

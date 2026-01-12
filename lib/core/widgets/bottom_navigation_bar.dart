@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/core/constants/app_dimensions.dart';
 import 'package:test_app/core/constants/app_colors.dart';
+import 'package:test_app/l10n/app_localizations.dart';
 
 class AppBottomNavigationBar extends StatelessWidget {
   final int currentIndex;
@@ -44,12 +45,13 @@ class AppBottomNavigationBar extends StatelessWidget {
   }
 
   List<Widget> _buildNavigationItems(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return [
       _buildNavItem(
         context: context,
         icon: Icons.dashboard_outlined,
         selectedIcon: Icons.dashboard,
-        label: 'Home',
+        label: l10n.navHome,
         index: 0,
         route: '/home',
       ),
@@ -57,7 +59,7 @@ class AppBottomNavigationBar extends StatelessWidget {
         context: context,
         icon: Icons.add_circle_outline,
         selectedIcon: Icons.add_circle,
-        label: 'Add',
+        label: l10n.navAdd,
         index: 1,
         route: '/add-transaction',
       ),
@@ -65,7 +67,7 @@ class AppBottomNavigationBar extends StatelessWidget {
         context: context,
         icon: Icons.category_outlined,
         selectedIcon: Icons.category,
-        label: 'Categories',
+        label: l10n.navCategories,
         index: 2,
         route: '/category-list',
       ),
@@ -73,7 +75,7 @@ class AppBottomNavigationBar extends StatelessWidget {
         context: context,
         icon: Icons.bar_chart_outlined,
         selectedIcon: Icons.bar_chart,
-        label: 'Stats',
+        label: l10n.navStats,
         index: 3,
         route: '/reports',
       ),
@@ -81,7 +83,7 @@ class AppBottomNavigationBar extends StatelessWidget {
         context: context,
         icon: Icons.settings_outlined,
         selectedIcon: Icons.settings,
-        label: 'Settings',
+        label: l10n.navSettings,
         index: 4,
         route: '/settings',
       ),

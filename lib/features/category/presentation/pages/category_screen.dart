@@ -15,6 +15,7 @@ import 'package:test_app/features/category/presentation/widgets/category_item.da
 import 'package:test_app/features/category/presentation/widgets/edit_category_dialog.dart';
 import 'package:test_app/features/category/presentation/widgets/empty_categories_view.dart';
 import 'package:test_app/injection_container.dart';
+import 'package:test_app/l10n/app_localizations.dart';
 
 class CategoryScreen extends StatelessWidget {
   const CategoryScreen({super.key});
@@ -38,13 +39,17 @@ class CategoryScreen extends StatelessWidget {
   }
 
   Widget _buildAppBarTitle() {
-    return const Text(
-      'Categories',
-      style: TextStyle(
-        fontSize: AppDimensions.fontSizeXXLarge,
-        fontWeight: FontWeight.bold,
-        color: AppColors.categoryTitleText,
-      ),
+    return Builder(
+      builder: (context) {
+        return Text(
+          AppLocalizations.of(context)!.categoriesTitle,
+          style: const TextStyle(
+            fontSize: AppDimensions.fontSizeXXLarge,
+            fontWeight: FontWeight.bold,
+            color: AppColors.categoryTitleText,
+          ),
+        );
+      },
     );
   }
 
@@ -105,17 +110,18 @@ class CategoryScreen extends StatelessWidget {
     List<CategoryData> expenseCategories,
     List<CategoryData> incomeCategories,
   ) {
+    final l10n = AppLocalizations.of(context)!;
     return [
       if (expenseCategories.isNotEmpty)
         ..._buildCategorySection(
           context,
-          'Expense Categories',
+          l10n.expenseCategories,
           expenseCategories,
         ),
       if (incomeCategories.isNotEmpty)
         ..._buildCategorySection(
           context,
-          'Income Categories',
+          l10n.incomeCategories,
           incomeCategories,
         ),
     ];
@@ -239,27 +245,28 @@ class CategoryScreen extends StatelessWidget {
   }
 
   Future<bool?> _confirmDelete(BuildContext context, CategoryData category) {
+    final l10n = AppLocalizations.of(context)!;
     return showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
         backgroundColor: AppColors.surfaceDark,
-        title: _buildDeleteDialogTitle(),
-        content: _buildDeleteDialogContent(category.name),
+        title: _buildDeleteDialogTitle(l10n),
+        content: _buildDeleteDialogContent(l10n, category.name),
         actions: _buildDeleteDialogActions(dialogContext, context, category.id),
       ),
     );
   }
 
-  Widget _buildDeleteDialogTitle() {
-    return const Text(
-      'Delete Category',
-      style: TextStyle(color: AppColors.categoryTitleText),
+  Widget _buildDeleteDialogTitle(AppLocalizations l10n) {
+    return Text(
+      l10n.deleteCategory,
+      style: const TextStyle(color: AppColors.categoryTitleText),
     );
   }
 
-  Widget _buildDeleteDialogContent(String categoryName) {
+  Widget _buildDeleteDialogContent(AppLocalizations l10n, String categoryName) {
     return Text(
-      'Are you sure you want to delete "$categoryName"?',
+      l10n.confirmDeleteCategory(categoryName),
       style: const TextStyle(color: AppColors.sectionHeaderText),
     );
   }
@@ -269,16 +276,17 @@ class CategoryScreen extends StatelessWidget {
     BuildContext parentContext,
     String categoryId,
   ) {
+    final l10n = AppLocalizations.of(parentContext)!;
     return [
-      _buildCancelButton(dialogContext),
-      _buildDeleteButton(dialogContext, parentContext, categoryId),
+      _buildCancelButton(dialogContext, l10n),
+      _buildDeleteButton(dialogContext, parentContext, categoryId, l10n),
     ];
   }
 
-  Widget _buildCancelButton(BuildContext dialogContext) {
+  Widget _buildCancelButton(BuildContext dialogContext, AppLocalizations l10n) {
     return TextButton(
       onPressed: () => Navigator.pop(dialogContext, false),
-      child: const Text('Cancel'),
+      child: Text(l10n.cancel),
     );
   }
 
@@ -286,15 +294,16 @@ class CategoryScreen extends StatelessWidget {
     BuildContext dialogContext,
     BuildContext parentContext,
     String categoryId,
+    AppLocalizations l10n,
   ) {
     return TextButton(
       onPressed: () {
         parentContext.read<CategoryCubit>().deleteCategory(categoryId);
         Navigator.pop(dialogContext, true);
       },
-      child: const Text(
-        'Delete',
-        style: TextStyle(color: AppColors.expensesStart),
+      child: Text(
+        l10n.delete,
+        style: const TextStyle(color: AppColors.expensesStart),
       ),
     );
   }

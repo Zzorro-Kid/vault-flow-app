@@ -3,6 +3,7 @@ import 'package:test_app/core/constants/app_dimensions.dart';
 import 'package:test_app/core/constants/app_colors.dart';
 import 'package:test_app/core/utils/icon_mapper.dart';
 import 'package:test_app/features/category/domain/entities/category_data.dart';
+import 'package:test_app/l10n/app_localizations.dart';
 
 class CategoryItem extends StatelessWidget {
   final CategoryData category;
@@ -72,12 +73,17 @@ class CategoryItem extends StatelessWidget {
   }
 
   Widget _buildCategorySubtitle(bool isIncome) {
-    return Text(
-      isIncome ? 'Income' : 'Expense',
-      style: TextStyle(
-        color: isIncome ? AppColors.incomeStart : AppColors.expensesStart,
-        fontSize: AppDimensions.fontSizeSmall,
-      ),
+    return Builder(
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        return Text(
+          isIncome ? l10n.income : l10n.expense,
+          style: TextStyle(
+            color: isIncome ? AppColors.incomeStart : AppColors.expensesStart,
+            fontSize: AppDimensions.fontSizeSmall,
+          ),
+        );
+      },
     );
   }
 }

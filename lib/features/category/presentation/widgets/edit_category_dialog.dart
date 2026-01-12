@@ -3,6 +3,7 @@ import 'package:test_app/core/constants/app_dimensions.dart';
 import 'package:test_app/core/constants/category_constants.dart';
 import 'package:test_app/core/constants/app_colors.dart';
 import 'package:test_app/features/category/domain/entities/category_data.dart';
+import 'package:test_app/l10n/app_localizations.dart';
 
 class EditCategoryDialog extends StatefulWidget {
   final CategoryData category;
@@ -37,18 +38,19 @@ class _EditCategoryDialogState extends State<EditCategoryDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return AlertDialog(
       backgroundColor: AppColors.surfaceDark,
-      title: _buildDialogTitle(),
+      title: _buildDialogTitle(l10n),
       content: _buildDialogContent(),
-      actions: _buildDialogActions(context),
+      actions: _buildDialogActions(context, l10n),
     );
   }
 
-  Widget _buildDialogTitle() {
-    return const Text(
-      'Edit Category',
-      style: TextStyle(color: AppColors.categoryTitleText),
+  Widget _buildDialogTitle(AppLocalizations l10n) {
+    return Text(
+      l10n.editCategory,
+      style: const TextStyle(color: AppColors.categoryTitleText),
     );
   }
 
@@ -77,42 +79,50 @@ class _EditCategoryDialogState extends State<EditCategoryDialog> {
     ];
   }
 
-  List<Widget> _buildDialogActions(BuildContext context) {
-    return [_buildCancelButton(context), _buildSaveButton()];
+  List<Widget> _buildDialogActions(
+    BuildContext context,
+    AppLocalizations l10n,
+  ) {
+    return [_buildCancelButton(context, l10n), _buildSaveButton(l10n)];
   }
 
-  Widget _buildCancelButton(BuildContext context) {
+  Widget _buildCancelButton(BuildContext context, AppLocalizations l10n) {
     return TextButton(
       onPressed: () => Navigator.pop(context),
-      child: const Text('Cancel'),
+      child: Text(l10n.cancel),
     );
   }
 
-  Widget _buildSaveButton() {
+  Widget _buildSaveButton(AppLocalizations l10n) {
     return ElevatedButton(
       onPressed: _handleSubmit,
       style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
-      child: const Text('Save'),
+      child: Text(l10n.save),
     );
   }
 
   Widget _buildNameField() {
-    return TextFormField(
-      controller: _nameController,
-      style: const TextStyle(color: AppColors.dialogInputText),
-      decoration: _buildNameFieldDecoration(),
-      validator: _validateCategoryName,
+    return Builder(
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        return TextFormField(
+          controller: _nameController,
+          style: const TextStyle(color: AppColors.dialogInputText),
+          decoration: _buildNameFieldDecoration(l10n),
+          validator: _validateCategoryName,
+        );
+      },
     );
   }
 
-  InputDecoration _buildNameFieldDecoration() {
-    return const InputDecoration(
-      labelText: 'Category Name',
-      labelStyle: TextStyle(color: AppColors.sectionHeaderText),
-      enabledBorder: UnderlineInputBorder(
+  InputDecoration _buildNameFieldDecoration(AppLocalizations l10n) {
+    return InputDecoration(
+      labelText: l10n.categoryName,
+      labelStyle: const TextStyle(color: AppColors.sectionHeaderText),
+      enabledBorder: const UnderlineInputBorder(
         borderSide: BorderSide(color: AppColors.sectionHeaderText),
       ),
-      focusedBorder: UnderlineInputBorder(
+      focusedBorder: const UnderlineInputBorder(
         borderSide: BorderSide(color: AppColors.primary),
       ),
     );
@@ -120,7 +130,7 @@ class _EditCategoryDialogState extends State<EditCategoryDialog> {
 
   String? _validateCategoryName(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'Please enter a category name';
+      return AppLocalizations.of(context)!.pleaseEnterACategoryName;
     }
     return null;
   }
@@ -137,22 +147,32 @@ class _EditCategoryDialogState extends State<EditCategoryDialog> {
   }
 
   Widget _buildTypeSelectorLabel() {
-    return const Text(
-      'Type',
-      style: TextStyle(
-        color: AppColors.sectionHeaderText,
-        fontSize: AppDimensions.fontSizeMedium,
-      ),
+    return Builder(
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        return Text(
+          l10n.type,
+          style: const TextStyle(
+            color: AppColors.sectionHeaderText,
+            fontSize: AppDimensions.fontSizeMedium,
+          ),
+        );
+      },
     );
   }
 
   Widget _buildTypeButtons() {
-    return Row(
-      children: [
-        _buildTypeButton('Expense', 'expense', AppColors.expensesStart),
-        const SizedBox(width: AppDimensions.paddingMedium),
-        _buildTypeButton('Income', 'income', AppColors.incomeStart),
-      ],
+    return Builder(
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        return Row(
+          children: [
+            _buildTypeButton(l10n.expense, 'expense', AppColors.expensesStart),
+            const SizedBox(width: AppDimensions.paddingMedium),
+            _buildTypeButton(l10n.income, 'income', AppColors.incomeStart),
+          ],
+        );
+      },
     );
   }
 
@@ -195,12 +215,17 @@ class _EditCategoryDialogState extends State<EditCategoryDialog> {
   }
 
   Widget _buildIconSelectorLabel() {
-    return const Text(
-      'Icon',
-      style: TextStyle(
-        color: AppColors.sectionHeaderText,
-        fontSize: AppDimensions.fontSizeMedium,
-      ),
+    return Builder(
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        return Text(
+          l10n.icon,
+          style: const TextStyle(
+            color: AppColors.sectionHeaderText,
+            fontSize: AppDimensions.fontSizeMedium,
+          ),
+        );
+      },
     );
   }
 
@@ -258,12 +283,17 @@ class _EditCategoryDialogState extends State<EditCategoryDialog> {
   }
 
   Widget _buildColorSelectorLabel() {
-    return const Text(
-      'Color',
-      style: TextStyle(
-        color: AppColors.sectionHeaderText,
-        fontSize: AppDimensions.fontSizeMedium,
-      ),
+    return Builder(
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        return Text(
+          l10n.color,
+          style: const TextStyle(
+            color: AppColors.sectionHeaderText,
+            fontSize: AppDimensions.fontSizeMedium,
+          ),
+        );
+      },
     );
   }
 

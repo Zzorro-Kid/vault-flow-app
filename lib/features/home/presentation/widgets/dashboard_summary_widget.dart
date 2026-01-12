@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:test_app/core/constants/app_dimensions.dart';
 import 'package:test_app/core/constants/app_colors.dart';
 import 'package:test_app/features/home/domain/entities/dashboard_summary_data.dart';
+import 'package:test_app/l10n/app_localizations.dart';
 
 class DashboardSummary extends StatelessWidget {
   final DashboardSummaryData summary;
@@ -24,7 +25,7 @@ class DashboardSummary extends StatelessWidget {
 
   Widget _buildDashboardTitle(BuildContext context) {
     return Text(
-      'Dashboard',
+      AppLocalizations.of(context)!.dashboard,
       style: Theme.of(context).textTheme.titleLarge?.copyWith(
         fontWeight: FontWeight.bold,
         color: AppColors.sectionHeaderText,
@@ -47,7 +48,7 @@ class DashboardSummary extends StatelessWidget {
       child: _buildSummaryCard(
         context: context,
         icon: Icons.trending_down,
-        title: 'Expenses',
+        title: AppLocalizations.of(context)!.expense,
         amount: summary.totalExpenses,
         gradient: _buildExpensesGradient(),
       ),
@@ -59,7 +60,7 @@ class DashboardSummary extends StatelessWidget {
       child: _buildSummaryCard(
         context: context,
         icon: Icons.trending_up,
-        title: 'Incomes',
+        title: AppLocalizations.of(context)!.income,
         amount: summary.totalIncome,
         gradient: _buildIncomeGradient(),
       ),
@@ -70,7 +71,7 @@ class DashboardSummary extends StatelessWidget {
     return _buildSummaryCard(
       context: context,
       icon: Icons.account_balance_wallet_outlined,
-      title: 'Balance',
+      title: AppLocalizations.of(context)!.balance,
       amount: summary.totalBalance,
       gradient: _buildBalanceGradient(),
       fullWidth: true,

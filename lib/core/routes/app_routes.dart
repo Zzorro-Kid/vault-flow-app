@@ -5,6 +5,7 @@ import 'package:test_app/features/home/presentation/pages/home_sceen.dart';
 import 'package:test_app/features/settings/presentation/pages/settings_screen.dart';
 import 'package:test_app/features/statistics/presentation/pages/statistics_screen.dart';
 import 'package:test_app/features/transaction/presentation/pages/transaction_screen.dart';
+import 'package:test_app/l10n/app_localizations.dart';
 
 class AppRouter {
   static const String auth = '/auth';
@@ -36,8 +37,10 @@ class AppRouter {
 
       default:
         return MaterialPageRoute(
-          builder: (_) => const Scaffold(
-            body: Center(child: Text('No route defined for this path')),
+          builder: (context) => Scaffold(
+            body: Center(
+              child: Text(AppLocalizations.of(context)!.noRouteDefined),
+            ),
           ),
         );
     }

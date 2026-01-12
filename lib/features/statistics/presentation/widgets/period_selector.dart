@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/core/constants/app_dimensions.dart';
 import 'package:test_app/core/constants/app_colors.dart';
+import 'package:test_app/l10n/app_localizations.dart';
 
 class PeriodSelector extends StatelessWidget {
   final String currentPeriod;
@@ -14,9 +15,10 @@ class PeriodSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       decoration: _buildContainerDecoration(),
-      child: _buildPeriodButtons(),
+      child: _buildPeriodButtons(l10n),
     );
   }
 
@@ -36,13 +38,13 @@ class PeriodSelector extends StatelessWidget {
     );
   }
 
-  Widget _buildPeriodButtons() {
+  Widget _buildPeriodButtons(AppLocalizations l10n) {
     return Row(
       children: [
-        _buildPeriodButton('Day', 'day'),
-        _buildPeriodButton('Week', 'week'),
-        _buildPeriodButton('Month', 'month'),
-        _buildPeriodButton('Year', 'year'),
+        _buildPeriodButton(l10n.periodDay, 'day'),
+        _buildPeriodButton(l10n.periodWeek, 'week'),
+        _buildPeriodButton(l10n.periodMonth, 'month'),
+        _buildPeriodButton(l10n.periodYear, 'year'),
       ],
     );
   }

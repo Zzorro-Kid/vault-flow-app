@@ -4,6 +4,7 @@ import 'package:test_app/core/constants/app_colors.dart';
 import 'package:test_app/features/statistics/domain/entities/daily_trend_data.dart';
 import 'package:test_app/core/utils/chart_calculator.dart';
 import 'package:intl/intl.dart';
+import 'package:test_app/l10n/app_localizations.dart';
 
 class DailyTrendChart extends StatelessWidget {
   final List<DailyTrendData> dailyTrends;
@@ -12,8 +13,9 @@ class DailyTrendChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     if (dailyTrends.isEmpty) {
-      return _buildEmptyState();
+      return _buildEmptyState(l10n);
     }
 
     return Container(
@@ -22,11 +24,11 @@ class DailyTrendChart extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildTitle(),
+          _buildTitle(l10n),
           const SizedBox(height: AppDimensions.spacingMedium),
           _buildChart(),
           const SizedBox(height: AppDimensions.spacingMedium),
-          _buildLegend(),
+          _buildLegend(l10n),
         ],
       ),
     );
@@ -46,10 +48,10 @@ class DailyTrendChart extends StatelessWidget {
     );
   }
 
-  Widget _buildTitle() {
-    return const Text(
-      'Daily Trends',
-      style: TextStyle(
+  Widget _buildTitle(AppLocalizations l10n) {
+    return Text(
+      l10n.dailyTrends,
+      style: const TextStyle(
         fontSize: AppDimensions.fontSizeXLarge,
         fontWeight: FontWeight.bold,
         color: AppColors.textPrimaryLight,
@@ -169,13 +171,13 @@ class DailyTrendChart extends StatelessWidget {
     );
   }
 
-  Widget _buildLegend() {
+  Widget _buildLegend(AppLocalizations l10n) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _buildLegendItem('Income', AppColors.incomeStart),
+        _buildLegendItem(l10n.income, AppColors.incomeStart),
         const SizedBox(width: AppDimensions.legendSpacing),
-        _buildLegendItem('Expense', AppColors.expensesStart),
+        _buildLegendItem(l10n.expense, AppColors.expensesStart),
       ],
     );
   }
@@ -212,20 +214,20 @@ class DailyTrendChart extends StatelessWidget {
     );
   }
 
-  Widget _buildEmptyState() {
+  Widget _buildEmptyState(AppLocalizations l10n) {
     return Container(
       decoration: _buildContainerDecoration(),
       padding: const EdgeInsets.all(AppDimensions.emptyStatePadding),
-      child: Center(child: _buildEmptyStateContent()),
+      child: Center(child: _buildEmptyStateContent(l10n)),
     );
   }
 
-  Widget _buildEmptyStateContent() {
+  Widget _buildEmptyStateContent(AppLocalizations l10n) {
     return Column(
       children: [
         _buildEmptyStateIcon(),
         const SizedBox(height: AppDimensions.spacingMedium),
-        _buildEmptyStateText(),
+        _buildEmptyStateText(l10n),
       ],
     );
   }
@@ -238,10 +240,10 @@ class DailyTrendChart extends StatelessWidget {
     );
   }
 
-  Widget _buildEmptyStateText() {
-    return const Text(
-      'No trend data available',
-      style: TextStyle(
+  Widget _buildEmptyStateText(AppLocalizations l10n) {
+    return Text(
+      l10n.noTrendDataAvailable,
+      style: const TextStyle(
         fontSize: AppDimensions.fontSizeLarge,
         color: AppColors.emptyStateTextGrey,
       ),

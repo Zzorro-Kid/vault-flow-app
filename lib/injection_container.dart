@@ -88,6 +88,21 @@ Future<void> _initCore() async {
     () => ExportService(
       calculateFinancialSummary:
           sl<FinancialService>().calculateFinancialSummary,
+      getNoTransactionsMessage: () => 'No transactions to export',
+      getTransactionsReportTitle: () => 'Transactions Report',
+      getGeneratedMessage: (date) => 'Generated: $date',
+      getSummaryTitle: () => 'Summary',
+      getTotalIncomeMessage: (income) =>
+          'Total Income: \$${income.toStringAsFixed(2)}',
+      getTotalExpensesMessage: (expenses) =>
+          'Total Expenses: \$${expenses.toStringAsFixed(2)}',
+      getBalanceMessage: (balance) =>
+          'Balance: \$${balance.toStringAsFixed(2)}',
+      getDateHeader: () => 'Date',
+      getTypeHeader: () => 'Type',
+      getCategoryHeader: () => 'Category',
+      getDescriptionHeader: () => 'Description',
+      getAmountHeader: () => 'Amount',
     ),
   );
 }

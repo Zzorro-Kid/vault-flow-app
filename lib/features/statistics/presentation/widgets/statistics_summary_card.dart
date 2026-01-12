@@ -4,6 +4,7 @@ import 'package:test_app/core/constants/app_colors.dart';
 import 'package:test_app/core/utils/currency_formatter.dart';
 import 'package:test_app/features/statistics/domain/entities/statistics_data.dart';
 import 'package:test_app/core/utils/period_formatter.dart';
+import 'package:test_app/l10n/app_localizations.dart';
 
 class StatisticsSummaryCard extends StatelessWidget {
   final StatisticsData statistics;
@@ -12,17 +13,18 @@ class StatisticsSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       decoration: _buildContainerDecoration(),
       padding: const EdgeInsets.all(AppDimensions.cardPaddingLarge),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildPeriodHeader(),
+          _buildPeriodHeader(l10n),
           const SizedBox(height: AppDimensions.spacingMedium),
           _buildBalanceRow(),
           const SizedBox(height: AppDimensions.summaryCardBalanceSpacing),
-          _buildIncomeExpenseRow(),
+          _buildIncomeExpenseRow(l10n),
         ],
       ),
     );
@@ -52,9 +54,9 @@ class StatisticsSummaryCard extends StatelessWidget {
     );
   }
 
-  Widget _buildPeriodHeader() {
+  Widget _buildPeriodHeader(AppLocalizations l10n) {
     return Text(
-      'Summary for ${PeriodFormatter.format(statistics.period)}',
+      l10n.summaryFor(PeriodFormatter.format(statistics.period)),
       style: const TextStyle(
         color: AppColors.summaryCardTextSecondary,
         fontSize: AppDimensions.fontSizeMedium,
@@ -63,28 +65,28 @@ class StatisticsSummaryCard extends StatelessWidget {
     );
   }
 
-  Widget _buildIncomeExpenseRow() {
+  Widget _buildIncomeExpenseRow(AppLocalizations l10n) {
     return Row(
       children: [
-        _buildIncomeItem(),
+        _buildIncomeItem(l10n),
         const SizedBox(width: AppDimensions.summaryCardItemSpacing),
-        _buildExpenseItem(),
+        _buildExpenseItem(l10n),
       ],
     );
   }
 
-  Widget _buildIncomeItem() {
+  Widget _buildIncomeItem(AppLocalizations l10n) {
     return _buildSummaryItem(
-      'Income',
+      l10n.income,
       statistics.totalIncome,
       AppColors.incomeStart,
       Icons.arrow_downward,
     );
   }
 
-  Widget _buildExpenseItem() {
+  Widget _buildExpenseItem(AppLocalizations l10n) {
     return _buildSummaryItem(
-      'Expenses',
+      l10n.expense_plural,
       statistics.totalExpense,
       AppColors.expensesStart,
       Icons.arrow_upward,
@@ -110,13 +112,18 @@ class StatisticsSummaryCard extends StatelessWidget {
   }
 
   Widget _buildBalanceTitle() {
-    return const Text(
-      'Net Balance',
-      style: TextStyle(
-        color: AppColors.summaryCardText,
-        fontSize: AppDimensions.fontSizeBalanceTitle,
-        fontWeight: FontWeight.w600,
-      ),
+    return Builder(
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        return Text(
+          l10n.netBalance,
+          style: const TextStyle(
+            color: AppColors.summaryCardText,
+            fontSize: AppDimensions.fontSizeBalanceTitle,
+            fontWeight: FontWeight.w600,
+          ),
+        );
+      },
     );
   }
 
