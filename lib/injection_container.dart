@@ -278,6 +278,7 @@ void _initSettings() {
       storageService: sl(),
       authService: sl(),
       exportService: sl(),
+      sharedPreferences: sl(),
     ),
   );
 }

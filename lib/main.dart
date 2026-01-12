@@ -10,17 +10,12 @@ import 'package:test_app/core/services/locale_service.dart';
 import 'package:test_app/injection_container.dart';
 import 'package:test_app/l10n/app_localizations.dart';
 import 'package:test_app/features/settings/presentation/cubit/settings_cubit.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await init();
-
-  // Initialize locale service early to determine initial locale
-  final prefs = await SharedPreferences.getInstance();
-  final localeService = LocaleService(prefs: prefs);
+  final localeService = sl<LocaleService>();
   final initialLocale = await localeService.determineInitialLocale();
-
   runApp(
     DevicePreview(
       enabled: true,

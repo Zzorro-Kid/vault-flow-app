@@ -1,3 +1,4 @@
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test_app/core/data/sources/base_local_data_source.dart';
 import 'package:test_app/core/secure_prefs.dart';
 import 'package:test_app/core/services/storage_service.dart';
@@ -25,6 +26,7 @@ class SettingsLocalDataSourceImpl extends BaseLocalDataSource
   final StorageService storageService;
   final AuthService authService;
   final ExportService exportService;
+  final SharedPreferences sharedPreferences;
 
   static const String _defaultCurrency = 'USD';
   static const String _defaultReportFrequency = 'monthly';
@@ -36,6 +38,7 @@ class SettingsLocalDataSourceImpl extends BaseLocalDataSource
     required this.storageService,
     required this.authService,
     required this.exportService,
+    required this.sharedPreferences,
   });
 
   @override
@@ -104,6 +107,9 @@ class SettingsLocalDataSourceImpl extends BaseLocalDataSource
         updater: (model) =>
             model.copyWith(appLanguage: languageCode, useSystemLanguage: false),
       );
+      // Sync with SharedPreferences for LocaleService
+      await sharedPreferences.setString('app_language', languageCode);
+      await sharedPreferences.setBool('use_system_language', false);
     }, errorMessage: 'Failed to update app language');
   }
 
@@ -116,6 +122,8 @@ class SettingsLocalDataSourceImpl extends BaseLocalDataSource
         saver: saveUserSettings,
         updater: (model) => model.copyWith(useSystemLanguage: useSystem),
       );
+      // Sync with SharedPreferences for LocaleService
+      await sharedPreferences.setBool('use_system_language', useSystem);
     }, errorMessage: 'Failed to update system language preference');
   }
 
