@@ -202,14 +202,12 @@ class SettingsCubit extends Cubit<SettingsState> {
   }
 
   Future<void> changeAppLanguage(String userId, String languageCode) async {
-    emit(SettingsLoading());
-
+    await loadUserSettings(userId);
     final result = await setAppLanguage(userId, languageCode);
-
-    result.fold((failure) => emit(SettingsError(failure.message)), (_) async {
-      await loadUserSettings(userId);
-      emit(SettingsLanguageChanged(languageCode));
-    });
+    result.fold(
+      (failure) => emit(SettingsError(failure.message)),
+      (_) => emit(SettingsLanguageChanged(languageCode)),
+    );
   }
 
   Future<void> toggleSystemLanguage(String userId, bool useSystem) async {

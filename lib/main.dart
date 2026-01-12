@@ -53,8 +53,8 @@ class _MyAppState extends State<MyApp> {
       value: sl<SettingsCubit>(),
       child: BlocListener<SettingsCubit, SettingsState>(
         listener: (context, state) {
-          if (state is SettingsLoaded) {
-            final newLocale = _determineLocale(state);
+          if (state is SettingsLanguageChanged) {
+            final newLocale = Locale(state.languageCode);
             if (newLocale != _currentLocale && mounted) {
               setState(() {
                 _currentLocale = newLocale;
@@ -81,15 +81,5 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
     );
-  }
-
-  Locale _determineLocale(SettingsLoaded state) {
-    final settings = state.settings;
-
-    if (settings.useSystemLanguage) {
-      return PlatformDispatcher.instance.locale;
-    }
-
-    return Locale(settings.appLanguage);
   }
 }

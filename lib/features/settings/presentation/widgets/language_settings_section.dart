@@ -29,44 +29,10 @@ class LanguageSettingsSection extends StatelessWidget {
         return SettingsSection(
           title: l10n.languageSettings,
           children: [
-            _buildUseSystemLanguageToggle(
-              context,
-              l10n,
-              settings.useSystemLanguage,
-            ),
             _buildLanguageSelector(context, l10n, currentLanguageName),
           ],
         );
       },
-    );
-  }
-
-  Widget _buildUseSystemLanguageToggle(
-    BuildContext context,
-    AppLocalizations l10n,
-    bool useSystemLanguage,
-  ) {
-    return SettingsTile(
-      icon: Icons.settings_suggest_outlined,
-      title: l10n.useSystemLanguage,
-      subtitle: l10n.appLanguage,
-      trailing: _buildSwitch(context, useSystemLanguage),
-      onTap: null,
-    );
-  }
-
-  Widget _buildSwitch(BuildContext context, bool value) {
-    return Transform.scale(
-      scale: 0.8,
-      child: Switch(
-        value: value,
-        activeThumbColor: AppColors.primary,
-        inactiveThumbColor: AppColors.sectionHeaderText,
-        onChanged: (newValue) {
-          final cubit = context.read<SettingsCubit>();
-          cubit.toggleSystemLanguage('user_id', newValue);
-        },
-      ),
     );
   }
 

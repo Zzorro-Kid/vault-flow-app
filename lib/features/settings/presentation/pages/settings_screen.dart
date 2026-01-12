@@ -19,10 +19,8 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => sl<SettingsCubit>()
-        ..loadUserSettings('user_id')
-        ..loadAppInfo(),
+    return BlocProvider.value(
+      value: sl<SettingsCubit>()..loadUserSettings('user_id'),
       child: Scaffold(
         appBar: _buildAppBar(),
         body: _buildBody(),

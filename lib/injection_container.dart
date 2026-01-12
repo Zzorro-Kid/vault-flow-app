@@ -229,7 +229,7 @@ void _initStatistics() {
 }
 
 void _initSettings() {
-  sl.registerFactory(
+  sl.registerLazySingleton(
     () => SettingsCubit(
       getUserSettings: sl(),
       saveUserSettings: sl(),
