@@ -10,22 +10,18 @@ import 'package:test_app/l10n/app_localizations.dart';
 
 class LanguageSettingsSection extends StatelessWidget {
   const LanguageSettingsSection({super.key});
-
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-
     return BlocBuilder<SettingsCubit, SettingsState>(
       builder: (context, state) {
         if (state is! SettingsLoaded) {
           return const SizedBox.shrink();
         }
-
         final settings = state.settings;
         final currentLanguageName =
             LocaleService.languageNames[settings.appLanguage] ??
             settings.appLanguage;
-
         return SettingsSection(
           title: l10n.languageSettings,
           children: [
@@ -56,7 +52,10 @@ class LanguageSettingsSection extends StatelessWidget {
   void _showLanguagePickerDialog(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final cubit = context.read<SettingsCubit>();
-
+    final currentState = cubit.state;
+    final currentLanguage = currentState is SettingsLoaded
+        ? currentState.settings.appLanguage
+        : 'en';
     showDialog(
       context: context,
       builder: (dialogContext) => AlertDialog(
@@ -65,22 +64,16 @@ class LanguageSettingsSection extends StatelessWidget {
           l10n.selectLanguage,
           style: const TextStyle(color: AppColors.categoryTitleText),
         ),
-        content: _buildLanguageList(context, l10n, dialogContext, cubit),
+        content: _buildLanguageList(currentLanguage, cubit, dialogContext),
       ),
     );
   }
 
   Widget _buildLanguageList(
-    BuildContext context,
-    AppLocalizations l10n,
-    BuildContext dialogContext,
+    String currentLanguage,
     SettingsCubit cubit,
+    BuildContext dialogContext,
   ) {
-    final currentState = context.read<SettingsCubit>().state;
-    final currentLanguage = currentState is SettingsLoaded
-        ? currentState.settings.appLanguage
-        : 'en';
-
     return SizedBox(
       width: double.maxFinite,
       height: 300,
@@ -91,13 +84,12 @@ class LanguageSettingsSection extends StatelessWidget {
           final languageCode = entry.key;
           final languageName = entry.value;
           final isSelected = languageCode == currentLanguage;
-
           return _buildLanguageTile(
             languageCode,
             languageName,
             isSelected,
-            dialogContext,
             cubit,
+            dialogContext,
           );
         },
       ),
@@ -108,8 +100,8 @@ class LanguageSettingsSection extends StatelessWidget {
     String languageCode,
     String languageName,
     bool isSelected,
-    BuildContext dialogContext,
     SettingsCubit cubit,
+    BuildContext dialogContext,
   ) {
     return InkWell(
       onTap: () {
